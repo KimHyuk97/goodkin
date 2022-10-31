@@ -7,6 +7,11 @@ spring:
     url: jdbc:log4jdbc:mysql://localhost:3306/goodkin?serverTimezone=Asia/Seoul
     username: root
     password: 1111
+    
+  thymeleaf:
+    prefix: classpath:templates/
+    suffix: .html
+    cache: false
 
   output:
     ansi:
@@ -40,15 +45,9 @@ logging:
       sqltiming: INFO
       connection : OFF
 
-cloud:
-  aws:  
-    credentials:
-      access-key: AKIA3LJCETV4ED72XSXX
-      secret-key: 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
-    region:
-      static: ap-northeast-2
-    s3:
-      bucket: goodkin-bucket
-      url: https://goodkin-bucket.s3.ap-northeast-2.amazonaws.com/
-    stack:
-      auto: false
+# CDN
+cdn:
+  ip: iup.cdn1.cafe24.com
+  port: 21
+  username: loveheartt
+  password: love123!!
