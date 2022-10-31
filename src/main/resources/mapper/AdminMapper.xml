@@ -4,11 +4,53 @@
 
 <mapper namespace="com.goodkin.repository.AdminRepository">
 
+    <select id="getAdminList" resultType="Admin"> 
+        select * 
+        from admin
+        order by create_date desc
+    </select>
+
     <select id="getAdmin" resultType="Admin">
         select * 
         from admin
-        where adminNo = #{adminNo}
+        where admin_no = #{adminNo}
     </select>
+
+    <select id="findByAdminRole" resultType="Admin">
+        select * 
+        from admin
+        where role = #{adminRole}
+    </select>
+
+    <select id="findByName" resultType="Admin">
+        select * 
+        from admin
+        where name = #{name}
+    </select>
+
+    <insert id="save" parameterType="Admin" useGeneratedKeys="true"  keyProperty="adminNo">
+        INSERT INTO admin (
+            id, password, name, role
+        ) VALUES (
+            #{id}, #{password}, #{name}, #{role}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE admin SET 
+        <if test="id != null">id = #{id},</if>
+        <if test="password != null">password = #{password},</if>
+        <if test="name != null">name = #{name},</if>
+        <if test="role != null">role = #{role},</if>
+        updateDate = now()
+        WHERE admin_no = #{adminNo}
+    </update>
+
+    <delete id="delete">
+        DELETE 
+        FROM admin 
+        WHERE admin_no = #{adminNo}
+    </delete>
 
 
 </mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goodkin.repository.SiteRepository">
+
+    <select id="getSite" resultType="Site"> 
+        select * 
+        from site
+    </select>
+
+    <update id="update">
+        UPDATE site 
+        SET    logo = #{logo},
+               ceo = #{ceo},
+               address = #{address},
+               business_number = #{businessNumber},
+               phone = #{phone},
+               copyright = #{copyright}
+    </update>
+
+</mapper>

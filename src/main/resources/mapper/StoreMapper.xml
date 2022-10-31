@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goodkin.repository.StoreRepository">
+
+    <select id="getStores" resultType="Store"> 
+        select * 
+        from store
+        order by create_date desc
+    </select>
+
+    <select id="getStore" resultType="Store">
+        select * 
+        from store
+        where store_no = #{storeNo}
+    </select>
+
+    <insert id="save" parameterType="Store" useGeneratedKeys="true"  keyProperty="StoreNo">
+        INSERT INTO store (
+            name, address, phone, x, y, service
+        ) VALUES (
+            #{name}, #{address}, #{phone}, #{x}, #{y}, #{service}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE store SET 
+        <if test="name != null">name = #{name},</if>
+        <if test="address != null">address = #{address},</if>
+        <if test="phone != null">phone = #{phone},</if>
+        <if test="x != null">x = #{x},</if>
+        <if test="y != null">y = #{y},</if>
+        service = #{service},
+        update_date = now()
+        where store_no = #{storeNo}
+    </update>
+
+    <delete id="delete">
+        DELETE 
+        FROM store 
+        where store_no = #{storeNo}
+    </delete>
+
+
+</mapper>

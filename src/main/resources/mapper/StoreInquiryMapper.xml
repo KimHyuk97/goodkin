@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goodkin.repository.StoreInquiryInquiryRepository">
+
+    <select id="getStoreInquirys" resultType="StoreInquiry"> 
+        select * 
+        from store_inquiry
+        order by create_date desc
+    </select>
+
+    <select id="getStoreInquiry" resultType="StoreInquiry">
+        select * 
+        from store_inquiry
+        where store_inquiry_no = #{storeInquiryNo}
+    </select>
+
+    <insert id="save" parameterType="StoreInquiry" useGeneratedKeys="true"  keyProperty="StoreInquiryNo">
+        INSERT INTO store_inquiry (
+            customer_name, customer_phone, desired_area, budget, content, current_store_operate_status, policy_status
+        ) VALUES (
+            #{customerName}, #{customerPhone}, #{desiredArea}, #{budget}, #{content}, #{currentStoreOperateStatus}, #{policyStatus}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE store_inquiry SET 
+        <if test="customerName != null">customer_name = #{customerName},</if>
+        <if test="customerPhone != null">customer_phone = #{customerPhone},</if>
+        <if test="desiredArea != null">desired_area = #{desiredArea},</if>
+        <if test="budget != null">budget = #{budget},</if>
+        <if test="content != null">content = #{content},</if>
+        <if test="currentStoreOperateStatus != null">current_store_operate_status = #{currentStoreOperateStatus},</if>
+        <if test="policyStatus != null">policy_status = #{policyStatus},</if>
+        create_date = now()
+        where store_inquiry_no = #{storeInquiryNo}
+    </update>
+
+    <delete id="delete">
+        DELETE 
+        FROM store_inquiry 
+        where store_inquiry_no = #{storeInquiryNo}
+    </delete>
+
+
+</mapper>

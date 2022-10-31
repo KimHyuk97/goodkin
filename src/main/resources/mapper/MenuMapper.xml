@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goodkin.repository.MenuRepository">
+
+    <!-- 고객 문의 -->
+    <select id="getMenus" resultType="Menu"> 
+        select * 
+        from menu
+        order by create_date desc
+    </select>
+
+    <select id="getMenu" resultType="Menu">
+        select * 
+        from menu
+        where menu_no = #{menuNo}
+    </select>
+
+    <select id="findByCategory" resultType="Menu">
+        select * 
+        from menu
+        where category = #{category}
+    </select>
+
+    <select id="findByName" resultType="Menu">
+        select * 
+        from menu
+        where name = #{name}
+    </select>
+
+    <select id="findByNewMenu" resultType="Menu">
+        select * 
+        from menu
+        where new_status = 1
+    </select>
+
+    <insert id="save" parameterType="Menu" useGeneratedKeys="true"  keyProperty="menuNo">
+        INSERT INTO menu (
+            category, name, description, file, fileUrl, new_status
+        ) VALUES (
+            #{category}, #{name}, #{description}, #{file}, #{fileUrl}, #{newStatus}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE menu SET 
+        <if test="category != null">category = #{category},</if>
+        <if test="name != null">name = #{name},</if>
+        <if test="description != null">description = #{description},</if>
+        <if test="file != null">file = #{file},</if>
+        <if test="fileUrl != null">fileUrl = #{fileUrl},</if>
+        <if test="newStatus != null">new_status = #{newStatus},</if>
+        update_date = now()
+        where menu_no = #{menuNo}
+    </update>
+
+    <delete id="delete">
+        DELETE 
+        FROM menu 
+        where menu_no = #{menuNo}
+    </delete>
+
+
+    <!-- 메인메뉴 -->
+    <select id="getMainMenus" resultType="MainMenu">
+        select * 
+        from main_menu
+        order by sort desc
+    </select>
+
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goodkin.repository.ReviewRepository">
+
+    <select id="getReviews" resultType="Review"> 
+        select * 
+        from review
+        order by create_date desc
+    </select>
+
+    <select id="getReview" resultType="Review">
+        select * 
+        from review
+        where review_no = #{reviewNo}
+    </select>
+
+    <insert id="save" parameterType="Review" useGeneratedKeys="true"  keyProperty="reviewNo">
+        INSERT INTO review (
+            file, file_url, content
+        ) VALUES (
+            #{file}, #{fileUrl}, #{content}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE review SET 
+        <if test="file != null">file = #{file},</if>
+        <if test="fileUrl != null">file_url = #{fileUrl},</if>
+        <if test="content != null">content = #{content},</if>
+        create_date = now()
+        where review_no = #{reviewNo}
+    </update>
+
+    <delete id="delete">
+        DELETE 
+        FROM review 
+        where review_no = #{reviewNo}
+    </delete>
+
+
+</mapper>
