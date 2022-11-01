@@ -1,5 +1,6 @@
 package com.goodkin.config;
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -7,8 +8,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import lombok.RequiredArgsConstructor;
+
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     // 비밀번호 암호화
@@ -16,7 +20,7 @@ public class SecurityConfig {
     BCryptPasswordEncoder encodePwd() {
         return new BCryptPasswordEncoder();
     }
-   
+ 
        
     // 권한설정 하기
     @Bean
@@ -25,21 +29,28 @@ public class SecurityConfig {
             .csrf().disable()
             .httpBasic().disable()
             .authorizeRequests()
-                .anyRequest().permitAll();
-            // .and()
-            //     .formLogin()
-            //     .loginPage("/admin")
-            //     .loginProcessingUrl("/admin/adminLoginProc")
-            //     .usernameParameter("adminId")
-			// 	.passwordParameter("adminPwd")
-            //     .defaultSuccessUrl("/admin")
-            //     .failureUrl("/admin/login/failure")
-
-            // .and()
-            //     .logout()
-            //         .logoutUrl("/admin/myadmin/logout")
-            //         .invalidateHttpSession(true)
-            //         .logoutSuccessUrl("/admin");
+                .antMatchers("/admin/utils/**").hasRole("ADMIN")
+                .antMatchers("/admin/mypage/**").hasAnyRole("ADMIN")
+                .antMatchers("/admin/store/**").hasRole("ADMIN")
+                .antMatchers("/admin/inquire/**").hasRole("ADMIN")
+                .antMatchers("/admin/menu/**").hasRole("ADMIN")
+                .antMatchers("/admin/site/**").hasRole("ADMIN")
+                .antMatchers("/admin/review/**").hasRole("ADMIN")
+                .anyRequest().permitAll()
+            
+            .and()
+                .formLogin()
+                .loginPage("/admin")
+                .loginProcessingUrl("/admin/login")
+                .usernameParameter("id")
+				.passwordParameter("password")
+                .defaultSuccessUrl("/admin")
+                .failureUrl("/admin/login/failure")
+            .and()
+                .logout()
+                    .logoutUrl("/admin/logout")
+                    .invalidateHttpSession(true)
+                    .logoutSuccessUrl("/admin");
 
 
         // // 중복 로그인 체크하기

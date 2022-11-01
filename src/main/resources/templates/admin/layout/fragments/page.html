@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="page">
+    <div class="table_paging" th:if="${paging.limitCount > 10}">
+        <ul>
+            <li>
+                <a th:if="${paging.page > 10}" class="first" th:onclick="pagination([[${paging.page-10}]])"></a>
+            </li>
+            <li th:if="${paging.page > 1}">
+                <a class="prev" th:onclick="pagination([[${paging.page-1}]])"></a>
+            </li>
+
+            <th:block th:each="page,i: ${#numbers.sequence(paging.startPage, paging.endPage)}">
+                <li><a th:classappend="${paging.page == page} ? 'on' : ''" th:onclick="pagination([[${i.count+(paging.startPage-1)}]])" th:text="${i.count+(paging.startPage-1)}">
+                    </a>
+                </li>
+            </th:block>
+
+            <li th:if="${paging.page lt paging.maxPage}">
+                <a class="next" th:onclick="pagination([[${paging.page+1}]])">다음</a>
+            </li>
+            <li th:if="${paging.page+10 lt paging.maxPage}">
+                <a th:onclick="pagination([[${paging.page+10}]])"class="last">last</a>
+            </li>
+
+        </ul>
+    </div>
+
+    <script>
+        function pagination(page) {
+            document.getElementById('page').value = page;
+            searchForm.submit();
+        }
+    </script>
+</th:block>
+
+</html>

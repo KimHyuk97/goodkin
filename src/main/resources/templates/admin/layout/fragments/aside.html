@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<th:block th:fragment="aside">
+    <aside class="aside">
+        <button type="button" class="aside_btn">메뉴열기</button>
+        <h1 class="aside_logo"><a href=""></a></h1>
+        <nav class="aside_nav">
+            <ul class="depth01">
+                <li><a th:href="@{/admin/store/list}">가맹점</a></li>
+                <li><a th:href="@{/admin/menu/list}">메뉴</a></li>
+                <li><a th:href="@{/admin/review/list}">리뷰 관리</a></li>
+                <li><a th:href="@{/admin/customerInquiry/list}">가맹 문의</a></li>
+                <li><a th:href="@{/admin/storeInquiry/list}">고객의 소리</a></li>
+                <li><a th:href="@{/admin/site/list}" >사이트 관리</a></li>
+            </ul>
+        </nav>
+    </aside>
+</th:block>
+
+</html>

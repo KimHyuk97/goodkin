@@ -1,12 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>굿킨어드민</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>굿킨 관리자</title>
+    <link rel="shortcut icon" th:href="@{/assets/imgs/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/admin/assets/css/main.css}">
+    <script th:src="@{/admin/assets/js/script.js}"></script>
+
+    <script th:inline="javascript" th:if="${msg != null}">
+        window.addEventListener('load', () => {	
+              /*<![CDATA[*/
+              const msg = /*[[${msg}]]*/
+              alert(msg);
+              /*]]>*/
+        });
+  </script>
 </head>
 <body>
-    <h1>굿킨어드민</h1>
+    <div id="wrapper">
+        <div id="main" class="login" style="background-color: #FDF2E0;">
+            <section class="section">
+                <h1 class="section_logo">굿킨</h1>
+                <form class="form" th:action="@{/admin/login}" method="post" name="loginForm">
+                    <fieldset class="fieldset">
+                        <input class="input" type="text" name="id" id="id" placeholder="아이디" maxlength="15" onkeyup="enterkey()">
+                        <input class="input" type="password" name="password" id="password" placeholder="비밀번호" onkeyup="enterkey()">
+                    </fieldset>
+                    <div class="form_action">
+                        <button type="button" 
+                            class="btn-prime btn-full" 
+                            onclick="loginProc()" 
+                            style="background-color: #F39800;">로그인</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+
+    <script>
+
+        function enterkey() {
+            if (window.event.keyCode == 13) {
+                loginProc()
+            }
+        }
+
+        function loginProc() {
+            const id = document.getElementById("id").value;
+            const password = document.getElementById("password").value;
+
+            if(id === '') alert('아이디를 입력해주세요.')
+            else if(password === '') alert('비밀번호를 입력해주세요.')
+            else loginForm.submit()
+        }
+    </script>
 </body>
 </html>

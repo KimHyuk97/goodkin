@@ -1,4 +1,4 @@
-package com.goodkin.service;
+package com.goodkin.service.admin;
 
 import org.springframework.stereotype.Service;
 

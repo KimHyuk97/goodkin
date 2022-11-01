@@ -16,7 +16,7 @@
         where store_no = #{storeNo}
     </select>
 
-    <insert id="save" parameterType="Store" useGeneratedKeys="true"  keyProperty="StoreNo">
+    <insert id="save" parameterType="Store" useGeneratedKeys="true"  keyProperty="storeNo">
         INSERT INTO store (
             name, address, phone, x, y, service
         ) VALUES (
@@ -41,6 +41,33 @@
         FROM store 
         where store_no = #{storeNo}
     </delete>
+
+    <!-- 관리자 -->
+
+	<sql id="filter">
+		<if test="!kind.equals('') and !keyword.equals('')">
+			and ${kind} LIKE CONCAT('%',#{keyword},'%') 
+		</if>
+        <if test="!address.equals('')">
+            and address LIKE '%${address} ${subAddress}%'
+        </if>
+	</sql>
+
+    <select id="listCount" resultType="int">
+        SELECT      COUNT(*)
+        FROM        store
+        WHERE       store_no > 0
+		<include refid="filter" />
+    </select>
+
+    <select id="list" resultType="Store">
+        SELECT      *
+        FROM        store
+        WHERE       store_no > 0
+		<include refid="filter" />
+        ORDER BY create_date DESC
+        limit ${paging.startRow},${paging.endRow}
+    </select>
 
 
 </mapper>

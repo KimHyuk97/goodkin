@@ -4,6 +4,12 @@
 
 <mapper namespace="com.goodkin.repository.AdminRepository">
 
+    <select id="findById" resultType="Admin"> 
+        select * 
+        from admin
+        where id = #{id}
+    </select>
+
     <select id="getAdminList" resultType="Admin"> 
         select * 
         from admin
@@ -51,6 +57,15 @@
         FROM admin 
         WHERE admin_no = #{adminNo}
     </delete>
+
+    <!-- 멀티 삭제 -->
+    <delete id="mutldel">
+		delete from ${name} 
+		where ${key} in 
+		<foreach collection="ids" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</delete>
 
 
 </mapper>

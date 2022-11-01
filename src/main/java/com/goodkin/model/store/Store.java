@@ -2,10 +2,8 @@ package com.goodkin.model.store;
 
 import java.math.BigDecimal;
 
-import lombok.Builder;
 import lombok.Data;
 
-@Builder
 @Data
 public class Store {
     private Long storeNo;
@@ -15,6 +13,7 @@ public class Store {
     private BigDecimal x;
     private BigDecimal y;
     private String service;
+    private Boolean exposureStatus;
     private String createDate;
     private String updateDate;
 }
