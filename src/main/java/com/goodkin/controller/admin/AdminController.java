@@ -51,7 +51,7 @@ public class AdminController {
 
 		return ResponseDto.builder()
                         .message("삭제되었습니다.")
-                        .result(Collections.emptyList())
+                        .data(Collections.emptyList())
                         .build();
 	}
 

@@ -16,11 +16,24 @@
         where store_no = #{storeNo}
     </select>
 
+    <select id="findByName" resultType="Store">
+        select * 
+        from store
+        where name = #{name}
+    </select>
+
+    <select id="storeNameValidation" resultType="Store">
+        select * 
+        from store
+        where name != (select name from store where store_no = #{storeNo})
+        and name = #{newName}
+    </select>
+
     <insert id="save" parameterType="Store" useGeneratedKeys="true"  keyProperty="storeNo">
         INSERT INTO store (
-            name, address, phone, x, y, service
+            name, address, detail_address, zonecode, phone, x, y, service
         ) VALUES (
-            #{name}, #{address}, #{phone}, #{x}, #{y}, #{service}
+            #{name}, #{address}, #{detailAddress}, #{zonecode}, #{phone}, #{x}, #{y}, #{service}
         )
     </insert>
 
@@ -28,6 +41,8 @@
         UPDATE store SET 
         <if test="name != null">name = #{name},</if>
         <if test="address != null">address = #{address},</if>
+        <if test="detailAddress != null">detail_address = #{detailAddress},</if>
+        <if test="zonecode != null">zonecode = #{zonecode},</if>
         <if test="phone != null">phone = #{phone},</if>
         <if test="x != null">x = #{x},</if>
         <if test="y != null">y = #{y},</if>

@@ -3,10 +3,12 @@ server:
       
 spring:
   datasource:
+    # driver-class-name: org.mariadb.jdbc.Driver
+    # url: jdbc:mariadb://localhost:3306/joeunfc2022?serverTimezone=Asia/Seoul
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:mysql://localhost:3306/goodkin?serverTimezone=Asia/Seoul
-    username: root
-    password: 1111
+    url: jdbc:log4jdbc:mariadb://goodchicken.co.kr:3306/joeunfc2022?serverTimezone=Asia/Seoul
+    username: joeunfc2022
+    password: Goodchicken2022!
     
   thymeleaf:
     prefix: classpath:templates/
@@ -49,5 +51,11 @@ logging:
 cdn:
   ip: iup.cdn1.cafe24.com
   port: 21
-  username: loveheartt
-  password: love123!!
+  username: joeunfc2022
+  password: Goodchicken2022!
+
+#naver
+naver:
+  client:
+    id: sg6n0oldss
+    secret: CQM5yLrbgemhoWeQ2anzpmeo7Hke9AuGsuurvXn1

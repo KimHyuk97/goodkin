@@ -4,148 +4,223 @@
 
 <th:block layout:fragment="main">
     <main id="main" class="center-details" data-page>
-        <section class="section" th:object="${store}">            
-            <form class="form wide" th:action="@{./process}" method="post" name="form">    
+        <section class="section" th:object="${store}">
+            <form class="form wide" th:action="@{./process}" method="post" name="form" style="max-width: 100%;">
 
                 <span class="form-title" th:text="|가맹점 ${mode eq 'insert' ? '등록':'상세'}|"></span>
-                <button type="button" onclick="storeDelete()" class="btn-normal btn-red position_abs">삭제</button>
+                <button type="button" th:if="${mode eq 'update'}" onclick="storeDelete()"
+                    class="btn-normal btn-red position_abs">삭제</button>
 
-                <fieldset class="fieldset">
-                    <span class="input-wrap" th:if="${mode == 'update'}">
-                        <label class="label" for="storeNo">가맹점 번호</label>
-                        <input class="input" type="text" th:field="*{storeNo}" readonly>
-                    </span>
+                <div class="flex_jc_as_g40">
+                    <fieldset class="fieldset">
+                        <span class="input-wrap" th:if="${mode == 'update'}">
+                            <label class="label" for="storeNo">가맹점 번호</label>
+                            <input class="input" type="text" th:field="*{storeNo}" readonly>
+                        </span>
 
-                    <span class="input-wrap">
-                        <label class="label" for="name">가맹점 이름</label>
-                        <input class="input" type="text" th:field="*{name}"  maxlength="255">
-                    </span>
+                        <span class="input-wrap">
+                            <label class="label" for="name">가맹점 이름</label>
+                            <input class="input" type="text" th:field="*{name}" maxlength="50">
+                        </span>
 
-                    <span class="input-wrap">
-                        <label class="label" for="phone">가맹점 연락처</label>
-                        <input class="input" type="text" th:field="*{phone}"  maxlength="255">
-                    </span>
-                             
-                    <span class="input-wrap">
-                        <label class="label">노출상태</label>
-                        <div class="input-group">
-                            <div class="check-wrap">
-                                <div class="check">
-                                    <input type="radio" id="exposureStatus01" 
-                                           name="exposureStatus" value="false" 
-                                           th:checked="${store.exposureStatus != null and !store.exposureStatus}">
-                                    <label for="exposureStatus01">미노출</label>
-                                </div>
-                                <div class="check">
-                                    <input type="radio" id="exposureStatus02" 
-                                           name="exposureStatus" value="true" 
-                                           th:checked="${store.exposureStatus != null and store.exposureStatus}">
-                                    <label for="exposureStatus02">노출</label>
+                        <span class="input-wrap">
+                            <label class="label" for="phone">가맹점 연락처</label>
+                            <input class="input" type="text" th:field="*{phone}" maxlength="13" onkeyup="autoHyphen(this)">
+                        </span>
+
+                        <span class="input-wrap">
+                            <label class="label">노출상태</label>
+                            <div class="input-group">
+                                <div class="check-wrap">
+                                    <div class="check">
+                                        <input type="radio" id="exposureStatus01" name="exposureStatus" value="false"
+                                            th:checked="${store.exposureStatus != null and !store.exposureStatus}">
+                                        <label for="exposureStatus01">미노출</label>
+                                    </div>
+                                    <div class="check">
+                                        <input type="radio" id="exposureStatus02" name="exposureStatus" value="true"
+                                            th:checked="${store.exposureStatus != null and store.exposureStatus}">
+                                        <label for="exposureStatus02">노출</label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </span>
-                    
-                
-                    <span class="input-wrap">
-                        <label class="label">매장 서비스</label>
-                        <div class="input-group">
-                            <div class="check-wrap" id="service_form">
-                                <div class="check">
-                                    <input type="checkbox" id="service01" 
-                                        name="serviceCheckbox" value="포장"
-                                        onchange="serviceCheckHandler(this.value)" 
-                                        th:checked="${store.service != null and #strings.contains(store.service,'포장')}">
-                                    <label for="service01">포장</label>
+                        </span>
+
+
+                        <span class="input-wrap">
+                            <label class="label">매장 서비스</label>
+                            <div class="input-group">
+                                <div class="check-wrap" id="service_form">
+                                    <div class="check">
+                                        <input type="checkbox" id="service01" name="serviceCheckbox" value="포장"
+                                            th:checked="${store.service != null and #strings.contains(store.service,'포장')}">
+                                        <label for="service01">포장</label>
+                                    </div>
+                                    <div class="check">
+                                        <input type="checkbox" id="service02" name="serviceCheckbox" value="배달"
+                                            th:checked="${store.service != null and #strings.contains(store.service,'배달')}">
+                                        <label for="service02">배달</label>
+                                    </div>
+                                    <div class="check">
+                                        <input type="checkbox" id="service03" name="serviceCheckbox" value="홀"
+                                            th:checked="${store.service != null and #strings.contains(store.service,'홀')}">
+                                        <label for="service03">홀</label>
+                                    </div>
+                                    <div class="check">
+                                        <input type="checkbox" id="service04" name="serviceCheckbox" value="주차"
+                                            th:checked="${store.service != null and #strings.contains(store.service,'주차')}">
+                                        <label for="service04">주차</label>
+                                    </div>
                                 </div>
-                                <div class="check">
-                                    <input type="checkbox" id="service02" 
-                                        name="serviceCheckbox" value="배달"
-                                        onchange="serviceCheckHandler(this.value)" 
-                                        th:checked="${store.service != null and #strings.contains(store.service,'배달')}">
-                                    <label for="service02">배달</label>
-                                </div>
-                                <div class="check">
-                                    <input type="checkbox" id="service03" 
-                                        name="serviceCheckbox" value="홀"
-                                        onchange="serviceCheckHandler(this.value)"   
-                                        th:checked="${store.service != null and #strings.contains(store.service,'홀')}">
-                                    <label for="service03">홀</label>
-                                </div>
-                                <div class="check">
-                                    <input type="checkbox" id="service04" 
-                                        name="serviceCheckbox" value="주차"
-                                        onchange="serviceCheckHandler(this.value)" 
-                                        th:checked="${store.service != null and #strings.contains(store.service,'주차')}">
-                                    <label for="service04">주차</label>
-                                </div>
-                                <input type="hidden" th:field="*{service}"/>
                             </div>
-                        </div>
-                    </span>
+                        </span>
 
-                    <span class="input-wrap search-wrap">
-                        <label class="label" >주소</label>
-                        <input class="input input-addr" type="text" style="border: 1px solid #dbdbdb !important;" th:field="*{address}" readonly>
-                        <button type="button" class="btn modalBtn"  data-modal="map">주소검색</button>
-                    </span>
+                        <span class="input-wrap" th:if="${mode == 'update'}">
+                            <label class="label" for="createDate">등록일자</label>
+                            <input class="input" type="text" th:field="*{createDate}" readonly>
+                        </span>
 
-                    <span class="input-wrap" th:if="${mode == 'update'}">
-                        <label class="label" for="createDate">등록일자</label>
-                        <input class="input" type="text" th:field="*{createDate}" readonly>
-                    </span>
+                        <span class="input-wrap" th:if="${mode == 'update'}">
+                            <label class="label" for="updateDate">수정일자</label>
+                            <input class="input" type="text" th:field="*{updateDate}" readonly>
+                        </span>
+                    </fieldset>
+                    <fieldset class="fieldset">
+                        <span class="input-wrap search-wrap">
+                            <label class="label">주소</label>
+                            <input class="input input-addr" type="text" th:field="*{address}"
+                                style="border: 1px solid #dbdbdb !important;" readonly>
+                            <input type="hidden" th:field="*{zonecode}" />
+                            <input type="hidden" th:field="*{x}" />
+                            <input type="hidden" th:field="*{y}" />
+                            <button type="button" class="btn address-btn" onclick="postCodeOpen()">주소검색</button>
+                        </span>
+                        <span class="input-wrap search-wrap">
+                            <label class="label">상세 주소</label>
+                            <input class="input" type="text" th:field="*{detailAddress}">
+                        </span>
 
-                    <span class="input-wrap" th:if="${mode == 'update'}">
-                        <label class="label" for="updateDate">수정일자</label>
-                        <input class="input" type="text" th:field="*{updateDate}" readonly>
-                    </span>
-                </fieldset>
+                        <div id="map" style="width: 100%; height:300px"></div>
+                    </fieldset>
+                </div>
             </form>
-            <div class="form_action bottom" form="profileForm">
-                <button type="button" class="btn-prime" th:onclick="process()" th:text="${mode == 'insert' ? '등록' : '수정'}"></button>
+            <div class="form_action" form="profileForm">
+                <button type="button" class="btn-prime" th:onclick="process()"
+                    th:text="${mode == 'insert' ? '등록' : '수정'}"></button>
                 <a th:href="@{./list}" class="btn-normal">취소</a>
             </div>
         </section>
     </main>
 
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script type="text/javascript"
+        src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=sg6n0oldss"></script>
+    <script defer th:src="@{/assets/js/openMapApi.js}"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
-        const mode = /*[[${mode}]]*/'';                    
+        const mode = /*[[${mode}]]*/'';
+        const x = /*[[${store.x}]]*/'';
+        const y = /*[[${store.y}]]*/'';
         /*]]>*/
 
-        function process() {                                                                        
-            ajax(`/admin/store/${mode}`, 'POST', {
-				storeNo: form.storeNo ? form.storeNo.value : 0,
-                name: form.name.value,
-                phone: form.phone.value,
-                exposureStatus: form.exposureStatus.value,
-                service: form.service.value,
-                address: form.address.value,
-			})
-			  .then((data) => {
-			  	alert(data.message);
-                location.reload();
-			  })
-			  .catch((error) => console.log(error));
+        function process() {
+
+            const checked = [];
+            form.serviceCheckbox.forEach(service => {
+                if(service.checked) {
+                    checked.push(service.value);
+                }
+            });
+
+            const service = checked.length > 0 ? checked.join(",") : '';
+
+            if (storeValidation()) {
+                console.log('ddd');
+                ajax(`./${mode}`, 'POST', {
+                    storeNo: form.storeNo ? form.storeNo.value : 0,
+                    name: form.name.value,
+                    phone: form.phone.value,
+                    exposureStatus: form.exposureStatus.value,
+                    service: service,
+                    address: form.address.value,
+                    detailAddress: form.detailAddress.value,
+                    zonecode: form.zonecode.value,
+                    x: form.x.value,
+                    y: form.y.value,
+                })
+                    .then((data) => {
+                        alert(data.message);
+                        if (data.message !== '이미 등록된 가맹점 입니다.') location.reload();
+                    })
+                    .catch((error) => console.log(error));
+            }
+        }
+
+        function storeValidation() {
+            const name = form.name;
+            const phone = form.phone;
+            const exposureStatus = form.exposureStatus;
+            const address = form.address;
+            const detailAddress = form.detailAddress;
+
+            if (name.value === '') {
+                alert('가맹점 이름을 입력해주세요.');
+                name.focus();
+                return false
+            }
+
+            if (phone.value === '') {
+                alert('가맹점 연락처를 입력해주세요.');
+                phone.focus();
+                return false
+            } else {
+                const regExp = /^(\d{2,3})-(\d{3,4})-(\d{4})$/;
+                if(!regExp.test(phone.value)) {
+                    alert('정확한 연락처를 입력해주세요.');
+                    phone.focus();
+                    return false;
+                }
+            }
+
+            if (exposureStatus.value === '') {
+                alert('노출상태를 입력해주세요.');
+                return false
+            }
+
+            if (address.value === '') {
+                alert('주소를 입력해주세요.');
+                address.focus();
+                return false
+            }
+
+            if (detailAddress.value === '') {
+                alert('상세주소를 입력해주세요.');
+                detailAddress.focus();
+                return false
+            }
+
+            return true
+        }
+
+        const autoHyphen = (target) => {
+            target.value = target.value
+            .replace(/[^0-9]/g, '')
+            .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
         }
 
         function storeDelete() {
             ajax(`./delete/${form.storeNo.value}`, 'POST')
-			  .then((data) => {
-			  	alert(data.message);
-                location.href="./list";
-			  })
-			  .catch((error) => console.log(error));
-        }
-
-        function serviceCheckHandler(value)  {  
-            const service = document.getElementById('service');
-            service.value += service.value === '' ? value : `,${value}`;
+                .then((data) => {
+                    alert(data.message);
+                    location.href = "./list";
+                })
+                .catch((error) => console.log(error));
         }
 
         window.addEventListener('DOMContentLoaded', () => {
             numberOnly();
             layoutFn();
+            if(mode === 'update') open_map(x,y)
         });
     </script>
 </th:block>

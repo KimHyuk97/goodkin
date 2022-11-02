@@ -69,4 +69,30 @@
         order by sort desc
     </select>
 
+    <!-- 관리자 -->
+    <sql id="filter">
+		<if test="!kind.equals('') and !keyword.equals('')">
+			and ${kind} LIKE CONCAT('%',#{keyword},'%') 
+		</if>
+        <if test="!category.equals('')">
+            and category LIKE '%${category}%'
+        </if>
+	</sql>
+
+    <select id="listCount" resultType="int">
+        SELECT      COUNT(*)
+        FROM        menu
+        WHERE       menu_no > 0
+		<include refid="filter" />
+    </select>
+
+    <select id="list" resultType="Menu">
+        SELECT      *
+        FROM        menu
+        WHERE       menu_no > 0
+		<include refid="filter" />
+        ORDER BY create_date DESC
+        limit ${paging.startRow},${paging.endRow}
+    </select>
+
 </mapper>

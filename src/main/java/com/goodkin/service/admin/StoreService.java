@@ -1,15 +1,16 @@
 package com.goodkin.service.admin;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.goodkin.model.Pagination;
 import com.goodkin.model.ResponseDto;
 import com.goodkin.model.store.Store;
 import com.goodkin.repository.StoreRepository;
+import com.goodkin.service.ResponseService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class StoreService {
 
     private final StoreRepository storeRepository;
+    private final ResponseService responseService;
 
     public ModelAndView list(ModelAndView mv, String kind, String keyword, int page, String address, String subAddress) {
 
@@ -53,31 +55,37 @@ public class StoreService {
         return mv;
     }
 
+    @Transactional
     public ResponseDto<?> insert(Store store) {
+
+        Store validNameStore = storeRepository.findByName(store.getName());
+
+        if(validNameStore != null) {
+            return responseService.responseBuilder("이미 등록된 가맹점 입니다.", null);
+        }
+
         int insert = storeRepository.save(store);
 
-        return ResponseDto.builder()
-                        .message(insert > 0 ? "등록되었습니다." : "등록 실패하였습니다.")
-                        .result(Collections.emptyList())
-                        .build();
+        return responseService.responseBuilder(insert > 0 ? "등록되었습니다." : "등록 실패하였습니다.", null);
     }
 
     public ResponseDto<?> update(Store store) {
-        int update = storeRepository.update(store);
 
-        return ResponseDto.builder()
-                        .message(update > 0 ? "수정되었습니다." : "수정 실패하였습니다.")
-                        .result(Collections.emptyList())
-                        .build();
+        Store validNameStore = storeRepository.storeNameValidation(store.getStoreNo(), store.getName());
+
+        if(validNameStore != null) {
+            return responseService.responseBuilder("이미 등록된 가맹점 입니다.", null);
+        }
+
+        int update = storeRepository.update(store);
+        
+        return responseService.responseBuilder(update > 0 ? "수정되었습니다." : "수정 실패하였습니다.", null);
     }
 
     public ResponseDto<?> delete(Long storeNo) {
         int delete = storeRepository.delete(storeNo);
 
-        return ResponseDto.builder()
-                        .message(delete > 0 ? "삭제되었습니다." : "삭제 실패하였습니다.")
-                        .result(Collections.emptyList())
-                        .build();
+        return responseService.responseBuilder(delete > 0 ? "삭제되었습니다." : "삭제 실패하였습니다.", null);
     }
     
 

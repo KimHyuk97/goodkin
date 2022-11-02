@@ -14,5 +14,5 @@ import lombok.ToString;
 @ToString
 public class ResponseDto<T> {
     private String message;
-    private T result;
+    private T data;
 }

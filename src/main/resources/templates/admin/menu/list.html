@@ -7,7 +7,7 @@
         <section class="section">
             <div class="section_header">
                 <div>
-                    <h2 class="section_title">가맹점 관리</h2>
+                    <h2 class="section_title">메뉴 관리</h2>
                     <span class="table_top_count">전체<i class="value" th:text="${#numbers.formatInteger(paging.limitCount, 0, 'COMMA')}"></i>건</span>
                 </div>
                 <div>
@@ -19,13 +19,12 @@
                     <form class="table_top_search" th:action="@{./list}" name="searchForm">
                         <input type="hidden" name="page" id="page" th:value="${page}" />
                         <div class="search_div">
-                            <span>지역 선택</span>
-                            <select class="select custom" name="address" id="siDo" onchange="guGunHandler(this)">
-                                <option value="" selected>시/도</option>
-                            </select>
-    
-                            <select class="select custom" name="subAddress" id="guGun">
-                                <option value="" selected>구/군</option>
+                            <span>카테고리 선택</span>
+                            <select class="select custom" name="category" id="siDo" onchange="guGunHandler(this)">
+                                <option value="" selected>선택</option>
+                                <option value="SETMENU" th:selected="${category eq 'SETMENU'}">세트메뉴</option>
+                                <option value="CHICKEN" th:selected="${category eq 'CHICKEN'}">치킨</option>
+                                <option value="TTEOKBOKKI" th:selected="${category eq 'TTEOKBOKKI'}">떡볶이</option>
                             </select>
                         </div>
 
@@ -47,40 +46,41 @@
                         <col width="10%"/>
                         <col width="10%"/>
                         <col width="10%"/>
-                        <col width="10%"/>
                     </colgroup>
                     <thead>
                         <tr>
                             <th class="check"><input type="checkbox" name="" id=""></th>
-                            <th>가맹점번호</th>
+                            <th>메뉴번호</th>
                             <th>이름</th>
-                            <th>지역</th>
-                            <th>연락처</th>
-                            <th>서비스</th>
+                            <th>카테고리</th>
+                            <th>신메뉴 여부</th>
                             <th>등록일시</th>
                         </tr>
                     </thead>
                     <tbody th:if="${list.size > 0}">
-                        <tr th:each="store : ${list}" th:onclick="linkTo(event,'./form?mode=update&storeNo=[[${store.storeNo}]]')">
-                            <td class="check"><input type="checkbox" name="ck" th:value="${store.storeNo}"></td>
-                            <td th:text="${store.storeNo}"></td>
-                            <td th:text="${store.name}"></td>
-                            <td th:text="${store.address}"></td>
-                            <td th:text="${store.phone}"></td>
-                            <td th:text="${store.service eq '' ? 'X' : store.service}"></td>
-                            <td th:text="${store.createDate}"></td>
+                        <tr th:each="menu : ${list}" th:onclick="linkTo(event,'./form?mode=update&menuNo=[[${menu.menuNo}]]')">
+                            <td class="check"><input type="checkbox" name="ck" th:value="${menu.menuNo}"></td>
+                            <td th:text="${menu.menuNo}"></td>
+                            <td th:text="${menu.name}"></td>
+                            <td th:switch="${#strings.toString(menu.category)}">
+                                <th:block th:case="SETMENU">세트메뉴</th:block>
+                                <th:block th:case="CHICKEN">치킨</th:block>
+                                <th:block th:case="TTEOKBOKKI">떡볶이</th:block>
+                            </td>
+                            <td th:text="${menu.newStatus ? 'O' : 'X'}"></td>
+                            <td th:text="${menu.createDate}"></td>
                         </tr>
                     </tbody>
                     <tbody th:if="${list.size == 0}">
                         <tr>
-                            <td class="none_data" colspan="7" rowspan="3">등록된 정보가 없습니다.</td>
+                            <td class="none_data" colspan="6">등록된 정보가 없습니다.</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="section_footer">
                 <div class="table_action">
-                    <button type="button" class="btn-normal btn-red" onclick="del('store','store_no','가맹점')">삭제</button>
+                    <button type="button" class="btn-normal btn-red" onclick="del('menu','menu_no','메뉴')">삭제</button>
                 </div>
 
                 <!-- 페이징 -->
@@ -89,12 +89,10 @@
         </section>
     </main>
 
-    <script defer th:src="@{/admin/assets/js/local.js}"></script>
     <script>
         window.addEventListener('DOMContentLoaded', () => {
             layoutFn();
             new Table(document.querySelector('#main table'));
-            siDoHandler();
         });
     </script>
 </th:block>

@@ -17,6 +17,9 @@ public interface StoreRepository {
     // 가맹점 단일 조회
     public Store getStore(Long storeNo);
     
+    // 가맹점 이름 단일 조회
+    public Store findByName(String name);
+
     // 가맹점 등록
     public int save(Store store);
 
@@ -31,5 +34,8 @@ public interface StoreRepository {
 
     // 관리자 리스트
     public List<Store> list(@Param("kind")String kind, @Param("keyword")String keyword,  @Param("address") String address, @Param("subAddress") String subAddress, @Param("paging") Pagination paging);
+
+    public Store storeNameValidation( @Param("storeNo") Long storeNo, @Param("newName") String name);
+
 
 }
