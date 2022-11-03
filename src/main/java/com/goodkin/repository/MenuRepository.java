@@ -26,7 +26,7 @@ public interface MenuRepository {
 
     public int save(Menu Menu);
 
-    public int update(Long MenuNo);
+    public int update(Menu Menu);
 
     public int delete(Long MenuNo);
 
@@ -36,5 +36,8 @@ public interface MenuRepository {
     //관리자 메뉴 리스트
     public int listCount(@Param("kind")String kind, @Param("keyword")String keyword, @Param("category") String category);
 
-    public List<Menu> list(@Param("kind")String kind, @Param("keyword")String keyword, @Param("category") String category, @Param("paging") Pagination paging);    
+    public List<Menu> list(@Param("kind")String kind, @Param("keyword")String keyword, @Param("category") String category, @Param("paging") Pagination paging);
+
+    //메뉴 현재이름을 제외한 이름 중복확인
+    public Menu menuNameValidation(@Param("menuNo") Long menuNo, @Param("newName") String name);    
 }

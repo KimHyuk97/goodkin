@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,7 +63,7 @@ public class Ftp {
      * @throws IOException
      * @throws Exception
      */
-    public String uploadFile(MultipartFile multipartFile, String path) throws IOException, Exception {
+    public List<String> uploadFile(List<MultipartFile> files, String path) throws IOException, Exception {
 
         FileInputStream fileInputStream = null;
         FTPClient ftpClient = new FTPClient();
@@ -82,17 +83,19 @@ public class Ftp {
             ftpClient.setFileTransferMode(FTP.BINARY_FILE_TYPE);
             ftpClient.enterLocalActiveMode();  // Active 모드 설정
 
-            // 고유한 파일명 생성
-            String fileName = createFileName(multipartFile.getOriginalFilename());
-
-            // 파일 업로드
-            boolean upload = ftpClient.storeFile(path + fileName, multipartFile.getInputStream());
-
-            if (upload) {
-                return fileName;
-            } else {
-                return null;
+            List<String> fileNames = new ArrayList<>();
+            for (MultipartFile file : files) {     
+                if(!file.isEmpty()) {
+                    // 고유한 파일명 생성
+                    String fileName = createFileName(file.getOriginalFilename());
+                    // 파일 업로드
+                    boolean upload = ftpClient.storeFile(path + fileName, file.getInputStream());
+    
+                    if(upload) fileNames.add(fileName);
+                }
             }
+            
+            return fileNames;
 
         } finally {
             if (ftpClient.isConnected()) {
@@ -133,12 +136,12 @@ public class Ftp {
     /**
      * 파일 삭제
      *
-     * @param files
+     * @param fileNames
      * @param path
      * @return boolean
      * @throws Exception
      */
-    public boolean deleteFile(List<String> files, String path) throws Exception {
+    public boolean deleteFile(List<String> fileNames, String path) throws Exception {
 
         FileInputStream fis = null;
         FTPClient ftpClient = new FTPClient();
@@ -149,8 +152,8 @@ public class Ftp {
 
             Boolean result = false;
 
-            for (int i = 0; i < files.size(); i++) {
-                result = ftpClient.deleteFile(path + files.get(i));
+            for (String fileName : fileNames) {
+                result = ftpClient.deleteFile(path + fileName);
             }
 
             return result;

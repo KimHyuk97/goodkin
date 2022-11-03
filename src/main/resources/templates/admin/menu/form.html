@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{admin/layout/layout}">
+
+<th:block layout:fragment="main">
+    <main id="main" class="center-details" data-page>
+        <section class="section" th:object="${menu}">
+            <form class="form wide" name="form" style="max-width: 100%;">
+
+                <span class="form-title" th:text="|메뉴 ${mode eq 'insert' ? '등록':'상세'}|"></span>
+                <button type="button" th:if="${mode eq 'update'}" onclick="menuDelete()"
+                    class="btn-normal btn-red position_abs">삭제</button>
+
+                <div class="flex_jc_as_g40">
+                    <fieldset class="fieldset">
+
+                        <span class="input-wrap" th:if="${mode == 'update'}">
+                            <label class="label" for="menuNo">메뉴 번호</label>
+                            <input class="input" type="text" th:field="*{menuNo}" readonly>
+                        </span>
+
+                        <span class="input-wrap">
+                            <label class="label" for="name">메뉴 이름</label>
+                            <input class="input" type="text" th:field="*{name}" maxlength="50">
+                        </span>
+
+                        <span class="input-wrap" style="height: 80px;">
+                            <label class="label" for="description">메뉴 설명</label>
+                            <textarea class="textarea" style="height: 80px;" th:field="*{description}"></textarea>
+                        </span>
+
+                        <span class="input-wrap">
+                            <label class="label">메뉴 사진</label>
+                            <div class="input-group">
+                                <div class="pic" style="width: 160px; height: 160px;">
+                                    <input type="file" id="file" name="files" onchange="fileUpload(this)">
+
+                                    <label for="file">
+                                        <img width="100%" height="100%" th:if="${menu.file != null}"
+                                            th:src="${menu.fileUrl}" />
+                                        <img width="100%" height="100%" th:unless="${menu.file != null}" />
+                                    </label>
+                                    <button type="button" onclick="deleteFiles(this, 0)"
+                                        style="width: 40px; height: 40px;">x</button>
+                                </div>
+                            </div>
+                        </span>
+                    </fieldset>
+                    <fieldset class="fieldset">
+
+                        <span class="input-wrap">
+                            <label class="label">카테고리</label>
+                            <div class="input-group">
+                                <div class="check-wrap">
+                                    <div class="check">
+                                        <input type="radio" id="category01" name="category" value="SETMENU"
+                                            th:checked="${menu.category != null and #strings.toString(menu.category) eq 'SETMENU'}">
+                                        <label for="category01">세트메뉴</label>
+                                    </div>
+                                    <div class="check">
+                                        <input type="radio" id="category02" name="category" value="CHICKEN"
+                                            th:checked="${menu.category != null and #strings.toString(menu.category) eq 'CHICKEN'}">
+                                        <label for="category02">치킨</label>
+                                    </div>
+                                    <div class="check">
+                                        <input type="radio" id="category03" name="category" value="TTEOKBOKKI"
+                                            th:checked="${menu.category != null and #strings.toString(menu.category) eq 'TTEOKBOKKI'}">
+                                        <label for="category03">떡볶이</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </span>
+
+                        <span class="input-wrap">
+                            <label class="label">신메뉴 여부</label>
+                            <div class="input-group">
+                                <div class="check-wrap">
+                                    <div class="check">
+                                        <input type="radio" id="newStatus01" name="newStatus" value="false"
+                                            th:checked="${menu.newStatus != null and !menu.newStatus}">
+                                        <label for="newStatus01">X</label>
+                                    </div>
+                                    <div class="check">
+                                        <input type="radio" id="newStatus02" name="newStatus" value="true"
+                                            th:checked="${menu.newStatus != null and menu.newStatus}">
+                                        <label for="newStatus02">O</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </span>
+
+                        <span class="input-wrap">
+                            <label class="label">노출 여부</label>
+                            <div class="input-group">
+                                <div class="check-wrap">
+                                    <div class="check">
+                                        <input type="radio" id="expStatus01" name="expStatus" value="false"
+                                            th:checked="${menu.expStatus != null and !menu.expStatus}">
+                                        <label for="expStatus01">미노출</label>
+                                    </div>
+                                    <div class="check">
+                                        <input type="radio" id="expStatus02" name="expStatus" value="true"
+                                            th:checked="${menu.expStatus != null and menu.expStatus}">
+                                        <label for="expStatus02">노출</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </span>
+
+                        <span class="input-wrap" th:if="${mode == 'update'}">
+                            <label class="label" for="createDate">등록일자</label>
+                            <input class="input" type="text" th:field="*{createDate}" readonly>
+                        </span>
+
+                        <span class="input-wrap" th:if="${mode == 'update'}">
+                            <label class="label" for="updateDate">수정일자</label>
+                            <input class="input" type="text" th:field="*{updateDate}" readonly>
+                        </span>
+                    </fieldset>
+                </div>
+            </form>
+            <div class="form_action" form="profileForm">
+                <button type="button" class="btn-prime" th:onclick="process()"
+                    th:text="${mode == 'insert' ? '등록' : '수정'}"></button>
+                <a th:href="@{./list}" class="btn-normal">취소</a>
+            </div>
+        </section>
+    </main>
+
+    <script defer th:src="@{/admin/assets/js/file.js}"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const mode = /*[[${mode}]]*/'';
+        /*]]>*/
+
+        function process() {
+
+            if (menuValidation()) {
+                const formData = new FormData();
+                formData.append("name", form.name.value);
+                formData.append("description", form.description.value);
+                formData.append("files", form.file.files[0]);
+                formData.append("category", form.category.value);
+                formData.append("newStatus", form.newStatus.value);
+                formData.append("expStatus", form.expStatus.value);
+
+                fetch(`./${mode}`, {
+                    method: 'POST',
+                    cache: 'no-cache',
+                    body: formData
+                })
+                    .then((response) => response.json()).then((data) => {
+                        console.log(data);
+                        alert(data.message);
+                        if (data.message !== '이미 등록된 메뉴 입니다.') location.reload();
+                    })
+                    .catch((error) => console.log(error));
+            }
+        }
+
+        function menuValidation() {
+            const name = form.name;
+            const newStatus = form.newStatus;
+            const expStatus = form.expStatus;
+
+            if (name.value === '') {
+                alert('메뉴 이름을 입력해주세요.');
+                name.focus();
+                return false
+            }
+
+            if (newStatus.value === '') {
+                alert('신메뉴 여부를 선택해주세요.');
+                address.focus();
+                return false
+            }
+
+            if (expStatus.value === '') {
+                alert('노출 여부를 선택해주세요.');
+                return false
+            }
+
+            return true
+        }
+
+        function menuDelete() {
+            ajax(`./delete/${form.menuNo.value}`, 'POST')
+                .then((data) => {
+                    alert(data.message);
+                    location.href = "./list";
+                })
+                .catch((error) => console.log(error));
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            numberOnly();
+            layoutFn();
+        });
+    </script>
+</th:block>
+
+</html>

@@ -35,11 +35,18 @@
         where new_status = 1
     </select>
 
+    <select id="menuNameValidation" resultType="Menu">
+        select * 
+        from menu
+        where name != (select name from menu where menu_no = #{menuNo})
+        and name = #{newName}
+    </select>
+
     <insert id="save" parameterType="Menu" useGeneratedKeys="true"  keyProperty="menuNo">
         INSERT INTO menu (
-            category, name, description, file, fileUrl, new_status
+            category, name, description, file, fileUrl, new_status, exp_status
         ) VALUES (
-            #{category}, #{name}, #{description}, #{file}, #{fileUrl}, #{newStatus}
+            #{category}, #{name}, #{description}, #{file}, #{fileUrl}, #{newStatus}, #{expStatus}
         )
     </insert>
 
@@ -51,6 +58,7 @@
         <if test="file != null">file = #{file},</if>
         <if test="fileUrl != null">fileUrl = #{fileUrl},</if>
         <if test="newStatus != null">new_status = #{newStatus},</if>
+        <if test="expStatus != null">exp_status = #{expStatus},</if>
         update_date = now()
         where menu_no = #{menuNo}
     </update>
