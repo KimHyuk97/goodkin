@@ -7,7 +7,7 @@
     <select id="getReviews" resultType="Review"> 
         select * 
         from review
-        order by create_date desc
+        order by review_no desc
     </select>
 
     <select id="getReview" resultType="Review">
@@ -16,12 +16,21 @@
         where review_no = #{reviewNo}
     </select>
 
-    <insert id="save" parameterType="Review" useGeneratedKeys="true"  keyProperty="reviewNo">
+    <insert id="save"  parameterType="Review" useGeneratedKeys="true"  keyProperty="reviewNo">
         INSERT INTO review (
             file, file_url, content
         ) VALUES (
             #{file}, #{fileUrl}, #{content}
         )
+    </insert>
+
+    <insert id="saveAll">
+        INSERT INTO review (
+            file, file_url
+        ) VALUES 
+        <foreach collection="reviews" item="review" separator=",">
+            (#{review.file}, #{review.fileUrl})
+        </foreach>
     </insert>
 
     <update id="update">
@@ -38,6 +47,22 @@
         FROM review 
         where review_no = #{reviewNo}
     </delete>
+
+    <!-- 관리자 list -->
+
+    <select id="listCount" resultType="int">
+        SELECT      COUNT(*)
+        FROM        review
+        WHERE       review_no > 0
+    </select>
+
+    <select id="list" resultType="Review">
+        SELECT      *
+        FROM        review
+        WHERE       review_no > 0
+        ORDER BY create_date DESC
+        limit ${paging.startRow},${paging.endRow}
+    </select>
 
 
 </mapper>

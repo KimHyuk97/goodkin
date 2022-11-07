@@ -1,4 +1,4 @@
-package com.goodkin.controller.admin;
+package com.goodkin.controller;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.goodkin.model.ResponseDto;
 import com.goodkin.model.menu.Menu;
-import com.goodkin.service.admin.MenuService;
+import com.goodkin.service.MenuService;
 
 import lombok.RequiredArgsConstructor;
 

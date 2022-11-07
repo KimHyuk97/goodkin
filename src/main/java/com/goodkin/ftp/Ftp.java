@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +40,9 @@ public class Ftp {
      */
     private void ftpConnection(FTPClient ftpClient) throws Exception {
 
-        ftpClient.connect(serverIp, serverPort);    // FTP 연결
-        ftpClient.setControlEncoding("UTF-8");      // FTP 인코딩설정
-        int reply = ftpClient.getReplyCode();       // 응답 코드 받기
+        ftpClient.connect(serverIp, serverPort); // FTP 연결
+        ftpClient.setControlEncoding("UTF-8"); // FTP 인코딩설정
+        int reply = ftpClient.getReplyCode(); // 응답 코드 받기
 
         // 응답 false 일 때 연결해제 exception 발생
         if (!FTPReply.isPositiveCompletion(reply)) {
@@ -49,8 +50,8 @@ public class Ftp {
             throw new Exception(serverIp + " FTP 서버 연결 실패");
         }
 
-        ftpClient.setSoTimeout(1000 * 10);  // Timeout 설정
-        ftpClient.login(user, password);    // FTP 로그인
+        ftpClient.setSoTimeout(1000 * 10); // Timeout 설정
+        ftpClient.login(user, password); // FTP 로그인
     }
 
     /**
@@ -67,7 +68,7 @@ public class Ftp {
 
         FileInputStream fileInputStream = null;
         FTPClient ftpClient = new FTPClient();
-        ftpClient.setControlEncoding("UTF-8");  // FTP 인코딩 설정
+        ftpClient.setControlEncoding("UTF-8"); // FTP 인코딩 설정
 
         try {
             ftpConnection(ftpClient);
@@ -79,22 +80,23 @@ public class Ftp {
                 ftpClient.makeDirectory(path);
             }
 
-            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);    // 파일 타입 설정
+            ftpClient.setFileType(FTP.BINARY_FILE_TYPE); // 파일 타입 설정
             ftpClient.setFileTransferMode(FTP.BINARY_FILE_TYPE);
-            ftpClient.enterLocalActiveMode();  // Active 모드 설정
+            ftpClient.enterLocalActiveMode(); // Active 모드 설정
 
             List<String> fileNames = new ArrayList<>();
-            for (MultipartFile file : files) {     
-                if(!file.isEmpty()) {
+            for (MultipartFile file : files) {
+                if (!file.isEmpty()) {
                     // 고유한 파일명 생성
                     String fileName = createFileName(file.getOriginalFilename());
                     // 파일 업로드
                     boolean upload = ftpClient.storeFile(path + fileName, file.getInputStream());
-    
-                    if(upload) fileNames.add(fileName);
+
+                    if (upload)
+                        fileNames.add(fileName);
                 }
             }
-            
+
             return fileNames;
 
         } finally {
@@ -145,7 +147,7 @@ public class Ftp {
 
         FileInputStream fis = null;
         FTPClient ftpClient = new FTPClient();
-        ftpClient.setControlEncoding("UTF-8");  // FTP 인코딩 설정
+        ftpClient.setControlEncoding("UTF-8"); // FTP 인코딩 설정
 
         try {
             ftpConnection(ftpClient);
@@ -166,5 +168,38 @@ public class Ftp {
             }
         }
     }
+
+    /**
+     * 파일 다운로드
+     * @param file
+     * @return
+     * @throws Exception
+     */
+    // 단일 파일 다운로드 
+    public InputStream download(String path, String file) throws Exception{
+
+        FileInputStream fis = null;
+        FTPClient ftpClient = new FTPClient();
+        ftpClient.setControlEncoding("UTF-8");  // FTP 인코딩 설정
+
+        InputStream in = null;
+        try{
+
+            ftpConnection(ftpClient);
+
+            
+        } finally {
+            if (ftpClient.isConnected()) {
+                ftpClient.disconnect();
+            }
+            if (fis != null) {
+                fis.close();
+            }
+        }
+
+        return in;
+    }
+
+    
 
 }

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{admin/layout/layout}">
+
+<th:block layout:fragment="main">
+    <main id="main" class="member-list">
+        <section class="section">
+            <div class="section_header">
+                <div>
+                    <h2 class="section_title">고객의 소리</h2>
+                    <span class="table_top_count">전체<i class="value" th:text="${#numbers.formatInteger(paging.limitCount, 0, 'COMMA')}"></i>건</span>
+                </div>
+                <div>
+                    <a th:href="@{./form(mode='insert')}" class="btn-normal btn-blue">등록</a>
+                </div>
+            </div>
+            <div class="table">
+                <div class="table_top">
+                    <form class="table_top_search" th:action="@{./list}" name="searchForm">
+                        <input type="hidden" name="page" id="page" th:value="${page}" />
+                        <div class="search_div">
+                            <span>분류 선택</span>
+                            <select class="select custom" name="type">
+                                <option value="" th:selected="${type == ''}">분류 선택</option>
+                                <option value="COMPLAIN" th:selected="${type == 'COMPLAIN'}">컴플레인 접수</option>
+                                <option value="IDEA" th:selected="${type == 'IDEA'}">아이디어 제안</option>
+                            </select>
+                        </div>
+
+                        <div class="search_div">
+                            <select class="select custom search_kind" name="kind" style="width: 100px !important;">
+                                <option value="c.customerName" th:selected="${kind eq 'c.customerName'}">고객이름</option>
+                                <option value="c.customerPhone" th:selected="${kind eq 'c.customerPhone'}">고객연락처</option>
+                                <option value="c.customerEmail" th:selected="${kind eq 'c.customerEmail'}">고객이메일</option>
+                                <option value="s.name" th:selected="${kind eq 's.name'}">가맹점이름</option>
+                                <option value="c.title" th:selected="${kind eq 'c.title'}">제목</option>
+                            </select>
+                            <input class="input" type="text" name="keyword" placeholder="검색어 입력" th:value="${keyword}">
+                        </div>
+
+                        <button type="button" onclick="form_submit()" class="btn-prime btn-search">검색</button>
+                    </form>
+                </div>
+                <table>
+                    <colgroup>
+                        <col width="5%"/>
+                        <col width="5%"/>
+                        <col width="10%"/>
+                        <col width="10%"/>
+                        <col width="10%"/>
+                        <col width="10%"/>
+                        <col width="10%"/>
+                        <col width="10%"/>
+                        <col width="10%"/>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th class="check"><input type="checkbox" name="" id=""></th>
+                            <th>No.</th>
+                            <th>분류</th>
+                            <th>고객성명</th>
+                            <th>고객연락처</th>
+                            <th>고객이메일</th>
+                            <th>이용 가맹점</th>
+                            <th>제목</th>
+                            <th>등록일자</th>
+                        </tr>
+                    </thead>
+                    <tbody th:if="${list.size > 0}">
+                        <tr th:each="customerInquiry : ${list}" th:onclick="linkTo(event,'./form?mode=update&customerInquiryNo=[[${customerInquiry.customerInquiryNo}]]')">
+                            <td class="check"><input type="checkbox" name="ck" th:value="${customerInquiry.customerInquiryNo}"></td>
+                            <td th:text="${customerInquiry.customerInquiryNo}"></td>
+                            <td th:switch="${#strings.toString(customerInquiry.type)}">
+                                <th:block th:case="IDEA">아이디어 제안</th:block>
+                                <th:block th:case="COMPLAIN">컴플레인 접수</th:block>
+                            </td>
+                            <td th:text="${customerInquiry.customerName}"></td>
+                            <td th:text="${customerInquiry.customerPhone}"></td>
+                            <td th:text="${customerInquiry.customerEmail}"></td>
+                            <td th:text="${customerInquiry.name}"></td>
+                            <td th:text="${customerInquiry.title}"></td>
+                            <td th:text="${customerInquiry.createDate}"></td>
+                        </tr>
+                    </tbody>
+                    <tbody th:if="${list.size == 0}">
+                        <tr>
+                            <td class="none_data" colspan="9" rowspan="3">등록된 정보가 없습니다.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section_footer">
+                <div class="table_action">
+                    <button type="button" 
+                        th:if="${list.size > 0}"
+                        class="btn-normal btn-red" 
+                        onclick="del('customer_inquiry','customer_inquiry_no','고객문의')">삭제</button>
+                </div>
+
+                <!-- 페이징 -->
+                <th:block th:replace="admin/layout/fragments/page :: page"/>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const form_submit = () => {
+            document.getElementById('page').value = 1;
+            searchForm.submit();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            layoutFn();
+            new Table(document.querySelector('#main table'));
+        });
+    </script>
+</th:block>
+
+</html>

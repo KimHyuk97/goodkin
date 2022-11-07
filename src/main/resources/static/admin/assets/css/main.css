@@ -931,6 +931,7 @@ textarea:active, textarea:focus {
   text-align: center;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 1rem;
+  cursor: pointer;
 }
 .btn:last-child, .btn-tab:last-child, .btn-full:last-child, .btn-prime:last-child, .btn-normal:last-child {
   margin-right: 0;
@@ -939,6 +940,7 @@ textarea:active, textarea:focus {
   background-color: #fff;
   border: 1px solid #dbdbdb;
   color: #333333;
+  cursor: pointer;
 }
 
 .btn-red {
@@ -948,6 +950,7 @@ textarea:active, textarea:focus {
   height: 38px;
   line-height: 38px;
   border: 0;
+  cursor: pointer;
 }
 
 .btn-blue {
@@ -957,6 +960,7 @@ textarea:active, textarea:focus {
   height: 38px;
   line-height: 38px;
   border: 0;
+  cursor: pointer;
 }
 
 .btn-prime {
@@ -2062,4 +2066,164 @@ textarea:active, textarea:focus {
 
 .address-btn{
   height: 48px !important;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  position: relative;
+}
+
+.swiper-slide button {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.not-review-data {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.review_delete_btn {
+  font-size: 20px;
+  background: #f1416c;
+  border-radius: 50%;
+  color: #fff5f8;
+  width: 32px;
+  height: 32px;
+}
+
+.file-uploader {
+  display: inline-block;
+  width: calc(100% - 200px);
+  /* max-width: 600px; */
+  max-width: 100%;
+  height: auto;
+  padding: 14px 0;
+}
+.file-uploader__add {
+  display: block;
+  position: relative;
+  width: 200px;
+  height: 46px;
+}
+.file-uploader__add input {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+/* .file-uploader__add label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  line-height: 34px;
+  text-align: center;
+  background-color: #fafafa;
+  border: 2px dotted #dbdbdb;
+  vertical-align: top;
+  cursor: pointer;
+} */
+.file-uploader__add label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 54%;
+  height: 46px;
+  line-height: 42px;
+  text-align: center;
+  background-color: #fafafa;
+  border: 1px solid #dbdbdb;
+  vertical-align: top;
+  border-radius: 41px;
+  cursor: pointer;
+}
+.p-file-uploader .file-uploader__add label {
+  background-color: #fff;
+  border-radius: 0;
+}
+.file-uploader .file-uploader__files + .file-uploader__add {
+  margin-top: 12px;
+}
+.file-uploader .file-uploader__add + .file-uploader__loaded {
+  margin-top: 12px;
+}
+.file-uploader__loaded {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #dbdbdb;
+}
+.file-uploader__files {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 12px;
+}
+.file-uploader__files .file {
+  margin-top: 12px;
+}
+.file-uploader .file {
+  position: relative;
+  display: inline-block;
+  width: auto;
+  height: 30px;
+  background-color: #fafafa;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+.file-uploader .file__name {
+  display: inline-block;
+  padding: 8px 8px 8px 12px;
+}
+.file-uploader .file__download {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  vertical-align: top;
+  background: 20px 20px url(../imgs/ico-download.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  font-size: 0;
+}
+.file-uploader .file__del {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  vertical-align: top;
+  background: 20px 20px url(../imgs/ico-cross.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  font-size: 0;
 }

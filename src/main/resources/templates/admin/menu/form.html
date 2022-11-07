@@ -40,8 +40,6 @@
                                             th:src="${menu.fileUrl}" />
                                         <img width="100%" height="100%" th:unless="${menu.file != null}" />
                                     </label>
-                                    <button type="button" onclick="deleteFiles(this, 0)"
-                                        style="width: 40px; height: 40px;">x</button>
                                 </div>
                             </div>
                         </span>
@@ -137,6 +135,7 @@
 
             if (menuValidation()) {
                 const formData = new FormData();
+                if(mode === 'update')formData.append("menuNo", form.menuNo.value);
                 formData.append("name", form.name.value);
                 formData.append("description", form.description.value);
                 formData.append("files", form.file.files[0]);

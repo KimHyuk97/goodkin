@@ -209,12 +209,14 @@
         }
 
         function storeDelete() {
-            ajax(`./delete/${form.storeNo.value}`, 'POST')
-                .then((data) => {
-                    alert(data.message);
-                    location.href = "./list";
-                })
-                .catch((error) => console.log(error));
+            if(confirm('가맹점을 선택하시겠습니까?')) {
+                ajax(`./delete/${form.storeNo.value}`, 'POST')
+                    .then((data) => {
+                        alert(data.message);
+                        location.href = "./list";
+                    })
+                    .catch((error) => console.log(error));
+            }
         }
 
         window.addEventListener('DOMContentLoaded', () => {

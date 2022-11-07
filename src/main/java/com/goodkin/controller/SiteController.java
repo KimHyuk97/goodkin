@@ -1,4 +1,4 @@
-package com.goodkin.controller.admin;
+package com.goodkin.controller;
 
 import org.springframework.stereotype.Controller;
 
@@ -6,6 +6,6 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-public class InquireController {
+public class SiteController {
     
 }

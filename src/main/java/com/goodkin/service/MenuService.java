@@ -1,6 +1,5 @@
-package com.goodkin.service.admin;
+package com.goodkin.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -13,7 +12,6 @@ import com.goodkin.model.Pagination;
 import com.goodkin.model.ResponseDto;
 import com.goodkin.model.menu.Menu;
 import com.goodkin.repository.MenuRepository;
-import com.goodkin.service.ResponseService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -69,8 +67,6 @@ public class MenuService {
             fileUpload(files, menu);
         }
 
-        System.err.println("저장할 메뉴 :"+menu);
-
         // 메뉴 저장
         int insert = menuRepository.save(menu);
 
@@ -85,14 +81,27 @@ public class MenuService {
             return responseService.responseBuilder("이미 등록된 가맹점 입니다.", null);
         }
 
+        // 파일 업로드
+        if(files != null && !files.isEmpty()) {
+            if(menu.getFile() != null) filedelete(List.of(menu.getFile()));
+            fileUpload(files, menu);
+        }
+
         int update = menuRepository.update(menu);
         
         return responseService.responseBuilder(update > 0 ? "수정되었습니다." : "수정 실패하였습니다.", null);
     }
 
+    @Transactional
     public ResponseDto<?> delete(Long menuNo) {
-        int delete = menuRepository.delete(menuNo);
+        
+        Menu menu = menuRepository.getMenu(menuNo);
+        if(menu != null && menu.getFile() != null) {
+            filedelete(List.of(menu.getFile()));
+        }
 
+        int delete = menuRepository.delete(menuNo);
+        
         return responseService.responseBuilder(delete > 0 ? "삭제되었습니다." : "삭제 실패하였습니다.", null);
     }
 

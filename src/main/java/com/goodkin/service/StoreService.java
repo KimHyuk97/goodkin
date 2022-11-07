@@ -1,4 +1,4 @@
-package com.goodkin.service.admin;
+package com.goodkin.service;
 
 import java.util.List;
 
@@ -10,7 +10,6 @@ import com.goodkin.model.Pagination;
 import com.goodkin.model.ResponseDto;
 import com.goodkin.model.store.Store;
 import com.goodkin.repository.StoreRepository;
-import com.goodkin.service.ResponseService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +19,13 @@ public class StoreService {
 
     private final StoreRepository storeRepository;
     private final ResponseService responseService;
+
+    /**
+     * api 스토어 리스트
+     */
+    public ResponseDto<?> getStores() {
+        return responseService.responseBuilder("", storeRepository.getStores());
+    }
 
     public ModelAndView list(ModelAndView mv, String kind, String keyword, int page, String address, String subAddress) {
 
@@ -87,7 +93,5 @@ public class StoreService {
 
         return responseService.responseBuilder(delete > 0 ? "삭제되었습니다." : "삭제 실패하였습니다.", null);
     }
-    
-
 
 }

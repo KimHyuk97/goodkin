@@ -1,4 +1,4 @@
-package com.goodkin.controller.admin;
+package com.goodkin.controller;
 
 import java.util.Collections;
 
@@ -17,7 +17,7 @@ import com.goodkin.model.DelModel;
 import com.goodkin.model.ResponseDto;
 import com.goodkin.model.admin.Admin;
 import com.goodkin.repository.AdminRepository;
-import com.goodkin.service.admin.AdminService;
+import com.goodkin.service.AdminService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -62,4 +62,5 @@ public class AdminController {
     public Admin getAdmin(@PathVariable Long adminNo) {
         return adminService.getAdmin(adminNo);
     }
+
 }

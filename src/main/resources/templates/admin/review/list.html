@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{admin/layout/layout}">
+<th:block layout:fragment="main">
+    <main id="main" class="member-list">
+        <section class="section">
+            <div class="section_header">
+                <div>
+                    <h2 class="section_title">리뷰 관리</h2>
+                </div>
+                <div>
+                    <input type="file" id="files" name="files" style="display: none;" onchange="fileUpload(this)" multiple>
+                    <label for="files" class="btn-normal btn-blue">등록</label>
+                </div>
+            </div>
+            <div class="table">
+                <div th:if="${not #lists.isEmpty(list)}"class="swiper mySwiper">
+                    <div class="swiper-wrapper">
+                        <div th:each="review : ${list}" 
+                            class="swiper-slide">
+                            <img th:src="${review.fileUrl}">
+                            <button type="button" 
+                                class="review_delete_btn" 
+                                th:onclick="deleteReview([[${review.reviewNo}]])">x</button>
+                        </div>
+                    </div>
+                    <!-- <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-pagination"></div> -->
+                </div>
+                <div th:if="${#lists.isEmpty(list)}" class="not-review-data">
+                    <p>등록된 리뷰정보가 없습니다.</p>
+                    <label for="files" class="btn-normal btn-blue">리뷰 정보 등록하기</label>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+
+        const fileUpload = (file) => {
+            const formData = new FormData();
+            const files = file.files;
+            
+            for(let file of files) {
+                formData.append('files', file)
+            }
+            
+            fetch(`./insert`, {
+                method: 'POST',
+                cache: 'no-cache',
+                body: formData
+            })
+                .then((response) => response.json()).then((data) => {
+                    alert(data.message);
+                    location.href = "./list";
+                })
+                .catch((error) => console.log(error));
+        }
+
+        const deleteReview = (reviewNo) => {
+            if(confirm('리뷰를 삭제하시겠습니까?')) {
+                ajax(`./delete/${reviewNo}`, 'POST')
+                    .then((data) => {
+                        alert(data.message);
+                        location.href = "./list";
+                    })
+                    .catch((error) => console.log(error));
+            }
+        }
+
+        const newSwiper = () => {
+            new Swiper(".mySwiper", {
+                slidesPerView: 4,
+                spaceBetween: 30,
+                slidesPerGroup: 1,
+                // centeredSlides: true,
+                grabCursor: true,
+                // pagination: {
+                //     el: ".swiper-pagination",
+                //     clickable: true,
+                // }
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            layoutFn();
+            newSwiper();
+        });
+    </script>
+</th:block>
+
+</html>

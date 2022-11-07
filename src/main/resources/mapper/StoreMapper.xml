@@ -7,7 +7,7 @@
     <select id="getStores" resultType="Store"> 
         select * 
         from store
-        order by create_date desc
+        order by store_no desc
     </select>
 
     <select id="getStore" resultType="Store">
@@ -80,7 +80,7 @@
         FROM        store
         WHERE       store_no > 0
 		<include refid="filter" />
-        ORDER BY create_date DESC
+        ORDER BY store_no DESC
         limit ${paging.startRow},${paging.endRow}
     </select>
 

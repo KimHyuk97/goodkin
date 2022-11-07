@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{admin/layout/layout}">
+
+<th:block layout:fragment="main">
+    <main id="main" class="center-details" data-page>
+        <section class="section" th:object="${customerInquiry}">
+            <form class="form wide" name="form" style="max-width: 100%;" id="form">
+
+                <span class="form-title" th:text="|고객문의 ${mode eq 'insert' ? '등록':'상세'}|"></span>
+                <button type="button" th:if="${mode eq 'update'}" onclick="customerInquiryDelete()"
+                    class="btn-normal btn-red position_abs">삭제</button>
+
+                <div class="flex_jc_as_g40">
+                    <fieldset class="fieldset">
+
+                        <span class="input-wrap" th:if="${mode == 'update'}">
+                            <label class="label" for="customerInquiryNo">고객 문의 번호</label>
+                            <input class="input" type="text" th:field="*{customerInquiryNo}" readonly>
+                        </span>
+
+                        <span class="input-wrap">
+                            <label class="label">문의 분류</label>
+                            <div class="input-group">
+                                <div class="check-wrap">
+                                    <div class="check">
+                                        <input type="radio" id="type01" name="type" value="IDEA"
+                                            th:checked="${customerInquiry.type != null and customerInquiry.type.toString() == 'IDEA'}">
+                                        <label for="type01">아이디어 제안</label>
+                                    </div>
+                                    <div class="check">
+                                        <input type="radio" id="type02" name="type" value="COMPLAIN"
+                                            th:checked="${customerInquiry.type != null and customerInquiry.type.toString() == 'COMPLAIN'}">
+                                        <label for="type02">컴플레인</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </span>
+
+                        <span class="input-wrap">
+                            <label class="label" for="customerName">고객 이름</label>
+                            <input class="input" type="text" th:field="*{customerName}" maxlength="50">
+                        </span>
+
+                        <span class="input-wrap">
+                            <label class="label" for="customerPhone">고객 연락처</label>
+                            <input class="input" type="text" th:field="*{customerPhone}" maxlength="13" onkeyup="autoHyphen(this)">
+                        </span>
+
+                        <span class="input-wrap">
+                            <label class="label" for="customerEmail">고객 이메일</label>
+                            <input class="input" type="text" th:field="*{customerEmail}" maxlength="255">
+                        </span>
+
+                        <span class="input-wrap" th:if="${mode == 'update'}">
+                            <label class="label" for="createDate">등록일자</label>
+                            <input class="input" type="text" th:field="*{createDate}" readonly>
+                        </span>
+
+                        <span class="input-wrap" th:if="${mode == 'update'}">
+                            <label class="label" for="updateDate">수정일자</label>
+                            <input class="input" type="text" th:field="*{updateDate}" readonly>
+                        </span>
+
+                    </fieldset>
+                    <fieldset class="fieldset">
+
+                        <span class="input-wrap">
+                            <label class="label">이용 가맹점</label>
+                            <select class="select" id="store_form" name="storeNo">
+                                <option value="" th:selected="*{storeNo == null}">선택</option>
+                            </select>
+                        </span>
+
+                        <span class="input-wrap">
+                            <label class="label" for="title">제목</label>
+                            <input class="input" type="text" th:field="*{title}" maxlength="50">
+                        </span>
+
+                        <span class="input-wrap" style="height: 80px;">
+                            <label class="label" for="content">내용</label>
+                            <textarea class="textarea" style="height: 80px;" th:field="*{content}"></textarea>
+                        </span>
+
+                        <span class="input-wrap">
+                            <label class="label">파일첨부</label>
+                            <div class="file-uploader">
+                                <div class="file-uploader__add">
+                                    <label for="files">파일선택</label>
+                                    <input type="file" id="files" onchange="uploaderUserFiles(this, 'files')">
+                                </div>
+
+                                <div class="file-uploader__files files">
+                                    <div class="file" th:if="*{#lists.size(files) > 0}" th:each="file : *{files}"
+                                        th:id="${file.file}">
+                                        <span class="file__name" th:text="${file.file}"></span>
+                                        <a class="file__download" th:href="${file.fileUrl}" download=""></a>
+                                        <button type="button" class="file__del"
+                                            th:onClick="fileDelete(this,[[${file.file}]],[[${file.customerInquiryFileNo}]])">삭제하기</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </span>
+
+                    </fieldset>
+                </div>
+            </form>
+            <div class="form_action" form="profileForm">
+                <button type="button" class="btn-prime" th:onclick="process()"
+                    th:text="${mode == 'insert' ? '등록' : '수정'}"></button>
+                <a th:href="@{./list}" class="btn-normal">취소</a>
+            </div>
+        </section>
+    </main>
+
+    <script defer th:src="@{/admin/assets/js/file.js}"></script>
+    <script defer th:src="@{/assets/js/store.js}"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const mode = /*[[${mode}]]*/'';
+        const storeNo = /*[[${customerInquiry.storeNo}]]*/'';
+        /*]]>*/
+
+        function process() {
+
+            if (customerInquiryValidation()) {
+                const formData = new FormData();
+                if(mode === 'update')formData.append("customerInquiryNo", form.customerInquiryNo.value);
+                formData.append("type", form.type.value);
+                formData.append("customerName", form.customerName.value);
+                formData.append("customerPhone", form.customerPhone.value);
+                formData.append("customerEmail", form.customerEmail.value);
+                formData.append("storeNo", form.storeNo.value);
+                formData.append("title", form.title.value);
+                formData.append("content", form.content.value);
+                
+                // 파일처리
+                const files = document.getElementsByName('files')
+                if(files.length > 0) {
+                    for(let file of files) {
+                        formData.append("customerInquiryFiles", file.files[0]);
+                    }
+                }
+
+                if(mode === 'update') {
+                    const deleteFiles = document.getElementsByName('deleteFiles')
+                    if(deleteFiles) {
+                        console.log(deleteFiles);
+                        for(let file of deleteFiles) {
+                            formData.append("deleteFiles", file.value)
+                        }   
+                    };
+                }
+
+                fetch(mode === 'update' ? `./${mode}` : `/api/customerInquiry/insert`, {
+                    method: 'POST',
+                    cache: 'no-cache',
+                    body: formData
+                })
+                    .then((response) => response.json()).then((data) => {
+                        console.log(data);
+                        alert(data.message);
+                    })
+                    .catch((error) => console.log(error));
+            }
+        }
+
+        function customerInquiryValidation() {
+            const type = form.type;
+            const customerName = form.customerName;
+            const customerPhone = form.customerPhone;
+            const customerEmail = form.customerEmail;
+            const title = form.title;
+            const content = form.content;
+
+            if (type.value === '') {
+                alert('문의 분류를 선택해주세요.');
+                type.focus();
+                return false
+            }
+
+            if (customerName.value === '') {
+                alert('고객 이름을 입력해주세요.');
+                customerName.focus();
+                return false
+            }
+
+            if (customerPhone.value === '') {
+                alert('고객 연락처를 입력해주세요.');
+                customerPhone.focus();
+                return false
+            } else {
+                const regExp = /^(\d{2,3})-(\d{3,4})-(\d{4})$/;
+                if(!regExp.test(customerPhone.value)) {
+                    alert('정확한 연락처를 입력해주세요.');
+                    customerPhone.focus();
+                    return false;
+                }
+            }
+
+            if(customerEmail.value !== '') {
+                const regExp =
+                    /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+                if(!regExp.test(customerEmail.value)) {
+                    alert('정확한 이메일을 입력해주세요.');
+                    customerEmail.focus();
+                    return false;
+                }
+            }
+
+            if (title.value === '') {
+                alert('제목을 입력해주세요.');
+                title.focus();
+                return false
+            }
+
+            if (content.value === '') {
+                alert('내용을 입력해주세요.');
+                content.focus();
+                return false
+            }
+
+            return true
+        }
+
+        function customerInquiryDelete() {
+            if(confirm("삭제하시겠습니까?")) {
+                ajax(`./delete/${form.customerInquiryNo.value}`, 'POST')
+                    .then((data) => {
+                        alert(data.message);
+                        location.href = "./list";
+                    })
+                    .catch((error) => console.log(error));
+            }
+        }
+
+        const store_data = async () => {
+            console.log(storeNo);
+            ajax('/api/stores', 'post')
+            .then((response) => {
+                let template = '<option value="">선택</option>';
+                if(response.data != null) {
+                    response.data.forEach(store => {
+                        template += `<option value="${store.storeNo}" 
+                            selected=${storeNo !== null && storeNo === store.storeNo}>${store.name}</option>`;
+                    });
+                }
+                document.getElementById('store_form').innerHTML = template;
+            })
+            .catch((error) => console.log(error));
+            
+        }
+
+
+        function fileDelete(file, fileName, fileNo) {
+            if (fileNo != 0) {
+                if(confirm("선택하신 첨부파일을 삭제하시겠습니까?")) {
+                    ajax(`./deleteFile/${fileNo}`, 'POST')
+                    .then((data) => {
+                        alert(data.message);
+                    })
+                    .catch((error) => console.log(error));
+                }
+            }
+            document.getElementById(fileName).remove();
+            file.closest('.file').remove();
+        }
+
+        function uploaderUserFiles(file, id) {
+            const fileList = file.closest('div');
+
+            file.id = file.files[0].name;
+            file.name = id;
+
+            const input = document.createElement('input');
+            input.id = id;
+            input.type = 'file';
+            input.setAttribute('onchange', `uploaderUserFiles(this,'${id}')`);
+            fileList.append(input);
+
+            let newFile = document.createElement('div');
+            newFile.className = 'file';
+
+            let name = document.createElement('span');
+            name.className = 'file__name';
+            name.innerText = file.files[0].name;
+
+            let del = document.createElement('button');
+            del.type = 'button';
+            del.className = 'file__del';
+            del.innerText = '삭제하기';
+            del.setAttribute('onclick', `fileDelete(this,'${file.files[0].name}', 0)`)
+
+            newFile.append(name);
+            newFile.append(del);
+
+            console.log(document.querySelector(`.file-uploader__files.${id}`));
+            document.querySelector(`.file-uploader__files.${id}`).append(newFile);
+        }
+
+        const autoHyphen = (target) => {
+            target.value = target.value
+            .replace(/[^0-9]/g, '')
+            .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+        }
+
+        window.addEventListener('load', () => {
+            numberOnly();
+            layoutFn();
+            store_data();
+        });
+    </script>
+</th:block>
+
+</html>

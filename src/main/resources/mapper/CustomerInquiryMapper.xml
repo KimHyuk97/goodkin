@@ -35,7 +35,7 @@
         where store_no = #{storeNo}
     </select>
 
-    <insert id="save" parameterType="CustomerInquiry" useGeneratedKeys="true"  keyProperty="CustomerInquiryNo">
+    <insert id="save" parameterType="CustomerInquiry" useGeneratedKeys="true"  keyProperty="customerInquiryNo">
         INSERT INTO customer_inquiry (
             type, customer_name, customer_phone, customer_email, title, content, store_no
         ) VALUES (
@@ -64,13 +64,28 @@
 
 
     <!-- 첨부 파일 -->
+    <select id="getFiles" resultType="CustomerInquiryFile">
+        select * 
+        from customer_inquiry_file
+        WHERE customer_inquiry_file_no in 
+        <foreach collection="fileNos" item="fileNo" open="(" close=")" separator=",">
+            #{fileNo}
+        </foreach>
+    </select>
+
+    <select id="getFile" resultType="CustomerInquiryFile">
+        select * 
+        from customer_inquiry_file
+        WHERE customer_inquiry_file_no = #{CustomerInquiryFileNo}
+    </select>
+
     <select id="getCustomerInquiryFiles" resultType="CustomerInquiryFile">
         select * 
         from customer_inquiry_file
         WHERE customer_inquiry_no = #{customerInquiryNo}
     </select>
 
-    <insert id="insertFiles" parameterType="CustomerInquiryFile" useGeneratedKeys="true"  keyProperty="CustomerInquiryFileNo">
+    <insert id="insertFiles">
         INSERT INTO customer_inquiry_file (
             file, file_url, customer_inquiry_no
         ) VALUES 
@@ -87,5 +102,37 @@
             #{fileNo}
         </foreach>
     </delete>
+
+    <!-- 관리자 -->
+    <sql id="filter">
+		<if test="!kind.equals('') and !keyword.equals('')">
+			and ${kind} LIKE CONCAT('%',#{keyword},'%') 
+		</if>
+        <if test="!type.equals('')">
+            and type = #{type}
+        </if>
+	</sql>
+
+    <select id="listCount" resultType="int">
+        SELECT      COUNT(*)
+        FROM        customer_inquiry c
+        LEFT JOIN   store s
+        ON          s.store_no = c.store_no
+        WHERE       c.customer_inquiry_no > 0
+		<include refid="filter" />
+    </select>
+
+    <select id="list" resultType="customerInquiry">
+        SELECT      *
+        FROM        customer_inquiry c
+        LEFT JOIN   store s
+        ON          s.store_no = c.store_no
+        WHERE       c.customer_inquiry_no > 0
+		<include refid="filter" />
+        ORDER BY c.customer_inquiry_no DESC
+        limit ${paging.startRow},${paging.endRow}
+    </select>
+
+
 
 </mapper>
