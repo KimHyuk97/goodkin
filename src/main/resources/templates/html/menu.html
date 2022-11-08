@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>굿킨</title>
+    <link rel="stylesheet" type="text/css" href="../css/common.min.css" />
+  </head>
+  <body>
+    <div class="root">
+      <header>
+        <div>
+          <a class="logo" href="/">굿킨</a>
+          <ul class="menu">
+            <li><a href="../html/about.html">브랜드 소개</a></li>
+            <li><a href="../html/self-employment.html">자영업 이야기</a></li>
+            <li><a href="../html/strategy.html">성공창업 전략</a></li>
+            <li><a href="../html/franchise.html">프렌차이즈</a></li>
+            <li><a href="../html/menu.html">메뉴 소개</a></li>
+            <li><a href="../html/store.html">매장 안내</a></li>
+            <li><a href="../html/customer-inquiry.html">고객의 소리</a></li>
+          </ul>
+        </div>
+        <button type="button" class="btn-menu" onclick="btnMenu()">Menu</button>
+      </header>
+      <div class="overlay">
+        <nav class="nav">
+          <div class="nav-head">
+            <a class="logo" href="/">굿킨</a>
+            <button type="button" class="btn-close" onClick="btnClose()">
+              Close
+            </button>
+          </div>
+          <div class="nav-main">
+            <ul class="menu">
+              <li><a href="../html/about.html">브랜드 소개</a></li>
+              <li><a href="../html/self-employment.html">자영업 이야기</a></li>
+              <li><a href="../html/strategy.html">성공창업 전략</a></li>
+              <li><a href="../html/franchise.html">프렌차이즈</a></li>
+              <li><a href="../html/menu.html">메뉴 소개</a></li>
+              <li><a href="../html/store.html">매장 안내</a></li>
+              <li><a href="../html/customer-inquiry.html">고객의 소리</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+
+      <main>
+        <div class="banner">
+          <img src="../assets/images/img-banner-menu.png" alt="menu-banner" />
+          <p class="text">‘정성’을 다해 만든 굿킨의 메뉴를 소개합니다.</p>
+        </div>
+        <section>
+          <h1 class="title center">MENU</h1>
+          <div class="tab">
+            <button class="tab-links active" onclick="tab(event, 'set')">
+              세트메뉴
+            </button>
+            <button class="tab-links" onclick="tab(event, 'chicken')">
+              치킨메뉴
+            </button>
+            <button class="tab-links" onclick="tab(event, 'tteokbokki')">
+              떡볶이 메뉴
+            </button>
+          </div>
+          <div id="set" class="tab-content active">
+            <ul class="list">
+              <li class="list-item">
+                <img
+                  src="../assets/images/menu/img-set-menu-01.png"
+                  alt="menu"
+                />
+                <div>
+                  <p class="list-title">굿튀 세트</p>
+                  <p class="list-explanation">
+                    떡볶이와 치킨 반마리를 함께 즐기는 실속 세트메뉴
+                  </p>
+                </div>
+              </li>
+              <li class="list-item">
+                <img
+                  src="../assets/images/menu/img-set-menu-02.png"
+                  alt="menu"
+                />
+                <div>
+                  <p class="list-title">떡튀 세트</p>
+                  <p class="list-explanation">
+                    떡볶이와 모둠튀김을 함께 즐기는 실속 세트메뉴
+                  </p>
+                </div>
+              </li>
+              <li class="list-item">
+                <img
+                  src="../assets/images/menu/img-set-menu-03.png"
+                  alt="menu"
+                />
+                <div>
+                  <p class="list-title">떡밥 세트</p>
+                  <p class="list-explanation">
+                    떡볶이와 주먹밥을 함께 즐기는 실속 세트메뉴
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div id="chicken" class="tab-content">
+            <ul class="list">
+              <li class="list-item">
+                <img
+                  src="../assets/images/menu/img-chicken-menu-01.png"
+                  alt="menu"
+                />
+                <div>
+                  <p class="list-title center">후라이드 치킨</p>
+                </div>
+              </li>
+              <li class="list-item">
+                <img
+                  src="../assets/images/menu/img-chicken-menu-02.png"
+                  alt="menu"
+                />
+                <div>
+                  <p class="list-title center">양념 치킨</p>
+                </div>
+              </li>
+              <li class="list-item">
+                <img
+                  src="../assets/images/menu/img-chicken-menu-03.png"
+                  alt="menu"
+                />
+                <div>
+                  <p class="list-title center">핫마늘간장 치킨</p>
+                </div>
+              </li>
+              <li class="list-item">
+                <img
+                  src="../assets/images/menu/img-chicken-menu-04.png"
+                  alt="menu"
+                />
+                <div>
+                  <p class="list-title center">치즈뿜뿜 치킨</p>
+                </div>
+              </li>
+              <li class="list-item">
+                <img
+                  src="../assets/images/menu/img-chicken-menu-05.png"
+                  alt="menu"
+                />
+                <div>
+                  <p class="list-title center">레드페퍼 치킨</p>
+                </div>
+              </li>
+              <li class="list-item">
+                <img
+                  src="../assets/images/menu/img-chicken-menu-06.png"
+                  alt="menu"
+                />
+                <div>
+                  <p class="list-title center">순살 후라이드</p>
+                </div>
+              </li>
+              <li class="list-item">
+                <img
+                  src="../assets/images/menu/img-chicken-menu-07.png"
+                  alt="menu"
+                />
+                <div>
+                  <p class="list-title center">순살 양념</p>
+                </div>
+              </li>
+              <li class="list-item">
+                <img
+                  src="../assets/images/menu/img-chicken-menu-08.png"
+                  alt="menu"
+                />
+                <div>
+                  <p class="list-title center">순살 핫마늘간장</p>
+                </div>
+              </li>
+              <li class="list-item">
+                <img
+                  src="../assets/images/menu/img-chicken-menu-09.png"
+                  alt="menu"
+                />
+                <div>
+                  <p class="list-title center">순살 치즈뿜뿜</p>
+                </div>
+              </li>
+              <li class="list-item">
+                <img
+                  src="../assets/images/menu/img-chicken-menu-10.png"
+                  alt="menu"
+                />
+                <div>
+                  <p class="list-title center">순살 레드페퍼</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div id="tteokbokki" class="tab-content">
+            <ul class="list">
+              <li class="list-item">
+                <img
+                  src="../assets/images/menu/img-tteokbokki-menu-01.png"
+                  alt="menu"
+                />
+                <div>
+                  <p class="list-title center">잘만든 떡볶이</p>
+                </div>
+              </li>
+              <li class="list-item">
+                <img
+                  src="../assets/images/menu/img-tteokbokki-menu-02.png"
+                  alt="menu"
+                />
+                <div>
+                  <p class="list-title center">투움바 떡볶이</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </section>
+      </main>
+      <footer>
+        <div class="logo">굿킨</div>
+        <ul class="menu">
+          <li><a href="../html/about.html"> 브랜드 소개 </a></li>
+          <li><a href="../html/franchise.html"> 프랜차이즈 </a></li>
+          <li><a href="../html/store.html"> 매장 안내 </a></li>
+          <li><a href="../html/privacy.html"> 개인정보취급방침 </a></li>
+        </ul>
+
+        <ul class="info">
+          <li>대표자: 이도현</li>
+          <li>주소: 서울특별시 도봉구 도봉로 113길 10, 1층</li>
+          <li>사업자등록번호: 710-81-02860</li>
+          <li>대표 전화: 02-994-3170</li>
+        </ul>
+        <div class="copyright">
+          Copyright 2022 잘만든치킨 굿킨. All rights reserved.
+        </div>
+      </footer>
+    </div>
+    <script
+      type="text/javascript"
+      src="../js/libs/jquery-3.6.1.min.js"
+    ></script>
+    <script src="../js/common.js"></script>
+  </body>
+</html>

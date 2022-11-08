@@ -42,13 +42,14 @@
         )
     </insert>
 
-    <update id="update">
+    <update id="update" parameterType="Admin">
         UPDATE admin SET 
-        <if test="id != null">id = #{id},</if>
         <if test="password != null">password = #{password},</if>
         <if test="name != null">name = #{name},</if>
+        <if test="phone != null">phone = #{phone},</if>
+        <if test="email != null">email = #{email},</if>
         <if test="role != null">role = #{role},</if>
-        updateDate = now()
+        update_date = now()
         WHERE admin_no = #{adminNo}
     </update>
 

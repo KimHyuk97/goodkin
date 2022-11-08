@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.goodkin.auth.AdminDetails;
 import com.goodkin.model.DelModel;
@@ -55,7 +56,17 @@ public class AdminController {
                         .build();
 	}
 
+    @GetMapping("/mypage")
+    public ModelAndView mypage(ModelAndView mv, 
+        @AuthenticationPrincipal AdminDetails admin) {
+        return adminService.mypage(mv, admin.getAdmin());
+    }
 
+    @PostMapping("/mypage/update")
+    @ResponseBody
+    public ResponseDto<?> adminUpdate(@RequestBody Admin admin) {
+        return adminService.adminUpdate(admin);
+    }
 
 
     @GetMapping("/getAdmin/{adminNo}")

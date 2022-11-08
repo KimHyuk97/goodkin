@@ -79,7 +79,7 @@
                 </table>
             </div>
             <div class="section_footer">
-                <div class="table_action">
+                <div class="table_action" th:if="${list.size > 0}">
                     <button type="button" class="btn-normal btn-red" onclick="del('menu','menu_no','메뉴')">삭제</button>
                 </div>
 

@@ -19,10 +19,10 @@
                     <!-- 사이트 정보 -->
                     <article class="tab_cont_item on" th:object="${site}" style="width: 800px; margin: 0 auto;">
                         <form id="site_form" style="border: 0;">
-                            <div class="flex_jc_as_g40">
+                            <div class="flex_jc_as_g40" style="justify-content: center;">
                                 <fieldset class="fieldset">
 
-                                    <span class="input-wrap" style="height: 170px; margin-bottom: 20px;">
+                                    <span class="input-wrap" style="height: 150px; margin-bottom: 20px;">
                                         <label class="label">홈페이지 로고</label>
                                         <div class="input-group">
                                             <div class="pic" style="width: 220px; height: 40px; margin-bottom: 20px;">
@@ -37,7 +37,7 @@
                                             </div>
                                             <div class="pic-inform">*사용자 페이지에 노출될 로고입니다.</div>
                                             <div class="pic-inform">*png/jpg/jpeg 형식의 파일만 업로드 가능합니다.</div>
-                                            <div class="pic-inform">*파일 크기는 220/40으로 최대한 맞춰주세요. </div>
+                                            <div class="pic-inform">*파일 크기는 220*40px으로 맞춰주세요. </div>
                                         </div>
                                     </span>
 
@@ -80,7 +80,7 @@
 
                         </form>
                         <div class="form_action">
-                            <button type="button" class="btn-normal btn-blue" onclick="siteUpdate()">수정</button>
+                            <button type="button" class="btn-prime" onclick="siteUpdate()">수정</button>
                         </div>
                     </article>
 
@@ -100,7 +100,7 @@
                             </table>
                         </form>
                         <div class="form_action">
-                            <button type="button" class="btn-normal btn-blue" onclick="policyUpdate()">수정</button>
+                            <button type="button" class="btn-prime" onclick="policyUpdate()">수정</button>
                         </div>
                     </article>
 
@@ -108,8 +108,51 @@
             </div>
         </section>
     </main>
-    <script defer th:src="@{/admin/assets/js/file.js}"></script>
+
     <script>
+
+        //사진 업로드
+        function fileUpload(file) {
+            const maxWidth = 220;
+            const maxHeight = 40;
+            const maxSize = 5 * 1024 * 1024;
+            const fileSize = file.files[0].size;
+            const div = file.closest('div');
+            const img = div.querySelector('img');
+            let _URL = window.URL || window.webkitURL;
+    
+            if (fileSize > maxSize) {
+                alert("사진 용량은 5MB 이내로 등록 가능합니다.");
+                return false;
+            }
+
+            var reg = /(.*?)\.(jpg|jpeg|png)$/;
+
+            if (!(file.files[0].name).toLowerCase().match(reg)) {
+                alert("jpg, jpeg, png 형식의 파일을 첨부해주세요.");
+                return false;
+            }
+
+            
+            const upload_img = new Image();
+            upload_img.src = _URL.createObjectURL(file.files[0]);
+            
+            upload_img.onload = function() {
+                if(upload_img.width != maxWidth || upload_img.height != maxHeight) {
+                    alert("이미지 가로 220px, 세로 40px로 맞춰서 올려주세요.")
+                    document.getElementById('logofile').value = '';
+                    img.src = document.getElementById('logo').value;
+                }
+            }
+                
+            let fileReader = new FileReader();
+            fileReader.readAsDataURL(file.files[0]);
+            
+            fileReader.onload = function () {
+                img.src = fileReader.result;
+            };
+
+        }
 
         function policyUpdate() {
             const form = document.getElementById('policy_form')
@@ -144,6 +187,7 @@
                 })
                     .then((response) => response.json()).then((data) => {
                         alert(data.message);
+                        location.reload();
                     })
                     .catch((error) => console.log(error));
             }

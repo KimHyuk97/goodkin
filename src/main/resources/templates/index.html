@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>굿킨</title>
+    <link rel="stylesheet" type="text/css" href="./css/common.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
+    />
+  </head>
+  <body>
+    <div class="root">
+      <header>
+        <div>
+          <a class="logo" href="/">굿킨</a>
+          <ul class="menu">
+            <li><a href="./html/about.html">브랜드 소개</a></li>
+            <li><a href="./html/self-employment.html">자영업 이야기</a></li>
+            <li><a href="./html/strategy.html">성공창업 전략</a></li>
+            <li><a href="./html/franchise.html">프렌차이즈</a></li>
+            <li><a href="./html/menu.html">메뉴 소개</a></li>
+            <li><a href="./html/store.html">매장 안내</a></li>
+            <li><a href="./html/customer-inquiry.html">고객의 소리</a></li>
+          </ul>
+        </div>
+        <button type="button" class="btn-menu" onclick="btnMenu()">Menu</button>
+      </header>
+
+      <div class="overlay">
+        <nav class="nav">
+          <div class="nav-head">
+            <a class="logo" href="/">굿킨</a>
+            <button type="button" class="btn-close" onClick="btnClose()">
+              Close
+            </button>
+          </div>
+          <div class="nav-main">
+            <ul class="menu">
+              <li><a href="./html/about.html">브랜드 소개</a></li>
+              <li><a href="./html/self-employment.html">자영업 이야기</a></li>
+              <li><a href="./html/strategy.html">성공창업 전략</a></li>
+              <li><a href="./html/franchise.html">프렌차이즈</a></li>
+              <li><a href="./html/menu.html">메뉴 소개</a></li>
+              <li><a href="./html/store.html">매장 안내</a></li>
+              <li><a href="./html/customer-inquiry.html">고객의 소리</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+
+      <main>
+        <div class="banner-main">
+          <img alt="banner" />
+        </div>
+        <section class="bg-primary-light reverse">
+          <div class="img-wrapper">
+            <img src="./assets/images/img-chicken.png" alt="" />
+          </div>
+          <article>
+            <h1>
+              <p class="subtitle">따듯한 정성으로 만드는</p>
+              <p class="title">“맛있는 치킨”</p>
+            </h1>
+            <p class="contents">
+              음식을 만드는 사람들은 한가지 공통점이 있습니다. 소중한 사람에게
+              정성껏 만든 음식을 대접했을 때, 맛있게 먹고 즐거워 하는 모습을
+              보며 기쁨과 보람을 얻습니다.
+              <br /><br />
+              우리 매장을 찾아주시는 소중한 고객님들을 생각하며, 엄선해서 좋은
+              재료를 고르고 반짝이는 청결한 주방에서 매일 이렇게 다짐합니다.
+              <br /><br />
+              <span class="font-bold">
+                잘만든 치킨으로 우리 고객님들이 즐겁고 행복한 시간을 보내셨으면
+                좋겠습니다.
+              </span>
+            </p>
+          </article>
+        </section>
+        <section class="bg-black reverse">
+          <div class="img-wrapper">
+            <img src="./assets/images/img-oneteam.png" alt="" />
+          </div>
+          <article>
+            <h1>
+              <p class="subtitle">전문가와 함께하는</p>
+              <p class="title">“우리 가게”</p>
+            </h1>
+            <p class="contents">
+              메뉴 개발, 매장 관리, 홍보마케팅 등 유명 브랜드에서 10년 이상 쌓은
+              경험과 노하우를 바탕으로 안정적인 매장 운영을 지원합니다.
+              <br /><br />
+
+              자영업을 처음 시작하는 초보 창업자라도 빠르게 적응할 수 있도록 각
+              분야의 전문가들이 점주님과 함께 원 팀 (One-Team)이 되어 성공
+              창업을 향해 나아가겠습니다.
+            </p>
+          </article>
+        </section>
+        <section>
+          <div class="swiper menu-swiper">
+            <h1 class="title">굿킨의 대표메뉴</h1>
+            <div class="swiper-button-prev menu-swiper-button-prev"></div>
+            <div class="swiper-button-next menu-swiper-button-next"></div>
+            <div class="swiper-wrapper menu-swiper-wrapper">
+              <!-- Slides -->
+              <div class="swiper-slide menu-swiper-item">
+                <img
+                  src="./assets/images/menu/img-chicken-menu-01.png"
+                  alt=""
+                />
+                <p class="center">후라이드 치킨</p>
+              </div>
+              <div class="swiper-slide menu-swiper-item">
+                <img
+                  src="./assets/images/menu/img-chicken-menu-02.png"
+                  alt=""
+                />
+                <p class="center">양념 치킨</p>
+              </div>
+              <div class="swiper-slide menu-swiper-item">
+                <img
+                  src="./assets/images/menu/img-chicken-menu-03.png"
+                  alt=""
+                />
+                <p class="center">핫마늘간장 치킨</p>
+              </div>
+              <div class="swiper-slide menu-swiper-item">
+                <img
+                  src="./assets/images/menu/img-chicken-menu-04.png"
+                  alt=""
+                />
+                <p class="center">치즈뿜뿜 치킨</p>
+              </div>
+              <div class="swiper-slide menu-swiper-item">
+                <img
+                  src="./assets/images/menu/img-chicken-menu-05.png"
+                  alt=""
+                />
+                <p class="center">레드페퍼 치킨</p>
+              </div>
+              <div class="swiper-slide menu-swiper-item">
+                <img
+                  src="./assets/images/menu/img-chicken-menu-06.png"
+                  alt=""
+                />
+                <p class="center">순살 후라이드</p>
+              </div>
+              <div class="swiper-slide menu-swiper-item">
+                <img
+                  src="./assets/images/menu/img-chicken-menu-07.png"
+                  alt=""
+                />
+                <p class="center">순살 양념</p>
+              </div>
+              <div class="swiper-slide menu-swiper-item">
+                <img
+                  src="./assets/images/menu/img-chicken-menu-08.png"
+                  alt=""
+                />
+                <p class="center">순살 핫마늘간장</p>
+              </div>
+              <div class="swiper-slide menu-swiper-item">
+                <img
+                  src="./assets/images/menu/img-chicken-menu-09.png"
+                  alt=""
+                />
+                <p class="center">순살 치즈뿜뿜</p>
+              </div>
+              <div class="swiper-slide menu-swiper-item">
+                <img
+                  src="./assets/images/menu/img-chicken-menu-10.png"
+                  alt=""
+                />
+                <p class="center">순살 레드페퍼</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section>
+          <h1 class="title center">고객님들이 인정한 맛집!</h1>
+        </section>
+        <section class="full bg-effect-parent">
+          <div class="bg-effect bg-gradient-vertical"></div>
+          <div class="swiper review-swiper">
+            <div class="swiper-wrapper review-swiper-wrapper">
+              <div class="swiper-slide review-swiper-item">
+                <img src="./assets/images/img-review-sample.png" alt="" />
+              </div>
+              <div class="swiper-slide review-swiper-item">
+                <img src="./assets/images/img-review-sample.png" alt="" />
+              </div>
+              <div class="swiper-slide review-swiper-item">
+                <img src="./assets/images/img-review-sample.png" alt="" />
+              </div>
+              <div class="swiper-slide review-swiper-item">
+                <img src="./assets/images/img-review-sample.png" alt="" />
+              </div>
+              <div class="swiper-slide review-swiper-item">
+                <img src="./assets/images/img-review-sample.png" alt="" />
+              </div>
+              <div class="swiper-slide review-swiper-item">
+                <img src="./assets/images/img-review-sample.png" alt="" />
+              </div>
+            </div>
+          </div>
+        </section>
+        <button type="button" class="btn-ScrollToTop" onClick="ScrollToTop()">
+          floating-ScrollToTop
+        </button>
+      </main>
+
+      <footer>
+        <div class="logo">굿킨</div>
+        <ul class="menu">
+          <li><a href="./html/about.html"> 브랜드 소개 </a></li>
+          <li><a href="./html/franchise.html"> 프랜차이즈 </a></li>
+          <li><a href="./html/store.html"> 매장 안내 </a></li>
+          <li><a href="./html/privacy.html"> 개인정보취급방침 </a></li>
+        </ul>
+
+        <ul class="info">
+          <li>대표자: 이도현</li>
+          <li>주소: 서울특별시 도봉구 도봉로 113길 10, 1층</li>
+          <li>사업자등록번호: 710-81-02860</li>
+          <li>대표 전화: 02-994-3170</li>
+        </ul>
+        <div class="copyright">
+          Copyright 2022 잘만든치킨 굿킨. All rights reserved.
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="./js/libs/jquery-3.6.1.min.js"></script>
+    <script
+      type="text/javascript"
+      src="./js/libs/swiper-bundle.min.js"
+    ></script>
+    <script src="./js/common.js"></script>
+
+    <script type="text/javascript">
+      const menuSwiper = new Swiper(".menu-swiper", {
+        breakpoints: {
+          768: {
+            slidesPerView: 3,
+            slidesPerGroup: 1,
+          },
+          1024: {
+            slidesPerView: 4,
+            slidesPerGroup: 4,
+          },
+        },
+        slidesPerView: 2,
+        spaceBetween: 30,
+        slidesPerGroup: 1,
+        loop: true,
+        loopFillGroupWithBlank: true,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+    </script>
+    <script type="text/javascript">
+      const reviewSwiper = new Swiper(".review-swiper", {
+        slidesPerView: "auto",
+        spaceBetween: 30,
+        centeredSlides: true,
+        loop: true,
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false,
+        },
+      });
+    </script>
+  </body>
+</html>
