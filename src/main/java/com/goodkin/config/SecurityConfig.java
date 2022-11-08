@@ -32,7 +32,7 @@ public class SecurityConfig {
                 .antMatchers("/admin/utils/**").hasRole("ADMIN")
                 .antMatchers("/admin/mypage/**").hasAnyRole("ADMIN")
                 .antMatchers("/admin/store/**").hasRole("ADMIN")
-                .antMatchers("/admin/inquire/**").hasRole("ADMIN")
+                .antMatchers("/admin/storeInquiry/**").hasRole("ADMIN")
                 .antMatchers("/admin/customerInquiry/**").hasRole("ADMIN")
                 .antMatchers("/admin/menu/**").hasRole("ADMIN")
                 .antMatchers("/admin/site/**").hasRole("ADMIN")

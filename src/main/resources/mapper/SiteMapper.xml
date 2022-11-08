@@ -11,12 +11,12 @@
 
     <update id="update">
         UPDATE site 
-        SET    logo = #{logo},
+        SET    <if test="logo != null">logo = #{logo},</if>
                ceo = #{ceo},
                address = #{address},
                business_number = #{businessNumber},
                phone = #{phone},
-               copyright = #{copyright}
+               update_date = now()
     </update>
 
 </mapper>

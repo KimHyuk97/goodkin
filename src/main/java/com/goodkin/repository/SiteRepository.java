@@ -11,6 +11,6 @@ public interface SiteRepository {
     public Site getSite();
     
     // 사이트 정보 업데이트
-    public int update(Long SiteNo);
+    public int update(Site site);
     
 }

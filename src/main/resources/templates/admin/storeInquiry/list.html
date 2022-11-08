@@ -7,7 +7,7 @@
         <section class="section">
             <div class="section_header">
                 <div>
-                    <h2 class="section_title">가맹점 관리</h2>
+                    <h2 class="section_title">가맹 문의 관리</h2>
                     <span class="table_top_count">전체<i class="value" th:text="${#numbers.formatInteger(paging.limitCount, 0, 'COMMA')}"></i>건</span>
                 </div>
                 <div>
@@ -30,13 +30,14 @@
                         </div>
 
                         <div class="search_div">
-                            <select class="select custom search_kind" name="kind">
-                                <option value="name" th:selected="${kind eq 'name'}">이름</option>
+                            <select class="select custom search_kind" name="kind" style="width: 100px !important;">
+                                <option value="customer_name" th:selected="${kind eq 'customer_name'}">고객성명</option>
+                                <option value="customer_phone" th:selected="${kind eq 'customer_phone'}">고객연락처</option>
                             </select>
                             <input class="input" type="text" name="keyword" placeholder="검색어 입력" th:value="${keyword}">
                         </div>
 
-                        <button type="submit" class="btn-prime btn-search">검색</button>
+                        <button type="button" onclick="form_submit()" class="btn-prime btn-search">검색</button>
                     </form>
                 </div>
                 <table>
@@ -52,23 +53,23 @@
                     <thead>
                         <tr>
                             <th class="check"><input type="checkbox" name="" id=""></th>
-                            <th>가맹점번호</th>
-                            <th>이름</th>
-                            <th>지역</th>
+                            <th>No.</th>
+                            <th>고객성명</th>
                             <th>연락처</th>
-                            <th>서비스</th>
+                            <th>창업 희망지역</th>
+                            <th>창업 예산</th>
                             <th>등록일시</th>
                         </tr>
                     </thead>
                     <tbody th:if="${list.size > 0}">
-                        <tr th:each="store : ${list}" th:onclick="linkTo(event,'./form?mode=update&storeNo=[[${store.storeNo}]]')">
-                            <td class="check"><input type="checkbox" name="ck" th:value="${store.storeNo}"></td>
-                            <td th:text="${store.storeNo}"></td>
-                            <td th:text="${store.name}"></td>
-                            <td th:text="${store.address}"></td>
-                            <td th:text="${store.phone}"></td>
-                            <td th:text="${store.service eq '' ? 'X' : store.service}"></td>
-                            <td th:text="${store.createDate}"></td>
+                        <tr th:each="storeInquiry : ${list}" th:onclick="linkTo(event,'./form?mode=update&storeInquiryNo=[[${storeInquiry.storeInquiryNo}]]')">
+                            <td class="check"><input type="checkbox" name="ck" th:value="${storeInquiry.storeInquiryNo}"></td>
+                            <td th:text="${storeInquiry.storeInquiryNo}"></td>
+                            <td th:text="${storeInquiry.customerName}"></td>
+                            <td th:text="${storeInquiry.customerPhone}"></td>
+                            <td th:text="${storeInquiry.desiredArea}"></td>
+                            <td th:text="${storeInquiry.budget}"></td>
+                            <td th:text="${storeInquiry.createDate}"></td>
                         </tr>
                     </tbody>
                     <tbody th:if="${list.size == 0}">
@@ -80,7 +81,7 @@
             </div>
             <div class="section_footer">
                 <div class="table_action" th:if="${list.size > 0}">
-                    <button type="button" class="btn-normal btn-red" onclick="del('store','store_no','가맹점')">삭제</button>
+                    <button type="button" class="btn-normal btn-red" onclick="del('store_inquiry','store_inquiry_no','가맹문의')">삭제</button>
                 </div>
 
                 <!-- 페이징 -->
@@ -91,6 +92,12 @@
 
     <script defer th:src="@{/admin/assets/js/local.js}"></script>
     <script>
+
+        const form_submit = () => {
+            document.getElementById('page').value = 1;
+            searchForm.submit();
+        }
+
         window.addEventListener('DOMContentLoaded', () => {
             layoutFn();
             new Table(document.querySelector('#main table'));

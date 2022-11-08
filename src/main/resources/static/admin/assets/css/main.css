@@ -1323,7 +1323,7 @@ textarea:active, textarea:focus {
   width: 200px;
 }
 .info-register .tab_cont {
-  margin-top: 20px;
+  margin-top: 50px;
 }
 .info-register .tab_cont_item form {
   padding: 8px;
@@ -2226,4 +2226,11 @@ textarea:active, textarea:focus {
   background-repeat: no-repeat;
   background-position: center;
   font-size: 0;
+}
+
+.pic-inform {
+  line-height: 22px;
+  height: 22px;
+  color: #aaaaaa;
+  font-size: 0.875rem;
 }

@@ -11,5 +11,6 @@ public class Site {
     private String address;
     private String businessNumber;
     private String phone;
-    private String copyright;
+    private String createDate;
+    private String updateDate;
 }

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{admin/layout/layout}">
+<th:block layout:fragment="main">
+    <main id="main" class="info-register">
+        <section class="section" style="justify-content: flex-start; gap: 60px 0;">
+            <div class="section_header">
+                <div>
+                    <h2 class="section_title">사이트 정보 & 정책 관리</h2>
+                </div>
+            </div>
+            <div class="tab">
+                <div class="tab_nav">
+                    <a href="" class="tab_nav_item btn btn-tab site_info on" value="1">사이트 정보</a>
+                    <a href="" class="tab_nav_item btn btn-tab site_info" value="2">개인정보취급방침</a>
+                </div>
+
+                <div class="tab_cont">
+                    <!-- 사이트 정보 -->
+                    <article class="tab_cont_item on" th:object="${site}" style="width: 800px; margin: 0 auto;">
+                        <form id="site_form" style="border: 0;">
+                            <div class="flex_jc_as_g40">
+                                <fieldset class="fieldset">
+
+                                    <span class="input-wrap" style="height: 170px; margin-bottom: 20px;">
+                                        <label class="label">홈페이지 로고</label>
+                                        <div class="input-group">
+                                            <div class="pic" style="width: 220px; height: 40px; margin-bottom: 20px;">
+                                                <input type="file" id="logofile" name="logofile"
+                                                    onchange="fileUpload(this)" style="display: none">
+                                                <input type="hidden" th:field="*{logo}">
+                                                <label for="logofile" style="cursor: pointer;">
+                                                    <img width="100%" height="100%" th:if="*{logo != null}"
+                                                        th:src="*{logo}" />
+                                                    <img width="100%" height="100%" th:if="*{logo == null}" />
+                                                </label>
+                                            </div>
+                                            <div class="pic-inform">*사용자 페이지에 노출될 로고입니다.</div>
+                                            <div class="pic-inform">*png/jpg/jpeg 형식의 파일만 업로드 가능합니다.</div>
+                                            <div class="pic-inform">*파일 크기는 220/40으로 최대한 맞춰주세요. </div>
+                                        </div>
+                                    </span>
+
+                                    <span class="input-wrap">
+                                        <label class="label" for="ceo">대표자 명</label>
+                                        <input class="input" type="text" th:field="*{ceo}" maxlength="13">
+                                    </span>
+
+                                    <span class="input-wrap">
+                                        <label class="label" for="address">회사 주소</label>
+                                        <input class="input" type="text" th:field="*{address}" maxlength="255">
+                                    </span>
+
+                                    <span class="input-wrap">
+                                        <label class="label" for="businessNumber">사업자번호</label>
+                                        <input class="input" type="text" th:field="*{businessNumber}">
+                                    </span>
+
+                                    <span class="input-wrap">
+                                        <label class="label" for="phone">대표전화</label>
+                                        <input class="input" type="text" th:field="*{phone}" maxlength="13"
+                                            onkeyup="autoHyphen(this)">
+                                    </span>
+
+
+
+                                    <span class="input-wrap">
+                                        <label class="label" for="createDate">등록일자</label>
+                                        <input class="input" type="text" th:field="*{createDate}" readonly>
+                                    </span>
+
+                                    <span class="input-wrap">
+                                        <label class="label" for="updateDate">수정일자</label>
+                                        <input class="input" type="text" th:field="*{updateDate}" readonly>
+                                    </span>
+
+                                </fieldset>
+
+                            </div>
+
+                        </form>
+                        <div class="form_action">
+                            <button type="button" class="btn-normal btn-blue" onclick="siteUpdate()">수정</button>
+                        </div>
+                    </article>
+
+
+                    <!-- 개인정보취급방침-->
+                    <article class="tab_cont_item" th:object="${privacyPolicy}">
+                        <form id="policy_form">
+                            <input type="hidden" th:field="*{policyNo}">
+                            <textarea cols="30" rows="10" th:field="*{content}"></textarea>
+                            <table>
+                                <tr>
+                                    <th>최초등록일자</th>
+                                    <td th:text="*{createDate}"></td>
+                                    <th>최초수정일자</th>
+                                    <td th:text="*{updateDate}"></td>
+                                </tr>
+                            </table>
+                        </form>
+                        <div class="form_action">
+                            <button type="button" class="btn-normal btn-blue" onclick="policyUpdate()">수정</button>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+    </main>
+    <script defer th:src="@{/admin/assets/js/file.js}"></script>
+    <script>
+
+        function policyUpdate() {
+            const form = document.getElementById('policy_form')
+            const policyNo = form.policyNo.value
+            const content = form.content.value
+
+            if (confirm('정책을 수정시겠습니까?')) {
+                ajax(`/admin/policy/update`, 'POST', { content, policyNo })
+                    .then((data) => {
+                        alert(data.message);
+                    })
+                    .catch((error) => console.log(error));
+            }
+        }
+
+        function siteUpdate() {
+            const form = document.getElementById('site_form')
+            const formData = new FormData();
+
+            formData.append('logofile', form.logofile.files[0]);
+            formData.append('logo', form.logo.value);
+            formData.append('ceo', form.ceo.value);
+            formData.append('address', form.address.value);
+            formData.append('businessNumber', form.businessNumber.value);
+            formData.append('phone', form.phone.value);
+
+            if (confirm('사이트 정보를 수정시겠습니까?')) {
+                fetch(`/admin/site/update`, {
+                    method: 'POST',
+                    cache: 'no-cache',
+                    body: formData
+                })
+                    .then((response) => response.json()).then((data) => {
+                        alert(data.message);
+                    })
+                    .catch((error) => console.log(error));
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            layoutFn();
+            new Tab(document.querySelector('.tab'));
+        });
+    </script>
+</th:block>
+
+</html>

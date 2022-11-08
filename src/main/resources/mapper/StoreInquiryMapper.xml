@@ -2,7 +2,7 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.goodkin.repository.StoreInquiryInquiryRepository">
+<mapper namespace="com.goodkin.repository.StoreInquiryRepository">
 
     <select id="getStoreInquirys" resultType="StoreInquiry"> 
         select * 
@@ -16,7 +16,7 @@
         where store_inquiry_no = #{storeInquiryNo}
     </select>
 
-    <insert id="save" parameterType="StoreInquiry" useGeneratedKeys="true"  keyProperty="StoreInquiryNo">
+    <insert id="save" parameterType="StoreInquiry" useGeneratedKeys="true"  keyProperty="storeInquiryNo">
         INSERT INTO store_inquiry (
             customer_name, customer_phone, desired_area, budget, content, current_store_operate_status, policy_status
         ) VALUES (
@@ -42,6 +42,33 @@
         FROM store_inquiry 
         where store_inquiry_no = #{storeInquiryNo}
     </delete>
+
+    <!-- 관리자 -->
+
+	<sql id="filter">
+		<if test="!kind.equals('') and !keyword.equals('')">
+			and ${kind} LIKE CONCAT('%',#{keyword},'%') 
+		</if>
+        <if test="!address.equals('')">
+            and desired_area LIKE '%${address} ${subAddress}%'
+        </if>
+	</sql>
+
+    <select id="listCount" resultType="int">
+        SELECT      COUNT(*)
+        FROM        store_inquiry
+        WHERE       store_inquiry_no > 0
+		<include refid="filter" />
+    </select>
+
+    <select id="list" resultType="StoreInquiry">
+        SELECT      *
+        FROM        store_inquiry
+        WHERE       store_inquiry_no > 0
+		<include refid="filter" />
+        ORDER BY store_inquiry_no DESC
+        limit ${paging.startRow},${paging.endRow}
+    </select>
 
 
 </mapper>

@@ -1,9 +1,7 @@
 package com.goodkin.model.store;
 
-import lombok.Builder;
 import lombok.Data;
 
-@Builder
 @Data
 public class StoreInquiry {
     private Long storeInquiryNo;

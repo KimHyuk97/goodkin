@@ -143,16 +143,6 @@
                     }
                 }
 
-                if(mode === 'update') {
-                    const deleteFiles = document.getElementsByName('deleteFiles')
-                    if(deleteFiles) {
-                        console.log(deleteFiles);
-                        for(let file of deleteFiles) {
-                            formData.append("deleteFiles", file.value)
-                        }   
-                    };
-                }
-
                 fetch(mode === 'update' ? `./${mode}` : `/api/customerInquiry/insert`, {
                     method: 'POST',
                     cache: 'no-cache',
