@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div class="overlay" th:fragment="aside">
+  <nav class="nav">
+    <div class="nav-head">
+      <a class="logo" th:href="@{/}">굿킨</a>
+      <button type="button" class="btn-close" onClick="btnClose()">
+        Close
+      </button>
+    </div>
+    <div class="nav-main">
+      <ul class="menu">
+        <li><a th:href="@{/about}">브랜드 소개</a></li>
+        <li><a th:href="@{/self-employment}">자영업 이야기</a></li>
+        <li><a th:href="@{/strategy}">성공창업 전략</a></li>
+        <li><a th:href="@{/franchise}">프렌차이즈</a></li>
+        <li><a th:href="@{/menu}">메뉴 소개</a></li>
+        <li><a th:href="@{/store}">매장 안내</a></li>
+        <li><a th:href="@{/customer-inquiry}">고객의 소리</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+</html>

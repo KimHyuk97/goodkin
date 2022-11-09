@@ -1,5 +1,7 @@
 package com.goodkin.controller;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +27,15 @@ public class StoreController {
     @ResponseBody
     public ResponseDto<?> getStores() {
         return storeService.getStores();
+    }
+
+    @PostMapping("/api/store/map")
+    @ResponseBody
+    public ResponseDto<?> getStoreMap(@RequestBody Map<String, String> map) {
+        return storeService.getStoresMap(map.get("siDo"), 
+            map.get("guGun"), 
+            map.get("dong"),
+            Integer.parseInt(map.get("page")));
     }
     
     @GetMapping("/admin/store/list")

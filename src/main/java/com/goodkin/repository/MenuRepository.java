@@ -18,7 +18,7 @@ public interface MenuRepository {
 
     public Menu getMenu(Long MenuNo);
 
-    public Menu findByCategory(MenuCategroy category);
+    public List<Menu> findByCategory(MenuCategroy category);
     
     public Menu findByName(String name);
 
@@ -39,5 +39,5 @@ public interface MenuRepository {
     public List<Menu> list(@Param("kind")String kind, @Param("keyword")String keyword, @Param("category") String category, @Param("paging") Pagination paging);
 
     //메뉴 현재이름을 제외한 이름 중복확인
-    public Menu menuNameValidation(@Param("menuNo") Long menuNo, @Param("newName") String name);    
+    public Menu menuNameValidation(@Param("menuNo") Long menuNo, @Param("newName") String name);  
 }

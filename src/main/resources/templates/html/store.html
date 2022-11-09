@@ -1,141 +1,123 @@
 <!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>굿킨</title>
-    <link rel="stylesheet" type="text/css" href="../css/common.min.css" />
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
-    <!-- 네이버 지도 API -->
-    <script
-      type="text/javascript"
-      src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=YOUR_CLIENT_ID"
-    ></script>
-  </head>
-  <body>
-    <div class="root">
-      <header>
-        <div>
-          <a class="logo" href="/">굿킨</a>
-          <ul class="menu">
-            <li><a href="../html/about.html">브랜드 소개</a></li>
-            <li><a href="../html/self-employment.html">자영업 이야기</a></li>
-            <li><a href="../html/strategy.html">성공창업 전략</a></li>
-            <li><a href="../html/franchise.html">프렌차이즈</a></li>
-            <li><a href="../html/menu.html">메뉴 소개</a></li>
-            <li><a href="../html/store.html">매장 안내</a></li>
-            <li><a href="../html/customer-inquiry.html">고객의 소리</a></li>
-          </ul>
-        </div>
-        <button type="button" class="btn-menu" onclick="btnMenu()">Menu</button>
-      </header>
-      <div class="overlay">
-        <nav class="nav">
-          <div class="nav-head">
-            <a class="logo" href="/">굿킨</a>
-            <button type="button" class="btn-close" onClick="btnClose()">
-              Close
-            </button>
-          </div>
-          <div class="nav-main">
-            <ul class="menu">
-              <li><a href="../html/about.html">브랜드 소개</a></li>
-              <li><a href="../html/self-employment.html">자영업 이야기</a></li>
-              <li><a href="../html/strategy.html">성공창업 전략</a></li>
-              <li><a href="../html/franchise.html">프렌차이즈</a></li>
-              <li><a href="../html/menu.html">메뉴 소개</a></li>
-              <li><a href="../html/store.html">매장 안내</a></li>
-              <li><a href="../html/customer-inquiry.html">고객의 소리</a></li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-
-      <main>
-        <div id="map" class="map"></div>
-        <section>
-          <h1 class="title">매장 목록</h1>
-          <table class="line-table">
-            <thead>
-              <tr>
-                <th>매장명</th>
-                <th>주소</th>
-                <th>전화번호</th>
-                <th>매장 서비스</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>방학쌍문점</td>
-                <td>서울시 도봉구 도봉로 113길 10</td>
-                <td>02-908-8899</td>
-                <td>
-                  <div class="icon-wrapper">
-                    <span class="icon-delivery"></span>
-                    <span class="icon-takeout"></span>
-                    <span class="icon-chair"></span>
-                    <span class="icon-park"></span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>오패산점</td>
-                <td>서울시 강북구 오패산로52길 58</td>
-                <td>02-985-8899</td>
-                <td>
-                  <div class="icon-wrapper">
-                    <span class="icon-delivery active"></span>
-                    <span class="icon-takeout active"></span>
-                    <span class="icon-chair active"></span>
-                    <span class="icon-park active"></span>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-      </main>
-      <footer>
-        <div class="logo">굿킨</div>
-        <ul class="menu">
-          <li><a href="../html/about.html"> 브랜드 소개 </a></li>
-          <li><a href="../html/franchise.html"> 프랜차이즈 </a></li>
-          <li><a href="../html/store.html"> 매장 안내 </a></li>
-          <li><a href="../html/privacy.html"> 개인정보취급방침 </a></li>
-        </ul>
-
-        <ul class="info">
-          <li>대표자: 이도현</li>
-          <li>주소: 서울특별시 도봉구 도봉로 113길 10, 1층</li>
-          <li>사업자등록번호: 710-81-02860</li>
-          <li>대표 전화: 02-994-3170</li>
-        </ul>
-        <div class="copyright">
-          Copyright 2022 잘만든치킨 굿킨. All rights reserved.
-        </div>
-      </footer>
+<th:block layout:fragment="main">
+  <main>
+    <div style="display: flex; width: 89%; height: 50px; background: #fff; gap: 0; margin: 20px 0; padding: 0 10px;">
+      <input type="text" id="address" placeholder="지역구, 지역명으로 검색" autocomplete="off">
+      <button style="width: 150px; background: #F4A426;" type="button" onclick="mapSearch()">검색</button>
     </div>
-    <script
-      type="text/javascript"
-      src="../js/libs/jquery-3.6.1.min.js"
-    ></script>
-    <script src="../js/common.js"></script>
+    <div id="map" class="map"></div>
+    <section style="gap: 20px;">
+      <h1 class="title">매장 목록</h1>
+      <span id="store_count"></span>
+      <table class="line-table">
+        <thead>
+          <tr>
+            <th>매장명</th>
+            <th>주소</th>
+            <th>전화번호</th>
+            <th>매장 서비스</th>
+          </tr>
+        </thead>
+        <tbody id="list"></tbody>
+      </table>
+      <div id="pagination">
 
-    <!-- 네이버 지도 API -->
-    <script
-      type="text/javascript"
-      src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=YOUR_CLIENT_ID&callback=initMap"
-    ></script>
-    <script type="text/javascript">
-      var map = null;
+      </div>
+    </section>
+  </main>
 
-      function initMap() {
-        map = new naver.maps.Map("map", {
-          center: new naver.maps.LatLng(37.3595704, 127.105399),
-          zoom: 10,
-        });
-      }
-    </script>
-  </body>
+  <!-- 네이버 지도 API -->
+  <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=sg6n0oldss&submodules=geocoder"></script>
+  <script defer th:src="@{/js/storeMap.js}"></script>
+  <script type="text/javascript">
+
+    let currentAddress = {};
+
+    function store_data(data) {
+
+      // 데이터 처리
+      const template = data.list.length > 0 
+        ? data.list.map(item => `
+          <tr>
+            <td>${item.name}</td>
+            <td>${item.address}, ${item.detailAddress}</td>
+            <td>${item.phone}</td>
+            <td>
+              <div class="icon-wrapper">
+                <span class="icon-delivery ${item.service.includes('배달') ? 'active' : ''}"></span>
+                <span class="icon-takeout ${item.service.includes('포장') ? 'active' : ''}""></span>
+                <span class="icon-chair ${item.service.includes('홀') ? 'active' : ''}""></span>
+                <span class="icon-park ${item.service.includes('주차') ? 'active' : ''}""></span>
+              </div>
+            </td>
+          </tr>
+        `)
+        :`
+          <tr>
+            <td colspan="4">등록된 매장 정보가 없습니다.</td>
+          </tr>
+        `;
+
+        // 페이징처리
+        const paging = data.paging;
+        const page = data.page;
+
+        if(paging.limitCount > 10) {
+          const pagination_template = `
+              <ul>
+                  ${paging.page > 10 ? `<li><a class="first" onclick="getStores('address', ${paging.page-10})"></a></li>` : ''}
+                  ${paging.page > 1 ? `<li><a class="prev" onclick="getStores('address', ${paging.page-1})"></a><li>` : ''}
+                  [[page]]
+                  ${paging.page < paging.maxPage ? `<li><a class="next" onclick="getStores('address', ${paging.page+1})">다음</a><li>` : ''}
+                  ${paging.page+10 < paging.maxPage ? `<li><a class="last" onclick="getStores('address', ${paging.page+10})">last</a><li>` : ''} 
+              </ul>
+          `;
+
+          let page_template = ''
+          for(let i = paging.startPage; i<= paging.endPage; i++) {
+            let cuurentPage = i+(paging.startPage-1);
+            page_template += `
+              <li>
+                <a class="${cuurentPage == page ? 'on' : ''}" onclick="getStores('address', ${cuurentPage})">
+                  ${cuurentPage}
+                </a>
+              </li>
+            `
+          }
+          
+          document.getElementById('pagination').innerHTML = pagination_template.replace('[[page]]', page_template);
+        } 
+
+        document.getElementById('store_count').innerText = `'${currentAddress.area1} ${currentAddress.area2} ${currentAddress.area3}' - 총 ${data.paging.limitCount}건`
+        document.getElementById('list').innerHTML = template.join('')
+    }
+
+    function getStores(address, page=1) {
+      if(address == 'address') address = currentAddress;
+      ajax(`/api/store/map`, 'post', {
+        siDo: address.area1,
+        guGun: address.area2,
+        dong: address.area3,
+        page
+      })
+        .then((response) => {
+          currentAddress = address
+          // 가맹점 데이터
+          store_data(response.data);
+          // 마커 생성
+          makeMarkers(response.data.list);
+        })
+        .catch((error) => console.log(error));
+    }
+
+    window.addEventListener('load', ()=>{
+      mapSearch()
+    })
+
+  </script>
+</th:block>
+
 </html>

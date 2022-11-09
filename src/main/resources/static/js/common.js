@@ -42,6 +42,17 @@ function tab(event, tabName) {
 
   document.getElementById(tabName).classList.add("active");
   event.currentTarget.classList.add("active");
+
+  getMenus(tabName);
+}
+
+// 메뉴 데이터 통신
+function getMenus(category) {
+  ajax(`/api/menu/${category.toUpperCase()}`, 'post')
+    .then((response) => {
+        menu_data(response.data, category);
+    })
+    .catch((error) => console.log(error));
 }
 
 (function ($, window) {
@@ -78,24 +89,10 @@ function tab(event, tabName) {
     });
   }
 
-  function goHome() {
-    $("header .logo").click(function () {
-      // server
-      // location.href = "/";
-
-      // local
-      if (location.pathname.includes("index.html"))
-        location.href = "./index.html";
-      else location.href = "../index.html";
-      return false;
-    });
-  }
-
   $(window).on({
     load: function () {
       createElement();
       goBack();
-      goHome();
     },
   });
 })(jQuery, window);

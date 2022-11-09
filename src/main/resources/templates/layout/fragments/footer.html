@@ -1,10 +1,12 @@
-<footer>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<footer th:fragment="footer">
   <div class="logo">굿킨</div>
   <ul class="menu">
-    <li><a href="/html/about.html"> 브랜드 소개 </a></li>
-    <li><a href="/html/franchise.html"> 프랜차이즈 </a></li>
-    <li><a href="/html/store.html"> 매장 안내 </a></li>
-    <li><a href="/html/privacy.html"> 개인정보취급방침 </a></li>
+    <li><a href="/about"> 브랜드 소개 </a></li>
+    <li><a href="/franchise"> 프랜차이즈 </a></li>
+    <li><a href="/store"> 매장 안내 </a></li>
+    <li><a href="/privacy"> 개인정보취급방침 </a></li>
   </ul>
 
   <ul class="info">
@@ -17,3 +19,5 @@
     Copyright 2022 잘만든치킨 굿킨. All rights reserved.
   </div>
 </footer>
+
+</html>

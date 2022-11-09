@@ -1,271 +1,247 @@
 <!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>굿킨</title>
-    <link rel="stylesheet" type="text/css" href="../css/common.min.css" />
-  </head>
-  <body>
-    <div class="root">
-      <header>
-        <div>
-          <a class="logo" href="/">굿킨</a>
-          <ul class="menu">
-            <li><a href="../html/about.html">브랜드 소개</a></li>
-            <li><a href="../html/self-employment.html">자영업 이야기</a></li>
-            <li><a href="../html/strategy.html">성공창업 전략</a></li>
-            <li><a href="../html/franchise.html">프렌차이즈</a></li>
-            <li><a href="../html/menu.html">메뉴 소개</a></li>
-            <li><a href="../html/store.html">매장 안내</a></li>
-            <li><a href="../html/customer-inquiry.html">고객의 소리</a></li>
-          </ul>
-        </div>
-        <button type="button" class="btn-menu" onclick="btnMenu()">Menu</button>
-      </header>
-      <div class="overlay">
-        <nav class="nav">
-          <div class="nav-head">
-            <a class="logo" href="/">굿킨</a>
-            <button type="button" class="btn-close" onClick="btnClose()">
-              Close
-            </button>
-          </div>
-          <div class="nav-main">
-            <ul class="menu">
-              <li><a href="../html/about.html">브랜드 소개</a></li>
-              <li><a href="../html/self-employment.html">자영업 이야기</a></li>
-              <li><a href="../html/strategy.html">성공창업 전략</a></li>
-              <li><a href="../html/franchise.html">프렌차이즈</a></li>
-              <li><a href="../html/menu.html">메뉴 소개</a></li>
-              <li><a href="../html/store.html">매장 안내</a></li>
-              <li><a href="../html/customer-inquiry.html">고객의 소리</a></li>
-            </ul>
-          </div>
-        </nav>
-      </div>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
-      <main>
-        <div class="banner">
-          <img src="../assets/images/img-banner-franchise.png" alt="banner" />
-        </div>
-        <section>
-          <h1 class="title">창업비용</h1>
-
-          <table class="grid-table">
-            <caption>
-              ※ 기타 위 내용에 포함되지 않은 철거비, 전기증설, 가스공사,
-              냉난방기기 및 온수기 설치, 전면유리 교체, 돌출간판, 닥트공사, 어닝
-              설치 등은 별도의 비용이 추가될 수 있습니다.
-              <br />
-              ※ 인테리어는 직접 시공 가능하며, 직접 시공 시 감리비가 발생합니다.
-            </caption>
-            <thead>
-              <tr>
-                <th>구분</th>
-                <th>내역</th>
-                <th>금액</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>가맹비</th>
-                <td>브랜드 및 상표 사용권</td>
-                <td>5,500,000 원</td>
-              </tr>
-              <tr>
-                <th>교육비</th>
-                <td>조리 및 서비스 교육 등</td>
-                <td>3,300,000 원</td>
-              </tr>
-              <tr>
-                <th>인테리어</th>
-                <td>
-                  목공사, 전기, 설비, 타일, 주방방수, 실내조명 공사 등
-                  <br />(직접공사 가능)
-                </td>
-                <td>17,600,000 원</td>
-              </tr>
-              <tr>
-                <th>간판</th>
-                <td>간판 사이즈에 따라 변동</td>
-                <td>2,200,000 원</td>
-              </tr>
-              <tr>
-                <th>주방기기 및 집기</th>
-                <td>튀김기, 냉장고, 간데기, 작업대 등</td>
-                <td>9,615,000 원</td>
-              </tr>
-              <tr>
-                <th>초도</th>
-                <td>식자제 일체</td>
-                <td>4,250,000 원</td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <th>합계</th>
-                <td colspan="2">42,460,000원</td>
-              </tr>
-            </tfoot>
-          </table>
-        </section>
-        <section>
-          <h1 class="title">개설 절차</h1>
-          <ul class="process">
-            <li>
-              <img
-                src="../assets/images/process/icon-process-01.svg"
-                alt="icon"
-              />
-              <p>1. 본사 방문 및 상담</p>
-            </li>
-            <li>
-              <img
-                src="../assets/images/process/icon-process-02.svg"
-                alt="icon"
-              />
-              <p>2. 상권분석 / 점포선정</p>
-            </li>
-            <li>
-              <img
-                src="../assets/images/process/icon-process-03.svg"
-                alt="icon"
-              />
-              <p>3. 가맹계약</p>
-            </li>
-            <li>
-              <img
-                src="../assets/images/process/icon-process-04.svg"
-                alt="icon"
-              />
-              <p>4. 인테리어 / 기물입고</p>
-            </li>
-            <li>
-              <img
-                src="../assets/images/process/icon-process-05.svg"
-                alt="icon"
-              />
-              <p>5. 조리 및 운영교육</p>
-            </li>
-            <li>
-              <img
-                src="../assets/images/process/icon-process-06.svg"
-                alt="icon"
-              />
-              <p>6. 오픈 사전점검 및 가오픈</p>
-            </li>
-            <li>
-              <img
-                src="../assets/images/process/icon-process-07.svg"
-                alt="icon"
-              />
-              <p>7. 오픈 행사</p>
-            </li>
-            <li>
-              <img
-                src="../assets/images/process/icon-process-08.svg"
-                alt="icon"
-              />
-              <p>8. 사후관리 및 운영지원</p>
-            </li>
-          </ul>
-        </section>
-        <section>
-          <h1 class="title">가맹 문의</h1>
-          <form action="#" name="storeInquiry" method="post">
-            <hr />
-            <label>성명 <span class="required">*</span></label>
-            <div class="input">
-              <input type="text" name="name" id="name" required />
-            </div>
-
-            <hr />
-            <label>연락처 <span class="required">*</span></label>
-            <div class="input">
-              <input type="text" name="phone" id="phone" required />
-            </div>
-
-            <hr />
-            <label>창업 희망지역</label>
-            <div class="input">
-              <input type="text" name="region" id="region" />
-            </div>
-
-            <hr />
-            <label>창업 예산</label>
-            <div class="input">
-              <input type="text" name="budget" id="budget" />
-            </div>
-
-            <hr />
-            <label>현재 매장 운영 여부</label>
-            <div class="input">
-              <select name="whether" id="whether">
-                <option class="placeholder" hidden selected value="">
-                  선택
-                </option>
-                <option value="true">1</option>
-                <option value="false">2</option>
-              </select>
-            </div>
-
-            <hr />
-            <label>내용</label>
-            <div class="textarea">
-              <textarea name="contents" id="contents"></textarea>
-            </div>
-
-            <hr />
-            <div class="grid-rows textbox">
-              <label class="checkbox">
-                <input type="checkbox" value="blue" name="agree" id="agree" />
-                개인정보 수집 및 활용 동의
-              </label>
-              <div class="text">
-                개인정보 수집·활용 동의 <br /><br />
-                (주)조은에프씨는 이용하는 고객님의 개인정보 보호를 위하여,
-                개인정보 수집의 목적과 그 정보의 정책적, 시스템적 보안에 관하여
-                규정하고 그에 따른 동의를 받고자 합니다.<br /><br />
-                1. 개인정보 수집 및 이용목적 <br />- 기름 재사용 신고 확인 목적
-                외에 어떠한 용도로도 사용되지 않습니다. <br />- 신고 건 확인에
-                있어, 원활하게 신고 사항의 접수 및 답변이 이루어질 수 있도록
-                하기 위한 최소한의 정보를 수집합니다.<br /><br />
-                2. 수집하는 개인정보의 항목 <br />- 이름, 연락처(전화번호,
-                핸드폰번호), 이메일
-              </div>
-            </div>
-            <div class="grid-rows submit">
-              <input type="submit" value="작성 완료" />
-            </div>
-          </form>
-        </section>
-      </main>
-      <footer>
-        <div class="logo">굿킨</div>
-        <ul class="menu">
-          <li><a href="../html/about.html"> 브랜드 소개 </a></li>
-          <li><a href="../html/franchise.html"> 프랜차이즈 </a></li>
-          <li><a href="../html/store.html"> 매장 안내 </a></li>
-          <li><a href="../html/privacy.html"> 개인정보취급방침 </a></li>
-        </ul>
-
-        <ul class="info">
-          <li>대표자: 이도현</li>
-          <li>주소: 서울특별시 도봉구 도봉로 113길 10, 1층</li>
-          <li>사업자등록번호: 710-81-02860</li>
-          <li>대표 전화: 02-994-3170</li>
-        </ul>
-        <div class="copyright">
-          Copyright 2022 잘만든치킨 굿킨. All rights reserved.
-        </div>
-      </footer>
+<th:block layout:fragment="main">
+  <main>
+    <div class="banner">
+      <img th:src="@{/assets/images/img-banner-franchise.png}" alt="banner" />
     </div>
-    <script
-      type="text/javascript"
-      src="../js/libs/jquery-3.6.1.min.js"
-    ></script>
-    <script src="../js/common.js"></script>
-  </body>
+    <section>
+      <h1 class="title">창업비용</h1>
+
+      <table class="grid-table">
+        <caption>
+          ※ 기타 위 내용에 포함되지 않은 철거비, 전기증설, 가스공사,
+          냉난방기기 및 온수기 설치, 전면유리 교체, 돌출간판, 닥트공사, 어닝
+          설치 등은 별도의 비용이 추가될 수 있습니다.
+          <br />
+          ※ 인테리어는 직접 시공 가능하며, 직접 시공 시 감리비가 발생합니다.
+        </caption>
+        <thead>
+          <tr>
+            <th>구분</th>
+            <th>내역</th>
+            <th>금액</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>가맹비</th>
+            <td>브랜드 및 상표 사용권</td>
+            <td>5,500,000 원</td>
+          </tr>
+          <tr>
+            <th>교육비</th>
+            <td>조리 및 서비스 교육 등</td>
+            <td>3,300,000 원</td>
+          </tr>
+          <tr>
+            <th>인테리어</th>
+            <td>
+              목공사, 전기, 설비, 타일, 주방방수, 실내조명 공사 등
+              <br />(직접공사 가능)
+            </td>
+            <td>17,600,000 원</td>
+          </tr>
+          <tr>
+            <th>간판</th>
+            <td>간판 사이즈에 따라 변동</td>
+            <td>2,200,000 원</td>
+          </tr>
+          <tr>
+            <th>주방기기 및 집기</th>
+            <td>튀김기, 냉장고, 간데기, 작업대 등</td>
+            <td>9,615,000 원</td>
+          </tr>
+          <tr>
+            <th>초도</th>
+            <td>식자제 일체</td>
+            <td>4,250,000 원</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>합계</th>
+            <td colspan="2">42,460,000원</td>
+          </tr>
+        </tfoot>
+      </table>
+    </section>
+    <section>
+      <h1 class="title">개설 절차</h1>
+      <ul class="process">
+        <li>
+          <img th:src="@{/assets/images/process/icon-process-01.svg}" alt="icon" />
+          <p>1. 본사 방문 및 상담</p>
+        </li>
+        <li>
+          <img th:src="@{/assets/images/process/icon-process-02.svg}" alt="icon" />
+          <p>2. 상권분석 / 점포선정</p>
+        </li>
+        <li>
+          <img th:src="@{/assets/images/process/icon-process-03.svg}" alt="icon" />
+          <p>3. 가맹계약</p>
+        </li>
+        <li>
+          <img th:src="@{/assets/images/process/icon-process-04.svg}" alt="icon" />
+          <p>4. 인테리어 / 기물입고</p>
+        </li>
+        <li>
+          <img th:src="@{/assets/images/process/icon-process-05.svg}" alt="icon" />
+          <p>5. 조리 및 운영교육</p>
+        </li>
+        <li>
+          <img th:src="@{/assets/images/process/icon-process-06.svg}" alt="icon" />
+          <p>6. 오픈 사전점검 및 가오픈</p>
+        </li>
+        <li>
+          <img th:src="@{/assets/images/process/icon-process-07.svg}" alt="icon" />
+          <p>7. 오픈 행사</p>
+        </li>
+        <li>
+          <img th:src="@{/assets/images/process/icon-process-08.svg}" alt="icon" />
+          <p>8. 사후관리 및 운영지원</p>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h1 class="title">가맹 문의</h1>
+      <form name="storeInquiry" onsubmit="return false">
+        <hr />
+        <label>성명 <span class="required">*</span></label>
+        <div class="input">
+          <input type="text" name="customerName" maxlength="50" placeholder="성명 입력"/>
+        </div>
+
+        <hr />
+        <label>연락처 <span class="required">*</span></label>
+        <div class="input">
+          <input type="text" name="customerPhone" maxlength="13" placeholder="숫자만 입력" onkeyup="isPhone(this)" />
+        </div>
+
+        <hr />
+        <label>창업 희망지역</label>
+        <div class="input">
+          <input type="text" name="desiredArea" maxlength="255" placeholder="창업 희망지역 입력"/>
+        </div>
+
+        <hr />
+        <label>창업 예산</label>
+        <div class="input">
+          <input type="text" name="budget" maxlength="50" placeholder="숫자만 입력" onkeyup="isNumber(this)" />
+        </div>
+
+        <hr />
+        <label>현재 매장 운영 여부</label>
+        <div class="input">
+          <select name="currentStoreOperateStatus">
+            <option class="placeholder" hidden selected value="">
+              선택
+            </option>
+            <option value="true">o</option>
+            <option value="false">x</option>
+          </select>
+        </div>
+
+        <hr />
+        <label>내용</label>
+        <div class="textarea">
+          <textarea name="content"></textarea>
+        </div>
+
+        <hr />
+        <div class="grid-rows textbox">
+          <label class="checkbox">
+            <input type="checkbox" value="true" name="policyStatus" id="agree" />
+            개인정보 수집 및 활용 동의
+          </label>
+          <div class="text">
+            개인정보 수집·활용 동의 <br /><br />
+            (주)조은에프씨는 이용하는 고객님의 개인정보 보호를 위하여,
+            개인정보 수집의 목적과 그 정보의 정책적, 시스템적 보안에 관하여
+            규정하고 그에 따른 동의를 받고자 합니다.<br /><br />
+            1. 개인정보 수집 및 이용목적 <br />- 기름 재사용 신고 확인 목적
+            외에 어떠한 용도로도 사용되지 않습니다. <br />- 신고 건 확인에
+            있어, 원활하게 신고 사항의 접수 및 답변이 이루어질 수 있도록
+            하기 위한 최소한의 정보를 수집합니다.<br /><br />
+            2. 수집하는 개인정보의 항목 <br />- 이름, 연락처(전화번호,
+            핸드폰번호), 이메일
+          </div>
+        </div>
+        <div class="grid-rows submit">
+          <input type="submit" onclick="process()" value="작성 완료" />
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    function process() {
+
+      if (storeInquiryValidation()) {
+        ajax('/api/storeInquiry/insert', 'POST', {
+          customerName: storeInquiry.customerName.value,
+          customerPhone: storeInquiry.customerPhone.value,
+          desiredArea: storeInquiry.desiredArea.value,
+          budget: storeInquiry.budget.value.replaceAll(',',''),
+          content: storeInquiry.content.value,
+          currentStoreOperateStatus: storeInquiry.currentStoreOperateStatus.value,
+          policyStatus: true,
+        })
+          .then((data) => {
+            alert(data.message);
+            location.reload();
+          })
+          .catch((error) => console.log(error));
+      }
+    }
+
+    function storeInquiryValidation() {
+      const customerName = storeInquiry.customerName;
+      const customerPhone = storeInquiry.customerPhone;
+      const policyStatus = storeInquiry.policyStatus;
+
+      if (customerName.value === '') {
+        alert('고객 성명을 입력해주세요.');
+        customerName.focus();
+        return false
+      }
+
+      if (customerPhone.value === '') {
+        alert('고객 연락처를 입력해주세요.');
+        customerPhone.focus();
+        return false
+      } else {
+        const regExp = /^(\d{2,3})-(\d{3,4})-(\d{4})$/;
+        if (!regExp.test(customerPhone.value)) {
+          alert('정확한 연락처를 입력해주세요.');
+          customerPhone.focus();
+          return false;
+        }
+      }
+
+      if (!policyStatus.checked) {
+        alert('개인정보 수집 및 활용을 동의해주세요.');
+        return false
+      }
+
+      return true
+    }
+
+    const isPhone = (target) => {
+      target.value = target.value
+        .replace(/[^0-9]/g, '')
+        .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+    }
+
+
+
+    const isNumber = (target) => {
+      target.value = Number(target.value.replace(/[^0-9]/g,"")).toLocaleString('ko-KR');
+    }
+  </script>
+
+</th:block>
+
 </html>

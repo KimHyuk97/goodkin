@@ -23,7 +23,7 @@ function serach_map(query) {
 
 function open_map(x, y) {
     const map = new naver.maps.Map('map', {
-        center: new naver.maps.LatLng(y, x), // 잠실 롯데월드를 중심으로 하는 지도
+        center: new naver.maps.LatLng(y, x),
         zoom: 15
     });
 

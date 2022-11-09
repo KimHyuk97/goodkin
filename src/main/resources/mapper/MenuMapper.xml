@@ -73,8 +73,11 @@
     <!-- 메인메뉴 -->
     <select id="getMainMenus" resultType="MainMenu">
         select * 
-        from main_menu
-        order by sort desc
+        from main_menu main
+        join menu m
+        on   m.menu_no = main.menu_no
+        order by sort
+        limit 0,7
     </select>
 
     <!-- 관리자 -->

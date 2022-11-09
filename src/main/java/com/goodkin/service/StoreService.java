@@ -1,6 +1,8 @@
 package com.goodkin.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +27,25 @@ public class StoreService {
      */
     public ResponseDto<?> getStores() {
         return responseService.responseBuilder("", storeRepository.getStores());
+    }
+
+    /*
+     * api 스토어 맵 리스트
+     */
+    public ResponseDto<?> getStoresMap(String siDo, String guGun, String dong, int page) {
+
+        int count = storeRepository.getStoreMapCount(siDo, guGun, dong);
+        
+        Pagination paging = new Pagination(page, count);
+
+        List<Store> list = storeRepository.getStoreMap(siDo, guGun, dong, paging);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("list", list);
+        map.put("paging", paging);
+        map.put("page", page);
+
+        return responseService.responseBuilder("", map);
     }
 
     public ModelAndView list(ModelAndView mv, String kind, String keyword, int page, String address, String subAddress) {
