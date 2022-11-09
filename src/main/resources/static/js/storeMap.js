@@ -13,7 +13,7 @@ const MAP_DATA = {
 
 /* === 지도 검색 === */
 const mapSearch = async () => {
-    const address = document.getElementById('address').value !== ''  ? document.getElementById('address').value : '경기도 부천시 고강동'
+    const address = document.getElementById('address').value !== ''  ? document.getElementById('address').value : '경기도 부천시'
     
     await getSearchByAddress(address)
       .then(res => {
@@ -131,7 +131,19 @@ const makeMarkers = (data) => {
         });
             
         var infoWindow = new naver.maps.InfoWindow({
-            content: `<div style="width:100px;text-align:center;">굿킨 ${item.name}</div>`
+            content: `
+                <div class="nvInfoWindow">
+                    <span>굿킨 ${item.name}</span>
+                    <p>${item.phone}</p>
+                    <p>${item.address}, ${item.detailAddress}</p>
+                </div>`,
+            backgroundColor: "#fff",
+            borderColor: "#F4A426",
+            borderWidth: 3,
+            borderRadius: 15,
+            anchorSize: new naver.maps.Size(10, 10),
+            anchorSkew: true,
+            anchorColor: "#fff",
         });
 
         // 이벤트 생성

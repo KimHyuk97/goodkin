@@ -19,3 +19,11 @@
 #pagination ul a.on {
     font-weight: bold;
 }
+
+.nvInfoWindow {
+    padding: 10px 15px;
+}
+
+.nvInfoWindow span{
+    font-weight: bold;
+}
