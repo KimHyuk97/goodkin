@@ -11,24 +11,10 @@ const MAP_DATA = {
     address: { area1: '', area2: '', area3: '' },
 }
 
-/* === 지도 검색 === */
-const mapSearch = async () => {
-    const address = document.getElementById('address').value !== ''  ? document.getElementById('address').value : '경기도 부천시'
-    
-    await getSearchByAddress(address)
-      .then(res => {
-        dataHandler(res.latlng, res.zoom, res.address)
-      })
-      .catch(err => {
-        alert('검색 지역을 찾을 수 없습니다. 지역명을 정확히 입력해 주세요.')
-      })
-}
 
 /* === 지도 데이터 업데이트 === */
-const dataHandler = (latlng, zoom, address) => {
-    map.setCenter(new naver.maps.LatLng(latlng[0], latlng[1]));
-    map.setZoom(zoom, true);
-    getStores(address);
+const dataHandler = (latlng, zoom) => {
+    map.morph(new naver.maps.LatLng(latlng[0],latlng[1]), zoom, "easeOutCubic");
 }
 
 /* === 지도 생성 === */
@@ -89,6 +75,7 @@ const getRegionByZoom = (regions, zoom) => {
     return result;
 };
 
+/* === 지도 검색 === */
 const getSearchByAddress = (address) => {
     return new Promise((resolve, reject) => {
         naver.maps.Service.geocode({
@@ -119,65 +106,51 @@ const getSearchByAddress = (address) => {
 };
 
 /* === 마커 생성 === */
+const current_marker = [];
+
 const makeMarkers = (data) => {
     const markers = [];
-    const infoWindows = [];
-    
+
     data.forEach(item => {
         var marker = new naver.maps.Marker({
             map: map,
             position: new naver.maps.LatLng(item.y, item.x),
-            zIndex: 999
+            zIndex: 999,
+            icon: {
+                content: `
+                    <div class="marker_container">    
+                        <div class="marker_img"><img src="../assets/images/food.svg" width="16px" height="16px"></div>
+                        <p>잘만든 치킨 굿킨 ${item.name}</p>
+                    </div>`,
+              },
         });
             
-        var infoWindow = new naver.maps.InfoWindow({
-            content: `
-                <div class="nvInfoWindow">
-                    <span>굿킨 ${item.name}</span>
-                    <p>${item.phone}</p>
-                    <p>${item.address}, ${item.detailAddress}</p>
-                </div>`,
-            backgroundColor: "#fff",
-            borderColor: "#F4A426",
-            borderWidth: 3,
-            borderRadius: 15,
-            anchorSize: new naver.maps.Size(10, 10),
-            anchorSkew: true,
-            anchorColor: "#fff",
-        });
-
-        // 이벤트 생성
-        naver.maps.Event.addListener(marker, 'mouseover', (e) => {
-            if (infoWindow.getMap()) {
-                infoWindow.close();
-            } else {
-                infoWindow.open(map, marker);
-            }
-        });
-
         markers.push(marker);
-        infoWindows.push(infoWindow);
+        current_marker.push(marker);
     })
 
-    naver.maps.Event.addListener(map, 'idle', () => {
-        updateMarkers(map, markers);
-    });
+    // 지도 움직임 이벤트
+    // naver.maps.Event.addListener(map, 'idle', () => {
+    //     updateMarkers(map, markers);
+    // });
+
+    updateMarkers(map, markers);
+
 }
 
 function updateMarkers(map, markers) {
 
-    var mapBounds = map.getBounds();
     var marker, position;
 
-    for (var i = 0; i < markers.length; i++) {
-        marker = markers[i]
-        position = marker.getPosition();
+    if(markers.length > 0) {
+        for (var i = 0; i < markers.length; i++) {
+            marker = markers[i]
+            position = marker.getPosition();
 
-        if (mapBounds.hasLatLng(position)) {
             showMarker(map, marker);
-        } else {
-            hideMarker(map, marker);
         }
+    } else {
+        hideMarker(markers);
     }
 }
 
@@ -186,9 +159,15 @@ function showMarker(map, marker) {
     marker.setMap(map);
 }
 
-function hideMarker(map, marker) {
-    if (!marker.setMap()) return;
-    marker.setMap(null);
+function hideMarker(marker) {
+    if(marker === undefined) return;
+
+    if(marker.length > 0){
+        if(Array.isArray(marker)) for (const mk of marker) mk.setMap(null);
+        else marker.setMap(null);
+    } else {
+        for (const mk of current_marker) mk.setMap(null);
+    }
 }
 
 const map = NAVER_MAP();

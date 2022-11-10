@@ -4,14 +4,16 @@
 
 <th:block layout:fragment="main">
   <main>
-    <div style="display: flex; width: 89%; height: 50px; background: #fff; gap: 0; margin: 20px 0; padding: 0 10px;">
-      <input type="text" id="address" placeholder="지역구, 지역명으로 검색" autocomplete="off">
-      <button style="width: 150px; background: #F4A426;" type="button" onclick="mapSearch()">검색</button>
-    </div>
     <div id="map" class="map"></div>
     <section style="gap: 20px;">
       <h1 class="title">매장 목록</h1>
-      <span id="store_count"></span>
+      <div class="search_filter_container">
+        <span id="store_count"></span>
+        <div class="search_filter">
+          <input type="text" id="keyword" placeholder="지역명, 매장명으로 검색" autocomplete="off">
+          <button type="button" onclick="searchHandler()"></button>
+        </div>
+      </div>
       <table class="line-table">
         <thead>
           <tr>
@@ -30,7 +32,8 @@
   </main>
 
   <!-- 네이버 지도 API -->
-  <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=sg6n0oldss&submodules=geocoder"></script>
+  <script type="text/javascript"
+    src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=sg6n0oldss&submodules=geocoder"></script>
   <script defer th:src="@{/js/storeMap.js}"></script>
   <script type="text/javascript">
 
@@ -38,8 +41,10 @@
 
     function store_data(data) {
 
+      console.log(data);
+
       // 데이터 처리
-      const template = data.list.length > 0 
+      const template = data.list.length > 0
         ? data.list.map(item => `
           <tr>
             <td>${item.name}</td>
@@ -55,57 +60,53 @@
             </td>
           </tr>
         `)
-        :`
+        : `
           <tr>
             <td colspan="4">등록된 매장 정보가 없습니다.</td>
           </tr>
         `;
 
-        // 페이징처리
-        const paging = data.paging;
-        const page = data.page;
+      // 페이징처리
+      const paging = data.paging;
+      const page = data.page;
 
-        if(paging.limitCount > 10) {
-          const pagination_template = `
+      if (Number(paging.limitCount) > 10) {
+        const pagination_template = `
               <ul>
-                  ${paging.page > 10 ? `<li><a class="first" onclick="getStores('address', ${paging.page-10})"></a></li>` : ''}
-                  ${paging.page > 1 ? `<li><a class="prev" onclick="getStores('address', ${paging.page-1})"></a><li>` : ''}
+                  ${paging.page > 10 ? `<li><a class="first" onclick="getStores(${paging.page - 10})"></a></li>` : ''}
+                  ${paging.page > 1 ? `<li><a class="prev" onclick="getStores(${paging.page - 1})"></a><li>` : ''}
                   [[page]]
-                  ${paging.page < paging.maxPage ? `<li><a class="next" onclick="getStores('address', ${paging.page+1})">다음</a><li>` : ''}
-                  ${paging.page+10 < paging.maxPage ? `<li><a class="last" onclick="getStores('address', ${paging.page+10})">last</a><li>` : ''} 
+                  ${paging.page < paging.maxPage ? `<li><a class="next" onclick="getStores(${paging.page + 1})">다음</a><li>` : ''}
+                  ${paging.page + 10 < paging.maxPage ? `<li><a class="last" onclick="getStores(${paging.page + 10})">last</a><li>` : ''} 
               </ul>
           `;
 
-          let page_template = ''
-          for(let i = paging.startPage; i<= paging.endPage; i++) {
-            let cuurentPage = i+(paging.startPage-1);
-            page_template += `
+        let page_template = ''
+        for (let i = paging.startPage; i <= paging.endPage; i++) {
+          let cuurentPage = i + (paging.startPage - 1);
+          page_template += `
               <li>
-                <a class="${cuurentPage == page ? 'on' : ''}" onclick="getStores('address', ${cuurentPage})">
+                <a class="${cuurentPage == page ? 'on' : ''}" onclick="getStores(${cuurentPage})">
                   ${cuurentPage}
                 </a>
               </li>
             `
-          }
-          
-          document.getElementById('pagination').innerHTML = pagination_template.replace('[[page]]', page_template);
-        } 
+        }
 
-        document.getElementById('store_count').innerText = `'${currentAddress.area1} ${currentAddress.area2} ${currentAddress.area3}' - 총 ${data.paging.limitCount}건`
-        document.getElementById('list').innerHTML = template.join('')
+        document.getElementById('pagination').innerHTML = pagination_template.replace('[[page]]', page_template);
+      } else {
+        document.getElementById('pagination').innerHTML = '';
+      }
+
+      document.getElementById('store_count').innerText = `총 ${data.paging.limitCount}건`
+      document.getElementById('list').innerHTML = typeof template === "string" ? template : template.join('')
     }
 
-    function getStores(address, page=1) {
-      if(address == 'address') address = currentAddress;
-      ajax(`/api/store/map`, 'post', {
-        siDo: address.area1,
-        guGun: address.area2,
-        dong: address.area3,
-        page
-      })
+    function getStores(page = 1) {
+      const keyword = document.getElementById('keyword').value;
+
+      ajax(`/api/store/map`, 'post', { keyword: keyword, page })
         .then((response) => {
-          currentAddress = address
-          // 가맹점 데이터
           store_data(response.data);
           // 마커 생성
           makeMarkers(response.data.list);
@@ -113,8 +114,27 @@
         .catch((error) => console.log(error));
     }
 
-    window.addEventListener('load', ()=>{
-      mapSearch()
+    // 검색 기능
+    const searchHandler = async () => {
+      const keyword = document.getElementById('keyword').value;
+
+      // 데이터 조회 api
+      await getStores();
+
+      // 지도 검색 api
+      if(keyword !== '') {
+        await getSearchByAddress(keyword)
+          .then(res => {
+            dataHandler(res.latlng, res.zoom)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
+    }
+
+    window.addEventListener('load', () => {
+      searchHandler()
     })
 
   </script>

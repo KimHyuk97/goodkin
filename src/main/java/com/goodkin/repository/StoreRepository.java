@@ -15,10 +15,10 @@ public interface StoreRepository {
     public List<Store> getStores();
 
     // 가맹점 맵 페이지 갯수
-    public int getStoreMapCount(@Param("siDo") String siDo, @Param("guGun") String guGun, @Param("dong")String dong);
+    public int getStoreMapCount(@Param("keyword") String keyword);
 
     // 가맹점 맵 리스트
-    public List<Store> getStoreMap(@Param("siDo") String siDo, @Param("guGun") String guGun, @Param("dong") String dong, @Param("paging")Pagination paging);
+    public List<Store> getStoreMap(@Param("keyword") String keyword, @Param("paging")Pagination paging);
 
     // 가맹점 단일 조회
     public Store getStore(Long storeNo);

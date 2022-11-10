@@ -56,7 +56,7 @@
     <section>
       <div class="swiper menu-swiper">
         <h1 class="title">굿킨의 대표메뉴</h1>
-        
+
         <div class="swiper-button-prev menu-swiper-button-prev"></div>
         <div class="swiper-button-next menu-swiper-button-next"></div>
 
@@ -68,7 +68,7 @@
         </div>
       </div>
     </section>
-    
+
     <!-- 맛집 리뷰 -->
     <section>
       <h1 class="title center">고객님들이 인정한 맛집!</h1>
@@ -79,7 +79,7 @@
       <div class="swiper review-swiper">
         <div class="swiper-wrapper review-swiper-wrapper">
           <div th:each="review : ${reviews}" class="swiper-slide review-swiper-item">
-            <img th:src="${review.fileUrl}" alt="" loading="lazy"/>
+            <img th:src="${review.fileUrl}" alt="" loading="lazy" />
           </div>
         </div>
       </div>
@@ -91,7 +91,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
   <script type="text/javascript" th:src="@{/js/libs/swiper-bundle.min.js}"></script>
-  
+
   <script type="text/javascript">
     const menuSwiper = new Swiper(".menu-swiper", {
       breakpoints: {
@@ -117,11 +117,11 @@
 
     const reviewSwiper = new Swiper(".review-swiper", {
       slidesPerView: "auto",
-      spaceBetween: 30,
       centeredSlides: true,
+      speed: 2000,
       loop: true,
       autoplay: {
-        delay: 5000,
+        delay: 1,
         disableOnInteraction: false,
       },
     });

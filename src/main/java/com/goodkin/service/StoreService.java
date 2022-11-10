@@ -32,17 +32,18 @@ public class StoreService {
     /*
      * api 스토어 맵 리스트
      */
-    public ResponseDto<?> getStoresMap(String siDo, String guGun, String dong, int page) {
+    public ResponseDto<?> getStoresMap(String keyword, int page) {
 
-        int count = storeRepository.getStoreMapCount(siDo, guGun, dong);
+        int count = storeRepository.getStoreMapCount(keyword);
         
         Pagination paging = new Pagination(page, count);
 
-        List<Store> list = storeRepository.getStoreMap(siDo, guGun, dong, paging);
+        List<Store> list = storeRepository.getStoreMap(keyword, paging);
 
         Map<String, Object> map = new HashMap<>();
         map.put("list", list);
         map.put("paging", paging);
+        map.put("keyword", keyword);
         map.put("page", page);
 
         return responseService.responseBuilder("", map);

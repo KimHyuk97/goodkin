@@ -13,20 +13,18 @@
     <select id="getStoreMapCount" resultType="int">
         select count(*)
         from store
-        <if test="!siDo.equals('')">
-            where address like '%${siDo}%' 
-            or address like '%${siDo} ${guGun}%'
-            or address like '%${siDo} ${guGun} ${dong}%'
+        <if test="!keyword.equals('')">
+            where address like '%${keyword}%' 
+            or    name like '%${keyword}%'
         </if>
     </select>
 
     <select id="getStoreMap" resultType="Store">
         select * 
         from store
-        <if test="!siDo.equals('')">
-            where address like '%${siDo}%' 
-            or address like '%${siDo} ${guGun}%'
-            or address like '%${siDo} ${guGun} ${dong}%'
+        <if test="!keyword.equals('')">
+            where address like '%${keyword}%' 
+            or    name like '%${keyword}%'
         </if>
         order by store_no desc
         limit ${paging.startRow},${paging.endRow}

@@ -32,10 +32,7 @@ public class StoreController {
     @PostMapping("/api/store/map")
     @ResponseBody
     public ResponseDto<?> getStoreMap(@RequestBody Map<String, String> map) {
-        return storeService.getStoresMap(map.get("siDo"), 
-            map.get("guGun"), 
-            map.get("dong"),
-            Integer.parseInt(map.get("page")));
+        return storeService.getStoresMap(map.get("keyword"), Integer.parseInt(map.get("page")));
     }
     
     @GetMapping("/admin/store/list")
