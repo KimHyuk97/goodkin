@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{admin/layout/layout}">
+
+<th:block layout:fragment="main">
+    <main id="main" class="member-list">
+        <section class="section">
+            <div class="section_header">
+                <div>
+                    <h2 class="section_title">대표 메뉴 관리</h2>
+                </div>
+                <div>
+                    <a onclick="mainMenuSortChange()" class="btn-normal btn-blue">적용</a>
+                </div>
+            </div>
+            <div class="table">
+                <table>
+                    <colgroup>
+                        <col width="5%"/>
+                        <col width="5%"/>
+                        <col width="10%"/>
+                        <col width="10%"/>
+                        <col width="10%"/>
+                        <col width="10%"/>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th class="check"><input type="checkbox" name="" id=""></th>
+                            <th>메뉴번호</th>
+                            <th>이름</th>
+                            <th>카테고리</th>
+                            <th>순서</th>
+                            <th>정렬</th>
+                        </tr>
+                    </thead>
+                    <tbody th:if="${list.size > 0}" id="list">
+                        <tr th:each="menu, i : ${list}">
+                            <td class="check"><input type="checkbox" name="ck" th:value="${menu.menuNo}"></td>
+                            <td th:text="${menu.menuNo}"></td>
+                            <td th:text="${menu.name}"></td>
+                            <td th:switch="${#strings.toString(menu.category)}">
+                                <th:block th:case="SETMENU">세트메뉴</th:block>
+                                <th:block th:case="CHICKEN">치킨</th:block>
+                                <th:block th:case="TTEOKBOKKI">떡볶이</th:block>
+                            </td>
+                            <td th:text="${menu.sort}"></td>
+                            <td>
+                                <button type="button" th:onclick="up_down(true, [[${i.index}]])"><img th:src="@{/admin/assets/imgs/admin_up.svg}" /></button>
+                                <button type="button" th:onclick="up_down(false, [[${i.index}]])"><img th:src="@{/admin/assets/imgs/admin_down.svg}" /></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody th:if="${list.size == 0}">
+                        <tr>
+                            <td class="none_data" colspan="6">등록된 정보가 없습니다.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section_footer">
+                <div class="table_action" th:if="${list.size > 0}">
+                    <button type="button" class="btn-normal btn-red" onclick="del('menu','menu_no','메뉴')">삭제</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        let list = /*[[${list}]]*/'';
+        /*]]>*/
+
+        function up_down(status, i) {
+            
+            const newList = mainMenuSort(i, status ? -1 : 1);
+
+            if(newList) {
+                const template = newList.length > 0 && newList.map((item, index) => `
+                        <tr>
+                            <td class="check"><input type="checkbox" name="ck">${item.menuNo}</td>
+                            <td>${item.menuNo}</td>
+                            <td>${item.name}</td>
+                            <td>
+                                ${(item.category == 'SETMENU') ? '세트메뉴' : (item.category == 'CHICKEN') ? '치킨' : '떡볶이'}
+                            </td>
+                            <td>${item.sort}</td>
+                            <td>
+                                <button type="button" onclick="up_down(true, ${index})"><img src="/admin/assets/imgs/admin_up.svg" /></button>
+                                <button type="button" onclick="up_down(false, ${index})"><img src="/admin/assets/imgs/admin_down.svg" /></button>
+                            </td>
+                        </tr>
+                    `)
+                
+                list = newList;
+                document.getElementById('list').innerHTML= template.join('');
+            }
+        }
+
+
+        const mainMenuSort = function(idx, moveValue) {
+
+            // 이동할 index 값을 변수에 선언
+            const newPosition = idx + moveValue;
+
+            // 이동할 값이 0보다 작거나 최대값을 벗어나는 경우 종료
+            if (newPosition < 0 || newPosition >= list.length) return;
+
+            // 임의의 변수를 하나 만들고 배열 값 저장
+            const tempList = JSON.parse(JSON.stringify(list));
+
+            // 옮길 대상을 target 변수에 저장하기
+            const target = tempList.splice(idx, 1)[0];
+
+            // 새로운 위치에 옮길 대상을 추가하기
+            tempList.splice(newPosition, 0, target);
+
+            return tempList;
+        };
+
+        const mainMenuSortChange = () => {
+
+            const newList = [];
+
+            list.forEach(item => {
+                newList.push(item.mainMenuNo)
+            })
+
+            if(confirm("변경하신 순서대로 대표메뉴를 나열하시겠습니까?")) {
+                ajax(`/admin/menu/main/sort/change`, 'POST', {ids: newList})
+                    .then((data) => {
+                        alert(data.message);
+                        location.reload();
+                    })
+                    .catch((error) => console.log(error));
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            layoutFn();
+            new Table(document.querySelector('#main table'));
+        });
+    </script>
+</th:block>
+
+</html>

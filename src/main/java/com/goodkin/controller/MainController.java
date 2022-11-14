@@ -1,11 +1,14 @@
 package com.goodkin.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.goodkin.repository.MenuRepository;
 import com.goodkin.repository.ReviewRepository;
+import com.goodkin.repository.SiteRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,11 +18,14 @@ public class MainController {
 
     private final ReviewRepository reviewRepository;
     private final MenuRepository menuRepository;
+    private final SiteRepository siteRepository;
+    private final HttpSession session;
     
     @GetMapping({"/", ""})
     public String home(Model model) {
         model.addAttribute("menus", menuRepository.getMainMenus());
         model.addAttribute("reviews", reviewRepository.getReviews());
+        session.setAttribute("site", siteRepository.getSite());
         return "index";
     }
 

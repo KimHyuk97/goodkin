@@ -39,5 +39,27 @@ public interface MenuRepository {
     public List<Menu> list(@Param("kind")String kind, @Param("keyword")String keyword, @Param("category") String category, @Param("paging") Pagination paging);
 
     //메뉴 현재이름을 제외한 이름 중복확인
-    public Menu menuNameValidation(@Param("menuNo") Long menuNo, @Param("newName") String name);  
+    public Menu menuNameValidation(@Param("menuNo") Long menuNo, @Param("newName") String name);
+
+    // 해당 카테고리 메인메뉴 갯수 
+    public int getMainMenusCount(MenuCategroy category);  
+
+    // 메인메뉴 설정
+    public int mainMenuInsert(Long menuNo);
+
+    // 메인메뉴 취소
+    public int mainMenuDelete(Long menuNo);
+
+    // 메인메뉴 리스트
+    public List<MainMenu> getMainMenuList();
+
+    // 메인메뉴 전체 정렬 업데이트
+    public void mainMenuUpdateAll(@Param("newMainMenus") List<MainMenu> newMainMenus);
+
+    // 업
+    public void mainMenuSortUp(Long mainMenuNo);
+
+    // 다운
+    public void mainMenuSortDown(Long mainMenuNo);
+
 }

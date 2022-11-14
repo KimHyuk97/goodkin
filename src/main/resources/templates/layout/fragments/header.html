@@ -3,7 +3,7 @@
 
 <header th:fragment="header">
   <div>
-    <a class="logo" th:href="@{/}">굿킨</a>
+    <a class="logo" th:href="@{/}" th:style="'background:url(' + ${session.site.logo} + ')  50% 50% no-repeat'">굿킨</a>
     <ul class="menu">
       <li><a th:href="@{/about}">브랜드 소개</a></li>
       <li><a th:href="@{/self-employment}">자영업 이야기</a></li>
@@ -11,7 +11,7 @@
       <li><a th:href="@{/franchise}">프렌차이즈</a></li>
       <li><a th:href="@{/menu}">메뉴 소개</a></li>
       <li><a th:href="@{/store}">매장 안내</a></li>
-      <li><a th:href="@{/customer-inquiry}">고객의 소리</a></li>
+      <!-- <li><a th:href="@{/customer-inquiry}">고객의 소리</a></li> -->
     </ul>
   </div>
   <button type="button" class="btn-menu" onclick="btnMenu()">Menu</button>

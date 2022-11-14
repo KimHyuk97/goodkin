@@ -4,7 +4,6 @@
 
 <mapper namespace="com.goodkin.repository.MenuRepository">
 
-    <!-- 고객 문의 -->
     <select id="getMenus" resultType="Menu"> 
         select * 
         from menu
@@ -12,15 +11,18 @@
     </select>
 
     <select id="getMenu" resultType="Menu">
-        select * 
-        from menu
-        where menu_no = #{menuNo}
+        select      * 
+        FROM        menu m
+        left JOIN 	main_menu main
+        ON      	m.menu_no = main.menu_no
+        where       m.menu_no = #{menuNo}
     </select>
 
     <select id="findByCategory" resultType="Menu">
         select * 
         from menu
         where category = #{category}
+        and exp_status = 1 
     </select>
 
     <select id="findByName" resultType="Menu">
@@ -76,6 +78,7 @@
         from main_menu main
         join menu m
         on   m.menu_no = main.menu_no
+        where m.exp_status = 1
         order by sort
         limit 0,7
     </select>
@@ -102,8 +105,43 @@
         FROM        menu
         WHERE       menu_no > 0
 		<include refid="filter" />
-        ORDER BY create_date DESC
+        ORDER BY    create_date DESC
         limit ${paging.startRow},${paging.endRow}
     </select>
+
+    <select id="getMainMenuList" resultType="MainMenu"> 
+        select *
+        from   main_menu main
+        join   menu m
+        on     m.menu_no = main.menu_no
+        ORDER BY sort
+    </select>
+
+    <select id="getMainMenusCount" resultType="int"> 
+        select count(*)
+        from   main_menu main
+        join   menu m
+        on     m.menu_no = main.menu_no
+        where  m.category = #{category} 
+    </select>
+
+    <insert id="mainMenuInsert">
+        insert into main_menu (menu_no, sort)
+        values (#{menuNo}, (select ifnull(max(main.sort),0)+1 from main_menu main))
+    </insert>
+
+    <delete id="mainMenuDelete">
+        delete 
+        from main_menu 
+        where menu_no = #{menuNo}
+    </delete>
+
+    <update id="mainMenuUpdateAll">
+        <foreach collection="newMainMenus" item="item" index="index"> 
+            update main_menu
+            set sort = #{item.sort}
+            where main_menu_no = #{item.mainMenuNo};
+        </foreach>
+    </update>
 
 </mapper>

@@ -1,12 +1,14 @@
 package com.goodkin.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,6 +37,12 @@ public class MenuController {
     public ResponseDto<?> getMenus(@PathVariable MenuCategroy category) {
         return responseService.responseBuilder("",
             menuRepository.findByCategory(category) );
+    }
+
+    @GetMapping("/admin/menu/main/list")
+    public ModelAndView menuMainList(ModelAndView mv) {
+
+        return menuService.menuMainList(mv);
     }
     
     @GetMapping("/admin/menu/list")
@@ -75,5 +83,29 @@ public class MenuController {
     public ResponseDto<?> delete(@PathVariable Long menuNo) {
 
         return menuService.delete(menuNo);
+    }
+
+    @PostMapping("/admin/menu/main/{category}/insert/{menuNo}")
+    @ResponseBody
+    public ResponseDto<?> menuMainInsert(@PathVariable MenuCategroy category, @PathVariable Long menuNo) {
+
+        if(category == MenuCategroy.SETMENU) {
+            return responseService.responseBuilder("세트메뉴는 대표메뉴에 설정이 불가합니다.", null);
+        }
+
+        return menuService.menuMainInsert(category, menuNo);
+    }
+
+    @PostMapping("/admin/menu/main/delete/{menuNo}")
+    @ResponseBody
+    public ResponseDto<?> menuMainDelete(@PathVariable Long menuNo) {
+
+        return menuService.menuMainDelete(menuNo);
+    }
+
+    @PostMapping("/admin/menu/main/sort/change")
+    @ResponseBody
+    public ResponseDto<?> mainMenuSortChange(@RequestBody Map<String, Long[]> map) {
+        return menuService.mainMenuSortChange(map.get("ids"));
     }
 }

@@ -13,18 +13,20 @@
     <select id="getStoreMapCount" resultType="int">
         select count(*)
         from store
+        where exposure_status = 1
         <if test="!keyword.equals('')">
-            where address like '%${keyword}%' 
-            or    name like '%${keyword}%'
+            and ( address like '%${keyword}%' 
+            or    name like '%${keyword}%' )
         </if>
     </select>
 
     <select id="getStoreMap" resultType="Store">
         select * 
         from store
+        where exposure_status = 1
         <if test="!keyword.equals('')">
-            where address like '%${keyword}%' 
-            or    name like '%${keyword}%'
+            and ( address like '%${keyword}%' 
+            or    name like '%${keyword}%' )
         </if>
         order by store_no desc
         limit ${paging.startRow},${paging.endRow}

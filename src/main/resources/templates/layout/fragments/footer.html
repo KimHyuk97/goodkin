@@ -10,10 +10,10 @@
   </ul>
 
   <ul class="info">
-    <li>대표자: 이도현</li>
-    <li>주소: 서울특별시 도봉구 도봉로 113길 10, 1층</li>
-    <li>사업자등록번호: 710-81-02860</li>
-    <li>대표 전화: 02-994-3170</li>
+    <li th:text="|대표자: ${session.site.ceo}|"></li>
+    <li th:text="|주소: ${session.site.address}|"></li>
+    <li th:text="|사업자등록번호: ${session.site.businessNumber}|"></li>
+    <li th:text="|대표 전화: ${session.site.phone}|"></li>
   </ul>
   <div class="copyright">
     Copyright 2022 잘만든치킨 굿킨. All rights reserved.

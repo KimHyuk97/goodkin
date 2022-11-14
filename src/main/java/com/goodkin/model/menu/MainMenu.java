@@ -10,4 +10,5 @@ public class MainMenu {
     
     private String name;
     private String fileUrl;   
+    private MenuCategroy category;
 }

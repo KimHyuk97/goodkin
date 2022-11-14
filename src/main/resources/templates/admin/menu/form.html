@@ -69,6 +69,25 @@
                             </div>
                         </span>
 
+                        <span class="input-wrap" th:if="${mode eq 'update'}">
+                            <label class="label">대표 메뉴 설정</label>
+                            <div class="input-group">
+                                <div class="check-wrap">
+                                    <div class="check">
+                                        <input type="radio" id="mainMenu01" name="mainMenu" value="false"
+                                            th:checked="${menu.mainMenuNo == null}" onclick="mainManuHandler(event)">
+                                        <label for="mainMenu01">X</label>
+                                    </div>
+                                    <div class="check">
+                                        <input type="radio" id="mainMenu02" name="mainMenu" value="true"
+                                            th:checked="${menu.mainMenuNo != null}" onclick="mainManuHandler(event)">
+                                        <label for="mainMenu02">O</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pic-inform">*설정 시 메인페이지 대표메뉴에 노출됩니다.</div>
+                        </span>
+
                         <span class="input-wrap">
                             <label class="label">신메뉴 여부</label>
                             <div class="input-group">
@@ -180,6 +199,28 @@
             }
 
             return true
+        }
+
+        // 메인 메뉴 설정
+        function mainManuHandler(event) {
+            console.log(event)
+            const menuNo = form.menuNo.value;
+            const category = form.category.value;
+            const url = event.target.value === 'true' ? `./main/${category}/insert/${menuNo}` : `./main/delete/${menuNo}`;
+            const message = event.target.value === 'true' ? '해당 메뉴를 대표메뉴로 설정하시겠습니까?' : '해당 메뉴를 대표메뉴에서 제외하시겠습니까?';
+            
+            if(confirm(message)) {
+                ajax(url, 'POST')
+                    .then((data) => {
+                        alert(data.message);
+                    })
+                    .catch((error) => {
+                        event.preventDefault()
+                        console.log(error)
+                    });
+            } else {
+                event.preventDefault()
+            }
         }
 
         function menuDelete() {
