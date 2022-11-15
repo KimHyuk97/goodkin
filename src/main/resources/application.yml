@@ -3,10 +3,10 @@ server:
       
 spring:
   datasource:
-    # driver-class-name: org.mariadb.jdbc.Driver
-    # url: jdbc:mariadb://localhost:3306/joeunfc2022?serverTimezone=Asia/Seoul&allowMultiQueries=true
-    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:mariadb://goodchicken.co.kr:3306/joeunfc2022?serverTimezone=Asia/Seoul&allowMultiQueries=true
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/joeunfc2022?serverTimezone=Asia/Seoul&allowMultiQueries=true
+    # driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    # url: jdbc:log4jdbc:mariadb://goodchicken.co.kr:3306/joeunfc2022?serverTimezone=Asia/Seoul&allowMultiQueries=true
     username: joeunfc2022
     password: Goodchicken2022!
     
