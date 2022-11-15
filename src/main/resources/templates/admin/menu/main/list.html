@@ -59,7 +59,7 @@
             </div>
             <div class="section_footer">
                 <div class="table_action" th:if="${list.size > 0}">
-                    <button type="button" class="btn-normal btn-red" onclick="del('menu','menu_no','메뉴')">삭제</button>
+                    <button type="button" class="btn-normal btn-red" onclick="deleteMenus()">제외</button>
                 </div>
             </div>
         </section>
@@ -77,7 +77,7 @@
             if(newList) {
                 const template = newList.length > 0 && newList.map((item, index) => `
                         <tr>
-                            <td class="check"><input type="checkbox" name="ck">${item.menuNo}</td>
+                            <td class="check"><input type="checkbox" name="ck" value="${item.menuNo}"></td>
                             <td>${item.menuNo}</td>
                             <td>${item.name}</td>
                             <td>
@@ -132,6 +132,28 @@
                         location.reload();
                     })
                     .catch((error) => console.log(error));
+            }
+        }
+
+        const deleteMenus = () => {
+            const check = document.querySelectorAll('input[name="ck"]:checked');
+
+            if(check.length > 0){		    	
+                let menuNos = [];
+                for(let i = 0; i < check.length; i++){
+                    menuNos.push(check[i].value);
+                }
+                
+                if(confirm("선택하신 대표메뉴를 제외시키겠습니까?")) {
+                    ajax(`/admin/menu/main/multi/delete/${menuNos}`, 'POST')
+                        .then((data) => {
+                            alert(data.message);
+                            location.reload();
+                        })
+                        .catch((error) => console.log(error));
+                }
+            }else{
+                alert(`제외할 대표메뉴를 선택해주세요.`);
             }
         }
 

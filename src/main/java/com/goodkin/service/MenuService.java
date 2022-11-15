@@ -178,7 +178,24 @@ public class MenuService {
         return responseService.responseBuilder("해당 메뉴를 대표메뉴에서 제외하였습니다.", null);
     }
 
-    // 메인 메뉴 정렬 설정
+    /*
+     * 대표 메뉴 멀티 삭제
+     */
+    public ResponseDto<?> menuMainMultiDelete(List<Long> menuNos) {
+        // 대표 메뉴 삭제
+        for (Long menuNo : menuNos) {
+            menuRepository.mainMenuDelete(menuNo);
+        }
+
+        // 정렬 초기화
+        mainMenuSortInit();
+
+        return responseService.responseBuilder("선택하신 메뉴를 대표메뉴에서 제외하였습니다.", null);
+    }
+
+    /*
+     * 메인 메뉴 정렬 설정
+     */
     public ResponseDto<?> mainMenuSortChange(Long[] ids) {
 
         List<MainMenu> newMainMenus = new ArrayList<>();

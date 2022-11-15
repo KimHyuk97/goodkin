@@ -103,6 +103,13 @@ public class MenuController {
         return menuService.menuMainDelete(menuNo);
     }
 
+    @PostMapping("/admin/menu/main/multi/delete/{menuNos}")
+    @ResponseBody
+    public ResponseDto<?> menuMainMultiDelete(@PathVariable List<Long> menuNos) {
+
+        return menuService.menuMainMultiDelete(menuNos);
+    }
+
     @PostMapping("/admin/menu/main/sort/change")
     @ResponseBody
     public ResponseDto<?> mainMenuSortChange(@RequestBody Map<String, Long[]> map) {
