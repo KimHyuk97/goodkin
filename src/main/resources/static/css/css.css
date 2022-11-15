@@ -85,8 +85,6 @@
 
 .search_filter {
     display: grid;
-    grid-template-columns: 1fr auto;
-    min-width: 220px;
     width: 24%;
     /* background: #fff; */
     gap: 0;
