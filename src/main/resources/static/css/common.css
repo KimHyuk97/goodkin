@@ -537,7 +537,7 @@ textarea {
     text-align: left;
     border-top: 1px solid #eee;
   }
-  .line-table tr:first-child {
+  .line-table thead tr:first-child {
     display: none;
   }
   .line-table tr {

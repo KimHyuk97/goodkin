@@ -261,7 +261,7 @@ textarea {
   @include mobile {
     text-align: left;
     border-top: 1px solid $color-line;
-    tr:first-child {
+    thead tr:first-child {
       display: none;
     }
     tr {
