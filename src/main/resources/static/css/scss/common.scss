@@ -270,6 +270,7 @@ textarea {
         "text1 icon"
         "text2 icon"
         "text3 icon";
+      grid-template-columns:1fr 100px;
       border-bottom: 1px solid $color-line;
     }
 
@@ -1377,5 +1378,26 @@ footer {
     &-color {
       color: $color-primary4;
     }
+  }
+}
+
+/* 검색창 */
+.search_filter_container{
+
+}
+
+.search_filter{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  min-width: 220px;
+  width: 24%;
+  gap: 0;
+  align-items: center;
+  border: 1px solid $color-gray2;
+  padding:0;
+  background: $color-gray0;
+  input{
+    border:0;
+    background: transparent;
   }
 }

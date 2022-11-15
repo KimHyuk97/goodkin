@@ -84,19 +84,21 @@
 }
 
 .search_filter {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    min-width: 220px;
     width: 24%;
-    background: #fff;
+    /* background: #fff; */
     gap: 0;
-    position: relative;
+    /* position: relative; */
     align-items: center;
 }
 
 .search_filter button {
-    width: 50px;
+    width: 30px;
     height: 100%;
-    position: absolute;
+    /* position: absolute; */
     background: url(../assets/images/search.svg) 88% 70% no-repeat;
-    top: 0;
-    right: 0;
+    /* top: 0; */
+    /* right: 0; */
 }

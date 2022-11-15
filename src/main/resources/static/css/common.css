@@ -543,6 +543,7 @@ textarea {
   .line-table tr {
     display: grid;
     grid-template-areas: "text1 icon" "text2 icon" "text3 icon";
+    grid-template-columns: 1fr 100px;
     border-bottom: 1px solid #eee;
   }
   .line-table td:last-child {
@@ -1739,4 +1740,21 @@ footer .copyright {
 }
 .strategy .emphasis-color {
   color: #f4a426;
+}
+
+/* 검색창 */
+.search_filter {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  min-width: 220px;
+  width: 24%;
+  gap: 0;
+  align-items: center;
+  border: 1px solid #eeeeee;
+  padding: 0;
+  background: #fafafa;
+}
+.search_filter input {
+  border: 0;
+  background: transparent;
 }/*# sourceMappingURL=common.css.map */
