@@ -79,7 +79,7 @@
       <div class="swiper review-swiper">
         <div class="swiper-wrapper review-swiper-wrapper">
           <div th:each="review : ${reviews}" class="swiper-slide review-swiper-item">
-            <img th:src="${review.fileUrl}" alt="" loading="lazy" />
+            <img th:src="${review.fileUrl}" loading="lazy" />
           </div>
         </div>
       </div>
@@ -121,7 +121,7 @@
       speed: 2000,
       loop: true,
       autoplay: {
-        delay: 1,
+        delay: 100,
         disableOnInteraction: false,
       },
     });
