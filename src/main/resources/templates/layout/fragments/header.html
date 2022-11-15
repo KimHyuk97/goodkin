@@ -3,7 +3,7 @@
 
 <header th:fragment="header">
   <div>
-    <a class="logo" th:href="@{/}" th:style="'background:url(' + ${session.site.logo} + ')  50% 50% no-repeat'">굿킨</a>
+    <a class="logo" th:href="@{/}" th:style="'background:url(' + ${session.site.logo} + ')  50% 50% no-repeat; background-size: 100% auto;'">굿킨</a>
     <ul class="menu">
       <li><a th:href="@{/about}">브랜드 소개</a></li>
       <li><a th:href="@{/self-employment}">자영업 이야기</a></li>

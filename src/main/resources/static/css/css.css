@@ -21,21 +21,20 @@
 }
 
 .marker_container {
+    min-width: 190px;
+    max-height: 38px;
     position: relative;
-    padding: 0px;
     background: #FFFFFF;
     border: 2px solid #396ef3;
-    -webkit-border-radius: 99px;
-    -moz-border-radius: 99px;
     border-radius: 99px;
     font-size: 14px;
     font-weight: bold;
     height: auto;
     letter-spacing: -0.25px;
-    margin-top: 6.8px;
-    padding: 5px 11px;
+    padding: 5px 8px;
     display: flex;
-    gap: 0 5px;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .marker_container:after {
