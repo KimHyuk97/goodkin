@@ -179,7 +179,7 @@
             formData.append('businessNumber', form.businessNumber.value);
             formData.append('phone', form.phone.value);
 
-            if (confirm('사이트 정보를 수정시겠습니까?')) {
+            if (confirm('사이트 정보를 수정하시겠습니까?')) {
                 fetch(`/admin/site/update`, {
                     method: 'POST',
                     cache: 'no-cache',

@@ -37,6 +37,7 @@ public class SecurityConfig {
                 .antMatchers("/admin/menu/**").hasRole("ADMIN")
                 .antMatchers("/admin/site/**").hasRole("ADMIN")
                 .antMatchers("/admin/review/**").hasRole("ADMIN")
+                .antMatchers("/admin/page/**").hasRole("ADMIN")
                 .anyRequest().permitAll()
             
             .and()

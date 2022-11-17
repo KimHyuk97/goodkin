@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goodkin.repository.PageRepository">
+
+    <select id="getPage" resultType="Page"> 
+        select * 
+        from page
+        where page_id = #{pageId}
+    </select>
+
+    <select id="findAllByTypeAndCategory" resultType="Page"> 
+        select * 
+        from page
+        where category = #{category}
+        and   type = #{type}
+        order by section
+    </select>
+
+    <insert id="insert">
+        insert into page (img, category, section, type)
+        values (#{img}, #{category}, #{section}, #{type})
+    </insert>
+
+    <update id="update">
+        update page
+        set 
+            <if test="img != null"> img = #{img},</if>
+            <if test="category != null"> category = #{category},</if>
+            <if test="section != null"> section = #{section},</if>
+            <if test="type != null"> type = #{type},</if>
+            update_date = now()
+        where  page_id = #{pageId}
+    </update>
+
+
+</mapper>

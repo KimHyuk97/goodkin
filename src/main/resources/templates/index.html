@@ -93,38 +93,41 @@
   <script type="text/javascript" th:src="@{/js/libs/swiper-bundle.min.js}"></script>
 
   <script type="text/javascript">
-    const menuSwiper = new Swiper(".menu-swiper", {
-      breakpoints: {
-        768: {
-          slidesPerView: 3,
-          slidesPerGroup: 1,
+    window.addEventListener('load', () => {
+      new Swiper(".menu-swiper", {
+        breakpoints: {
+          768: {
+            slidesPerView: 3,
+            slidesPerGroup: 1,
+          },
+          1024: {
+            slidesPerView: 4,
+            slidesPerGroup: 4,
+          },
         },
-        1024: {
-          slidesPerView: 4,
-          slidesPerGroup: 4,
+        slidesPerView: 2,
+        spaceBetween: 30,
+        slidesPerGroup: 1,
+        loop: true,
+        loopFillGroupWithBlank: true,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
         },
-      },
-      slidesPerView: 2,
-      spaceBetween: 30,
-      slidesPerGroup: 1,
-      loop: true,
-      loopFillGroupWithBlank: true,
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-    });
+      });
 
-    const reviewSwiper = new Swiper(".review-swiper", {
-      slidesPerView: "auto",
-      centeredSlides: true,
-      speed: 2000,
-      loop: true,
-      autoplay: {
-        delay: 100,
-        disableOnInteraction: false,
-      },
-    });
+      new Swiper(".review-swiper", {
+        slidesPerView: "auto",
+        centeredSlides: true,
+        speed: 2000,
+        loop: true,
+        autoplay: {
+          delay: 100,
+          disableOnInteraction: false,
+        },
+      });
+
+    })
   </script>
 </th:block>
 

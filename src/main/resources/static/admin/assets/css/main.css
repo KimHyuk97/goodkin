@@ -1139,6 +1139,16 @@ textarea:active, textarea:focus {
 .tab .tab_cont .tab_cont_item {
   display: none;
 }
+
+.tab .tab_cont .tab_cont_item .items {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 30px 0;
+  gap: 0 120px;
+}
+
+
 .tab .tab_cont .tab_cont_item.on {
   display: block;
 }
@@ -1322,9 +1332,40 @@ textarea:active, textarea:focus {
 .info-register .tab_nav_item {
   width: 200px;
 }
+
+.info-register .tab_nav_item.page {
+  width: 150px !important;
+}
+
 .info-register .tab_cont {
   margin-top: 50px;
 }
+
+.info-register .tab_cont_item .sub_tab{
+  width: 100%;
+  height: 45px;
+  display: flex;
+  align-items: center;
+}
+
+.info-register .tab_cont_item .sub_tab .sub_tab_btn{
+  width: 80px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  border: 0;
+  color: #333;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.info-register .tab_cont_item .sub_tab .sub_tab_btn.on{
+  border-bottom: 2px solid #E87A00;
+  color: #E87A00;
+}
+
 .info-register .tab_cont_item form {
   padding: 8px;
   border: 1px solid #dbdbdb;
@@ -1350,6 +1391,8 @@ textarea:active, textarea:focus {
 .info-register .tab_cont_item form table td {
   padding-left: 14px;
 }
+
+
 
 /* 팝업 */
 .modal .report table,
@@ -2234,3 +2277,60 @@ textarea:active, textarea:focus {
   color: #aaaaaa;
   font-size: 0.875rem;
 }
+
+.pic-inform2 {
+  line-height: 22px;
+  height: 22px;
+  color: #aaaaaa;
+  font-size: 12px;
+}
+
+.page_item_div {
+  display: flex;
+  flex-direction: column;
+  gap: 20px 0;
+}
+
+.page_item_div h1 {
+  font-size: 20px;
+}
+
+.page_item_css {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.page_item_css a {
+  border: 1px solid #dbdbdb;
+  padding: 10px;
+  font-size: 14px;
+  color: #E87A00;
+  width: 512px;
+  overflow: hidden;
+
+}
+
+.page_item_css label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page_item_css label span {
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #dbdbdb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url(../imgs/camera.png) center no-repeat;
+}
+
+.page_item_css label input[type="file"] {
+  display: none;
+}
+
+

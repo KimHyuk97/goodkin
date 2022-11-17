@@ -121,31 +121,6 @@ public class MenuService {
         return responseService.responseBuilder(delete > 0 ? "삭제되었습니다." : "삭제 실패하였습니다.", null);
     }
 
-    private void fileUpload(List<MultipartFile> files, Menu menu) {
-        String path = "/www/menu/";
-
-        try {
-            List<String> fileNames = ftp.uploadFile(files, path);
-            ;
-            if (!fileNames.isEmpty()) {
-                menu.setFile(fileNames.get(0));
-                menu.setFileUrl("https://joeunfc2022.cdn1.cafe24.com/menu/" + fileNames.get(0));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void filedelete(List<String> files) {
-        String path = "/www/menu/";
-
-        try {
-            ftp.deleteFile(files, path);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     /*
      * 메인 메뉴 설정
      */
@@ -231,6 +206,32 @@ public class MenuService {
         }
 
         menuRepository.mainMenuUpdateAll(newMainMenus);
+    }
+
+
+    private void fileUpload(List<MultipartFile> files, Menu menu) {
+        String path = "/www/menu/";
+
+        try {
+            List<String> fileNames = ftp.uploadFile(files, path);
+            ;
+            if (!fileNames.isEmpty()) {
+                menu.setFile(fileNames.get(0));
+                menu.setFileUrl("https://joeunfc2022.cdn1.cafe24.com/menu/" + fileNames.get(0));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void filedelete(List<String> files) {
+        String path = "/www/menu/";
+
+        try {
+            ftp.deleteFile(files, path);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

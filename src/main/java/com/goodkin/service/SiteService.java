@@ -37,6 +37,9 @@ public class SiteService {
         // 사이즈 정보
         Site site = siteRepository.getSite();
 
+        // 각 페이지 사진 정보
+        
+
         mv.addObject("privacyPolicy", privacyPolicy);
         mv.addObject("site", site);
         mv.setViewName("admin/site/form");

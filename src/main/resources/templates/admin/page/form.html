@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{admin/layout/layout}">
+<th:block layout:fragment="main">
+    <main id="main" class="info-register">
+        <section class="section" style="justify-content: flex-start; gap: 60px 0;">
+            <div class="section_header">
+                <div>
+                    <h2 class="section_title">페이지 관리</h2>
+                </div>
+            </div>
+            <div class="tab">
+                <div class="tab_nav">
+                    <a onclick="get_data('main_page')" class="tab_nav_item page btn btn-tab site_info on" value="1">메인페이지</a>
+                    <a onclick="get_data('about')" class="tab_nav_item page btn btn-tab site_info" value="2">브랜드 소개</a>
+                    <a onclick="get_data('self_employment')" class="tab_nav_item page btn btn-tab site_info" value="3">자영업 이야기</a>
+                    <a onclick="get_data('strategy')" class="tab_nav_item page btn btn-tab site_info" value="4">성공창업 전략</a>
+                    <a onclick="get_data('franchise')" class="tab_nav_item page btn btn-tab site_info" value="5">프렌차이즈</a>
+                    <a onclick="get_data('menu')" class="tab_nav_item page btn btn-tab site_info" value="6">메뉴 소개</a>
+                </div>
+
+                <div class="tab_cont">
+                    <article class="tab_cont_item on">
+                        <div id="main_page" class="items"></div>
+                        <div class="form_action">
+                            <button type="button" class="btn-prime" onclick="policyUpdate()">적용</button>
+                        </div>
+                    </article>
+                    <article class="tab_cont_item">
+                        <div id="about" class="items"></div>
+                        <div class="form_action">
+                            <button type="button" class="btn-prime" onclick="policyUpdate()">적용</button>
+                        </div>
+                    </article>
+                    <article class="tab_cont_item">
+                        <div id="self_employment" class="items"></div>
+                        <div class="form_action">
+                            <button type="button" class="btn-prime" onclick="policyUpdate()">적용</button>
+                        </div>
+                    </article>
+                    <article class="tab_cont_item">
+                        <div id="strategy" class="items"></div>
+                        <div class="form_action">
+                            <button type="button" class="btn-prime" onclick="policyUpdate()">적용</button>
+                        </div>
+                    </article>
+                    <article class="tab_cont_item">
+                        <div id="franchise" class="items"></div>
+                        <div class="form_action">
+                            <button type="button" class="btn-prime" onclick="policyUpdate()">적용</button>
+                        </div>
+                    </article>
+                    <article class="tab_cont_item">
+                        <div id="menu" class="items"></div>
+                        <div class="form_action">
+                            <button type="button" class="btn-prime" onclick="policyUpdate()">적용</button>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script th:src="@{/admin/assets/js/page_data.js}"></script>
+    <script>        
+        
+        function get_data(category) {
+            ajax(`./getPage/${category}`, 'POST')
+                .then((response) => {
+                    template_literals(response.data)
+                })
+                .catch((error) => console.log(error));
+        }
+
+        function template_literals(data) {
+            
+            const pc_data = data.pc;
+            const mob_data = data.mob;
+
+            const pc_template = `<div class="page_item_div">
+                <h1>PC</h1>
+                ${pc_data.length > 0 && pc_data.map(item => `
+                    <div>
+                        <div class="page_item_css">
+                            <input type="hidden" name="pageId" value="${item.pageId}">
+                            <input type="hidden" name="category" value="${item.category}">
+                            <input type="hidden" name="section" value="${item.section}">
+                            <a href="${item.img}"  target="_black" download>${item.img}</a>
+                            <label>
+                                <span></span>
+                                <input type="file" onchange="fileUpload(this,${item.maxWidth},${item.maxHeight})">
+                            </label>
+                        </div>
+                        <p class="pic-inform2">*png / jpg / jpeg 형식의 파일만 업로드 가능합니다.</p>
+                        <p class="pic-inform2">*이미지 사이즈는 ${item.maxWidth} * ${item.maxHeight}px로 맞춰주세요.</p>
+                    </div>
+                `).join('')}
+            </div>`;
+            
+            const mob_template = `<div class="page_item_div">
+                <h1>모바일</h1>
+                ${mob_data.length > 0 && mob_data.map(item => `
+                    <div>
+                        <div class="page_item_css">
+                            <input type="hidden" name="pageId" value="${item.pageId}">
+                            <input type="hidden" name="category" value="${item.category}">
+                            <input type="hidden" name="section" value="${item.section}">
+                            <a href="${item.img}"  target="_black" download>${item.img}</a>
+                            <label>
+                                <span></span>
+                                <input type="file" name="file" onchange="fileUpload(this,${item.maxWidth},${item.maxHeight})">
+                            </label>
+                        </div>
+                        <p class="pic-inform2">*png / jpg / jpeg 형식의 파일만 업로드 가능합니다.</p>
+                        <p class="pic-inform2">*이미지 사이즈는 ${item.maxWidth} * ${item.maxHeight}px로 맞춰주세요.</p>
+                    </div>
+                `).join('')}
+            </div>`;
+
+            document.getElementById(`${pc_data[0].category}`).innerHTML = pc_template+mob_template;
+        }
+
+        //사진 업로드
+        function fileUpload(file,maxWidth,maxHeight) {
+            const maxSize = 5 * 1024 * 1024;
+            const fileSize = file.files[0].size;
+            var reg = /(.*?)\.(jpg|jpeg|png)$/;
+            let _URL = window.URL || window.webkitURL;
+            const div = file.closest('div');
+            const a = div.querySelector('a')
+    
+            if (fileSize > maxSize) {
+                alert("사진 용량은 5MB 이내로 등록 가능합니다.");
+                return false;
+            }
+
+            if (!(file.files[0].name).toLowerCase().match(reg)) {
+                alert("jpg, jpeg, png 형식의 파일을 첨부해주세요.");
+                return false;
+            }
+
+            const upload_img = new Image();
+            upload_img.src = _URL.createObjectURL(file.files[0]);
+            
+            upload_img.onload = function() {
+                if(upload_img.width != maxWidth || upload_img.height != maxHeight) {
+                    alert(`이미지 가로 ${maxWidth}px, 세로 ${maxHeight}px로 맞춰서 올려주세요.`)
+                    return false;
+                } else {
+                    // a.removeAttribute('target')
+                    // a.removeAttribute('href')
+                    // a.removeAttribute('download')
+                    // a.style.color = '#333'
+                    // a.style.cursor = 'default'
+                    // a.innerText = file.files[0].name;
+                    process(file.files[0], div)
+                }
+            }
+        }
+
+        function process(file, target) {
+
+            const pageId = target.querySelector('input[name="pageId"]').value
+            const category = get_title(target.querySelector('input[name="category"]').value);
+            const section = target.querySelector('input[name="section"]').value
+
+            const formData = new FormData();
+
+            formData.append('files', file);
+            formData.append('pageId', pageId);
+
+            if (confirm(`${category}의 ${section}번째 사진 정보를 수정하시겠습니까?`)) {
+                fetch(`/admin/page/update`, {
+                    method: 'POST',
+                    cache: 'no-cache',
+                    body: formData
+                })
+                    .then((response) => response.json()).then((data) => {
+                        alert(data.message);
+                        location.reload();
+                    })
+                    .catch((error) => console.log(error));
+            }
+        }
+
+        function get_title(value) {
+            if(value == 'main_page') return '메인페이지'
+            if(value == 'about') return '브랜드 소개 페이지'
+            if(value == 'franchise') return '프렌차이즈 페이지'
+            if(value == 'menu') return '메뉴 소개 페이지'
+            if(value == 'self_employment') return '자영업 이야기 페이지'
+            if(value == 'strategy') return '성공창업 전략 페이지'
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            layoutFn();
+            new Tab(document.querySelector('.tab'));
+            get_data('main_page');
+        });
+    </script>
+</th:block>
+
+</html>
