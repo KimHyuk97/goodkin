@@ -1,18 +1,12 @@
 package com.goodkin.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.goodkin.model.page.Page;
 import com.goodkin.repository.MenuRepository;
-import com.goodkin.repository.PageRepository;
 import com.goodkin.repository.ReviewRepository;
 import com.goodkin.repository.SiteRepository;
 
@@ -25,7 +19,6 @@ public class MainController {
     private final ReviewRepository reviewRepository;
     private final MenuRepository menuRepository;
     private final SiteRepository siteRepository;
-    private final PageRepository pageRepository;
     private final HttpSession session;
     
     @GetMapping({"/", ""})
@@ -33,23 +26,15 @@ public class MainController {
         if(session.getAttribute("site") == null) {
             session.setAttribute("site", siteRepository.getSite());
         }
-        Map<String, List<Page>> data = new HashMap<>();
-
-        List<Page> pc = pageRepository.findAllByTypeAndCategory("main_page", "pc");
-        List<Page> mob = pageRepository.findAllByTypeAndCategory("main_page", "mob");
-
-        data.put("pc", pc);
-        data.put("mob", mob);
 
         model.addAttribute("menus", menuRepository.getMainMenus());
         model.addAttribute("reviews", reviewRepository.getReviews());
-        model.addAttribute("imgs", data);
         
         return "index";
     }
 
     @GetMapping("/about")
-    public String about() {
+    public String about(Model model) {
         return "html/about";
     }
 
