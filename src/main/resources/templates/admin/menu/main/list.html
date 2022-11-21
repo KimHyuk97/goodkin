@@ -34,7 +34,7 @@
                         </tr>
                     </thead>
                     <tbody th:if="${list.size > 0}" id="list">
-                        <tr th:each="menu, i : ${list}">
+                        <tr th:each="menu, i : ${list}" th:onclick="linkTo(event,'/admin/menu/form?mode=update&menuNo=[[${menu.menuNo}]]')">
                             <td class="check"><input type="checkbox" name="ck" th:value="${menu.menuNo}"></td>
                             <td th:text="${menu.menuNo}"></td>
                             <td th:text="${menu.name}"></td>
@@ -71,25 +71,27 @@
         /*]]>*/
 
         function up_down(status, i) {
+
+            console.log('iiiii')
             
             const newList = mainMenuSort(i, status ? -1 : 1);
 
             if(newList) {
                 const template = newList.length > 0 && newList.map((item, index) => `
-                        <tr>
-                            <td class="check"><input type="checkbox" name="ck" value="${item.menuNo}"></td>
-                            <td>${item.menuNo}</td>
-                            <td>${item.name}</td>
-                            <td>
-                                ${(item.category == 'SETMENU') ? '세트메뉴' : (item.category == 'CHICKEN') ? '치킨' : '떡볶이'}
-                            </td>
-                            <td>${item.sort}</td>
-                            <td>
-                                <button type="button" onclick="up_down(true, ${index})"><img src="/admin/assets/imgs/admin_up.svg" /></button>
-                                <button type="button" onclick="up_down(false, ${index})"><img src="/admin/assets/imgs/admin_down.svg" /></button>
-                            </td>
-                        </tr>
-                    `)
+                    <tr onclick="linkTo(event,'/admin/menu/form?mode=update&menuNo=${item.menuNo}')">
+                        <td class="check"><input type="checkbox" name="ck" value="${item.menuNo}"></td>
+                        <td>${item.menuNo}</td>
+                        <td>${item.name}</td>
+                        <td>
+                            ${(item.category == 'SETMENU') ? '세트메뉴' : (item.category == 'CHICKEN') ? '치킨' : '떡볶이'}
+                        </td>
+                        <td>${item.sort}</td>
+                        <td>
+                            <button type="button" onclick="up_down(true, ${index})"><img src="/admin/assets/imgs/admin_up.svg" /></button>
+                            <button type="button" onclick="up_down(false, ${index})"><img src="/admin/assets/imgs/admin_down.svg" /></button>
+                        </td>
+                    </tr>
+                `)
                 
                 list = newList;
                 document.getElementById('list').innerHTML= template.join('');

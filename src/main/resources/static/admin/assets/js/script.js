@@ -472,7 +472,7 @@ class FileUploader {
 
 /* 테이블 클릭 스크립트 */
 function linkTo(event, addr) {
-    const preventClicks = ['input', 'a', 'button', 'select', 'option'];
+    const preventClicks = ['input', 'a', 'button', 'select', 'option', 'img'];
     const isPreventClick = function(clicked){
         let isPrevent = false;
         let clickedTag = clicked.tagName.toLowerCase();
