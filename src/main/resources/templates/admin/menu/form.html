@@ -20,33 +20,6 @@
                         </span>
 
                         <span class="input-wrap">
-                            <label class="label" for="name">메뉴 이름</label>
-                            <input class="input" type="text" th:field="*{name}" maxlength="50">
-                        </span>
-
-                        <span class="input-wrap" style="height: 80px;">
-                            <label class="label" for="description">메뉴 설명</label>
-                            <textarea class="textarea" style="height: 80px;" th:field="*{description}"></textarea>
-                        </span>
-
-                        <span class="input-wrap">
-                            <label class="label">메뉴 사진</label>
-                            <div class="input-group">
-                                <div class="pic" style="width: 160px; height: 160px;">
-                                    <input type="file" id="file" name="files" onchange="fileUpload(this)">
-
-                                    <label for="file">
-                                        <img width="100%" height="100%" th:if="${menu.file != null}"
-                                            th:src="${menu.fileUrl}" />
-                                        <img width="100%" height="100%" th:unless="${menu.file != null}" />
-                                    </label>
-                                </div>
-                            </div>
-                        </span>
-                    </fieldset>
-                    <fieldset class="fieldset">
-
-                        <span class="input-wrap">
                             <label class="label">카테고리</label>
                             <div class="input-group">
                                 <div class="check-wrap">
@@ -69,24 +42,34 @@
                             </div>
                         </span>
 
-                        <span class="input-wrap" th:if="${mode eq 'update'}">
-                            <label class="label">대표 메뉴 설정</label>
+                        <span class="input-wrap">
+                            <label class="label" for="name">메뉴 이름</label>
+                            <input class="input" type="text" th:field="*{name}" maxlength="50">
+                        </span>
+
+                        <span class="input-wrap" style="height: 80px;">
+                            <label class="label" for="description">메뉴 설명</label>
+                            <textarea class="textarea" style="height: 80px;" th:field="*{description}"></textarea>
+                        </span>
+
+                        <span class="input-wrap">
+                            <label class="label">메뉴 사진</label>
                             <div class="input-group">
-                                <div class="check-wrap">
-                                    <div class="check">
-                                        <input type="radio" id="mainMenu01" name="mainMenu" value="false"
-                                            th:checked="${menu.mainMenuNo == null}" onclick="mainManuHandler(event)">
-                                        <label for="mainMenu01">X</label>
-                                    </div>
-                                    <div class="check">
-                                        <input type="radio" id="mainMenu02" name="mainMenu" value="true"
-                                            th:checked="${menu.mainMenuNo != null}" onclick="mainManuHandler(event)">
-                                        <label for="mainMenu02">O</label>
-                                    </div>
+                                <div class="pic" style="width: 220px; height: 133px;">
+                                    <input type="file" id="file" name="files" onchange="fileUpload(this, 880, 532)">
+
+                                    <label for="file">
+                                        <img width="100%" height="100%" th:if="${menu.file != null}"
+                                            th:src="${menu.fileUrl}" />
+                                        <img width="100%" height="100%" th:unless="${menu.file != null}" />
+                                    </label>
                                 </div>
                             </div>
-                            <div class="pic-inform">*설정 시 메인페이지 대표메뉴에 노출됩니다.</div>
+                            <p class="pic-inform">*png / jpg / jpeg 형식의 파일만 업로드 가능합니다.</p>
+                            <p class="pic-inform">*이미지 사이즈는 880*532px로 맞춰주세요.</p>
                         </span>
+                    </fieldset>
+                    <fieldset class="fieldset">
 
                         <span class="input-wrap">
                             <label class="label">신메뉴 여부</label>
@@ -124,6 +107,43 @@
                             </div>
                         </span>
 
+                        <span class="input-wrap" th:if="${mode eq 'update'}">
+                            <label class="label">대표 메뉴 설정</label>
+                            <div class="input-group">
+                                <div class="check-wrap">
+                                    <div class="check">
+                                        <input type="radio" id="mainMenu01" name="mainMenu" value="false"
+                                            th:checked="${menu.mainMenuNo == null}" onclick="mainManuHandler(event)">
+                                        <label for="mainMenu01">X</label>
+                                    </div>
+                                    <div class="check">
+                                        <input type="radio" id="mainMenu02" name="mainMenu" value="true"
+                                            th:checked="${menu.mainMenuNo != null}" onclick="mainManuHandler(event)">
+                                        <label for="mainMenu02">O</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pic-inform">*설정 시 메인페이지 대표메뉴에 노출됩니다.</div>
+                        </span>
+
+                        <span class="input-wrap" id="mainMenuImg"
+                            th:classappend="${menu.mainMenuNo == null ? 'off' : 'on'}">
+                            <label class="label">대표 메뉴 사진</label>
+                            <div class="input-group">
+                                <div class="pic" style="width: 160px; height: 160px;">
+                                    <input type="file" id="mainfile" name="mainfiles" onchange="fileUpload(this, 640, 640)">
+
+                                    <label for="mainfile">
+                                        <img width="100%" height="100%" th:if="${menu.mainFile != null}"
+                                            th:src="${menu.mainFileUrl}" />
+                                        <img width="100%" height="100%" th:unless="${menu.mainFile != null}" />
+                                    </label>
+                                </div>
+                            </div>
+                            <p class="pic-inform">*png / jpg / jpeg 형식의 파일만 업로드 가능합니다.</p>
+                            <p class="pic-inform">*이미지 사이즈는 640*640px로 맞춰주세요.</p>
+                        </span>
+
                         <span class="input-wrap" th:if="${mode == 'update'}">
                             <label class="label" for="createDate">등록일자</label>
                             <input class="input" type="text" th:field="*{createDate}" readonly>
@@ -144,7 +164,6 @@
         </section>
     </main>
 
-    <script defer th:src="@{/admin/assets/js/file.js}"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
         const mode = /*[[${mode}]]*/'';
@@ -154,10 +173,11 @@
 
             if (menuValidation()) {
                 const formData = new FormData();
-                if(mode === 'update')formData.append("menuNo", form.menuNo.value);
+                if (mode === 'update') formData.append("menuNo", form.menuNo.value);
                 formData.append("name", form.name.value);
                 formData.append("description", form.description.value);
                 formData.append("files", form.file.files[0]);
+                if (mode === 'update') formData.append("mainfiles", form.mainfiles.files[0]);
                 formData.append("category", form.category.value);
                 formData.append("newStatus", form.newStatus.value);
                 formData.append("expStatus", form.expStatus.value);
@@ -208,11 +228,18 @@
             const category = form.category.value;
             const url = event.target.value === 'true' ? `./main/${category}/insert/${menuNo}` : `./main/delete/${menuNo}`;
             const message = event.target.value === 'true' ? '해당 메뉴를 대표메뉴로 설정하시겠습니까?' : '해당 메뉴를 대표메뉴에서 제외하시겠습니까?';
-            
-            if(confirm(message)) {
+            const mainMenuImg = document.getElementById('mainMenuImg')
+
+            if (confirm(message)) {
                 ajax(url, 'POST')
                     .then((data) => {
                         alert(data.message);
+                        if (event.target.value === 'true') {
+                            mainMenuImg.setAttribute('class', 'input-wrap on')
+                        } else {
+                            mainMenuImg.setAttribute('class', 'input-wrap off')
+                        }
+
                     })
                     .catch((error) => {
                         event.preventDefault()
@@ -230,6 +257,47 @@
                     location.href = "./list";
                 })
                 .catch((error) => console.log(error));
+        }
+
+        //사진 업로드
+        function fileUpload(file, maxWidth, maxHeight) {
+
+            const maxSize = 50 * 1024 * 1024;
+            const fileSize = file.files[0].size;
+            let _URL = window.URL || window.webkitURL;
+
+            if (fileSize > maxSize) {
+                alert("사진 용량은 50MB 이내로 등록 가능합니다.");
+                return false;
+            }
+
+            const reg = /(.*?)\.(jpg|jpeg|png)$/;
+
+            if (!(file.files[0].name).toLowerCase().match(reg)) {
+                alert("jpg, jpeg, png 형식의 파일을 첨부해주세요.");
+                return false;
+            }
+
+            const upload_img = new Image();
+            console.log(file.files[0])
+            upload_img.src = _URL.createObjectURL(file.files[0]);
+            
+            upload_img.onload = function() {
+                if(upload_img.width != maxWidth || upload_img.height != maxHeight) {
+                    alert(`이미지 가로 ${maxWidth}px, 세로 ${maxHeight}px로 맞춰서 올려주세요.`)
+                    return false;
+                } else {
+                    const div = file.closest('div');
+                    const img = div.querySelector('img');
+
+                    const fileReader = new FileReader();
+
+                    fileReader.onload = function () {
+                        img.src = fileReader.result;
+                    };
+                    fileReader.readAsDataURL(file.files[0]);
+                }
+            }
         }
 
         window.addEventListener('DOMContentLoaded', () => {

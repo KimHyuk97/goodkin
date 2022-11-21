@@ -11,8 +11,11 @@ public class Menu {
     private String description;
     private String file;
     private String fileUrl;
+    private String mainFile;
+    private String mainFileUrl;
     private Boolean newStatus;
     private Boolean expStatus;
+    
     
     // 메인 메뉴
     private Long mainMenuNo;

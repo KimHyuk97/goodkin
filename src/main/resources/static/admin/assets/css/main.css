@@ -528,6 +528,15 @@ textarea:active, textarea:focus {
 .input-wrap.pwd-wrap {
   height: auto;
 }
+.input-wrap.off {
+  display: none;
+  height: 0;
+}
+
+.input-wrap.on {
+  display: flex;
+  height: 160px;
+}
 .input-wrap .label {
   display: inline-block;
   width: 200px;

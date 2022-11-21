@@ -46,7 +46,7 @@
 
     <insert id="save" parameterType="Menu" useGeneratedKeys="true"  keyProperty="menuNo">
         INSERT INTO menu (
-            category, name, description, file, fileUrl, new_status, exp_status
+            category, name, description, file, file_url, new_status, exp_status
         ) VALUES (
             #{category}, #{name}, #{description}, #{file}, #{fileUrl}, #{newStatus}, #{expStatus}
         )
@@ -58,7 +58,9 @@
         <if test="name != null">name = #{name},</if>
         <if test="description != null">description = #{description},</if>
         <if test="file != null">file = #{file},</if>
-        <if test="fileUrl != null">fileUrl = #{fileUrl},</if>
+        <if test="fileUrl != null">file_url = #{fileUrl},</if>
+        <if test="mainFile != null">main_file = #{mainFile},</if>
+        <if test="mainFileUrl != null">main_file_url = #{mainFileUrl},</if>
         <if test="newStatus != null">new_status = #{newStatus},</if>
         <if test="expStatus != null">exp_status = #{expStatus},</if>
         update_date = now()

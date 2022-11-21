@@ -146,12 +146,6 @@
                     alert(`이미지 가로 ${maxWidth}px, 세로 ${maxHeight}px로 맞춰서 올려주세요.`)
                     return false;
                 } else {
-                    // a.removeAttribute('target')
-                    // a.removeAttribute('href')
-                    // a.removeAttribute('download')
-                    // a.style.color = '#333'
-                    // a.style.cursor = 'default'
-                    // a.innerText = file.files[0].name;
                     process(file.files[0], div)
                 }
             }
@@ -176,7 +170,6 @@
                 })
                     .then((response) => response.json()).then((data) => {
                         alert(data.message);
-                        location.reload();
                     })
                     .catch((error) => console.log(error));
             }

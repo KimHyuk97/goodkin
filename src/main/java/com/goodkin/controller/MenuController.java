@@ -73,9 +73,10 @@ public class MenuController {
     @PostMapping("/admin/menu/update")
     @ResponseBody
     public ResponseDto<?> update(@ModelAttribute Menu menu,
-        @RequestPart(required=false) List<MultipartFile> files) {
+        @RequestPart(required=false) List<MultipartFile> files,
+        @RequestPart(required=false) List<MultipartFile> mainfiles) {
 
-        return menuService.update(menu, files);
+        return menuService.update(menu, files, mainfiles);
     }
 
     @PostMapping("/admin/menu/delete/{menuNo}")

@@ -9,6 +9,6 @@ public class MainMenu {
     private Integer sort;
     
     private String name;
-    private String fileUrl;   
+    private String mainFileUrl;   
     private MenuCategroy category;
 }

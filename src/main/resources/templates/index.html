@@ -68,7 +68,7 @@
 
         <div class="swiper-wrapper menu-swiper-wrapper">
           <div th:each="menu : ${menus}" class="swiper-slide menu-swiper-item">
-            <img th:src="${menu.fileUrl}" />
+            <img th:src="${menu.mainFileUrl}" />
             <p class="center" th:text="${menu.name}"></p>
           </div>
         </div>

@@ -90,7 +90,7 @@ public class MenuService {
     }
 
     @Transactional
-    public ResponseDto<?> update(Menu menu, List<MultipartFile> files) {
+    public ResponseDto<?> update(Menu menu, List<MultipartFile> files, List<MultipartFile> mainfiles) {
         Menu validNamemenu = menuRepository.menuNameValidation(menu.getMenuNo(), menu.getName());
 
         if (validNamemenu != null) {
@@ -99,9 +99,20 @@ public class MenuService {
 
         // 파일 업로드
         if (files != null && !files.isEmpty()) {
-            if (menu.getFile() != null)
+            if (menu.getFile() != null) {
                 filedelete(Arrays.asList(menu.getFile()));
+            }
+                
             fileUpload(files, menu);
+        }
+
+        // 메인 파일 업로드
+        if (mainfiles != null && !mainfiles.isEmpty()) {
+            if (menu.getMainFile() != null) {
+                mainfiledelete(Arrays.asList(menu.getMainFile()));
+            }
+
+            mainfileUpload(mainfiles, menu);
         }
 
         int update = menuRepository.update(menu);
@@ -227,6 +238,31 @@ public class MenuService {
 
     private void filedelete(List<String> files) {
         String path = "/www/menu/";
+
+        try {
+            ftp.deleteFile(files, path);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void mainfileUpload(List<MultipartFile> files, Menu menu) {
+        String path = "/www/menu/main/";
+
+        try {
+            List<String> fileNames = ftp.uploadFile(files, path);
+            ;
+            if (!fileNames.isEmpty()) {
+                menu.setMainFile(fileNames.get(0));
+                menu.setMainFileUrl("https://joeunfc2022.cdn1.cafe24.com/menu/main/" + fileNames.get(0));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void mainfiledelete(List<String> files) {
+        String path = "/www/menu/main/";
 
         try {
             ftp.deleteFile(files, path);
