@@ -17,5 +17,7 @@ public interface PageRepository {
     List<Page> findAllByTypeAndCategory(@Param("category")String category, @Param("type")String type);
 
     Page getPage(Long pageId);
+
+    List<Page> getPages(@Param("category")String category, @Param("section") int section);
     
 }

@@ -4,9 +4,13 @@
 
 <th:block layout:fragment="main">
   <main>
-    <div class="banner">
+    <!-- <div class="banner">
       <img th:src="@{/assets/images/img-banner-franchise.png}" alt="banner" />
+    </div> -->
+    <div class="banner-main">
+      <img th:style="'--imgUrl-PC:url('+${section1[0].img}+'); --imgUrl-MO:url('+${section1[1].img}+');'" alt="banner" />
     </div>
+
     <section>
       <h1 class="title">창업비용</h1>
 

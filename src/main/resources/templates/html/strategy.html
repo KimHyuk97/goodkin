@@ -4,7 +4,7 @@
 
 <th:block layout:fragment="main">
   <main class="strategy">
-    <section class="direct bg-primary-light">
+    <!-- <section class="direct bg-primary-light">
       <div class="img-wrapper">
         <img th:src="@{/assets/images/strategy/img-strategy-01.png}" alt="" />
       </div>
@@ -113,7 +113,23 @@
           적정 마진을 유지하고자 노력하고 있습니다.
         </div>
       </article>
-    </section>
+    </section> -->
+
+    <div class="banner-main">
+      <img alt="banner" th:style="'--imgUrl-PC:url('+${section1[0].img}+'); --imgUrl-MO:url('+${section1[1].img}+');'"/>
+    </div>
+    <div class="banner-main">
+      <img alt="banner" th:style="'--imgUrl-PC:url('+${section2[0].img}+'); --imgUrl-MO:url('+${section2[1].img}+');'"/>
+    </div>
+    <div class="banner-main">
+      <img alt="banner" th:style="'--imgUrl-PC:url('+${section3[0].img}+'); --imgUrl-MO:url('+${section3[1].img}+');'"/>
+    </div>
+    <div class="banner-main">
+      <img alt="banner" th:style="'--imgUrl-PC:url('+${section4[0].img}+'); --imgUrl-MO:url('+${section4[1].img}+');'"/>
+    </div>
+    <div class="banner-main">
+      <img alt="banner" th:style="'--imgUrl-PC:url('+${section5[0].img}+'); --imgUrl-MO:url('+${section5[1].img}+');'"/>
+    </div>
   </main>
 
 </th:block>

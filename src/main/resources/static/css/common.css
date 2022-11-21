@@ -1167,11 +1167,11 @@ main .banner-main img {
   height: 100%;
   -o-object-fit: fill;
      object-fit: fill;
-  content: url("../assets/images/img-banner-main-pc.png");
+  content: var(--imgUrl-PC);
 }
 @media (max-width: 767px) {
   main .banner-main img {
-    content: url("../assets/images/img-banner-main-mo.png");
+    content: var(--imgUrl-MO);
   }
 }
 main .banner .text {

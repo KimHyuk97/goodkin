@@ -10,6 +10,13 @@
         where page_id = #{pageId}
     </select>
 
+    <select id="getPages" resultType="Page"> 
+        select * 
+        from page
+        where category = #{category}
+        and section = #{section}
+    </select>
+
     <select id="findAllByTypeAndCategory" resultType="Page"> 
         select * 
         from page

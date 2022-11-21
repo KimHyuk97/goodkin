@@ -5,9 +5,15 @@
 <th:block layout:fragment="main">
   <main>
     <div class="banner-main">
-      <img alt="banner" />
+      <img alt="banner" th:style="'--imgUrl-PC:url('+${section1[0].img}+'); --imgUrl-MO:url('+${section1[1].img}+');'"/>
     </div>
-    <section class="bg-primary-light reverse">
+    <div class="banner-main">
+      <img alt="banner" th:style="'--imgUrl-PC:url('+${section2[0].img}+'); --imgUrl-MO:url('+${section2[1].img}+');'"/>
+    </div>
+    <div class="banner-main">
+      <img alt="banner" th:style="'--imgUrl-PC:url('+${section3[0].img}+'); --imgUrl-MO:url('+${section3[1].img}+');'"/>
+    </div>
+    <!-- <section class="bg-primary-light reverse">
       <div class="img-wrapper">
         <img th:src="@{/assets/images/img-chicken.png}" />
       </div>
@@ -30,8 +36,8 @@
           </span>
         </p>
       </article>
-    </section>
-    <section class="bg-black reverse">
+    </section> -->
+    <!-- <section class="bg-black reverse">
       <div class="img-wrapper">
         <img th:src="@{/assets/images/img-oneteam.png}" />
       </div>
@@ -50,7 +56,7 @@
           창업을 향해 나아가겠습니다.
         </p>
       </article>
-    </section>
+    </section> -->
 
     <!-- 굿킨의 대표메뉴 -->
     <section>

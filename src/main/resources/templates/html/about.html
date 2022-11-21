@@ -4,7 +4,19 @@
 
 <th:block layout:fragment="main">
   <main>
-    <section class="bg-primary-light reverse">
+    <div class="banner-main">
+      <img alt="banner" th:style="'--imgUrl-PC:url('+${section1[0].img}+'); --imgUrl-MO:url('+${section1[1].img}+');'"/>
+    </div>
+    <div class="banner-main">
+      <img alt="banner" th:style="'--imgUrl-PC:url('+${section2[0].img}+'); --imgUrl-MO:url('+${section2[1].img}+');'"/>
+    </div>
+    <div class="banner-main">
+      <img alt="banner" th:style="'--imgUrl-PC:url('+${section3[0].img}+'); --imgUrl-MO:url('+${section3[1].img}+');'"/>
+    </div>
+    <div class="banner-main">
+      <img alt="banner" th:style="'--imgUrl-PC:url('+${section4[0].img}+'); --imgUrl-MO:url('+${section4[1].img}+');'"/>
+    </div>
+    <!-- <section class="bg-primary-light reverse">
       <div class="img-wrapper">
         <img th:src="@{/assets/images/img-chicken.png}" alt="" />
       </div>
@@ -89,7 +101,7 @@
           있도록 고민하고 다양한 노력과 실천으로 앞장서겠습니다.
         </p>
       </article>
-    </section>
+    </section> -->
   </main>
 
 </th:block>

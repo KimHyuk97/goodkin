@@ -873,9 +873,11 @@ main {
         width: 100%;
         height: 100%;
         object-fit: fill;
-        content: url("../assets/images/img-banner-main-pc.png");
+        
+        content: var(--imgUrl-PC);
         @include mobile {
-          content: url("../assets/images/img-banner-main-mo.png");
+          
+          content: var(--imgUrl-MO);
         }
       }
     }
