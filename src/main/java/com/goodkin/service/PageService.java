@@ -1,5 +1,6 @@
 package com.goodkin.service;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +52,7 @@ public class PageService {
 
             if (page.getImg() != null) {
                 String[] file = page.getImg().split("/");
-                filedelete(List.of(file[file.length-1]), path);
+                filedelete(Arrays.asList(file[file.length-1]), path);
             } 
             fileUpload(files, page, path);
         }

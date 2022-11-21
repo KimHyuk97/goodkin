@@ -1,6 +1,7 @@
 package com.goodkin.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -147,11 +148,11 @@ public class CustomerInquiryService {
             CustomerInquiryFile customerInquiryFile = customerInquiryRepository.getFile(fileNo);
 
             if(customerInquiryFile != null) {
-                filedelete(List.of(customerInquiryFile.getFile()));
+                filedelete(Arrays.asList(customerInquiryFile.getFile()));
             }
 
             // 파일 데이터 삭제
-            delete = customerInquiryRepository.deleteFiles(List.of(fileNo));
+            delete = customerInquiryRepository.deleteFiles(Arrays.asList(fileNo));
 
             System.err.println(delete);
         }

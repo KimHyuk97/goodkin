@@ -1,6 +1,7 @@
 package com.goodkin.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -99,7 +100,7 @@ public class MenuService {
         // 파일 업로드
         if (files != null && !files.isEmpty()) {
             if (menu.getFile() != null)
-                filedelete(List.of(menu.getFile()));
+                filedelete(Arrays.asList(menu.getFile()));
             fileUpload(files, menu);
         }
 
@@ -113,7 +114,7 @@ public class MenuService {
 
         Menu menu = menuRepository.getMenu(menuNo);
         if (menu != null && menu.getFile() != null) {
-            filedelete(List.of(menu.getFile()));
+            filedelete(Arrays.asList(menu.getFile()));
         }
 
         int delete = menuRepository.delete(menuNo);

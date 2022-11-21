@@ -1,6 +1,7 @@
 package com.goodkin.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -55,7 +56,7 @@ public class ReviewService {
         Review review = reviewRepository.getReview(reviewNo);
 
         try {
-            ftp.deleteFile(List.of(review.getFile()), path);
+            ftp.deleteFile(Arrays.asList(review.getFile()), path);
         } catch (Exception e) {
             e.printStackTrace();
         }

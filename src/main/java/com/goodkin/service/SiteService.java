@@ -1,5 +1,6 @@
 package com.goodkin.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -54,7 +55,7 @@ public class SiteService {
             // 파일 삭제
             if(site != null && site.getLogo() != null) {
                 String[] logos = site.getLogo().split("/");
-                filedelete(List.of(logos[logos.length -1]));
+                filedelete(Arrays.asList(logos[logos.length -1]));
             }
 
             fileUpload(logofile, site);
@@ -70,7 +71,7 @@ public class SiteService {
         String path = "/www/site/";
     
         try {
-            List<String> fileNames = ftp.uploadFile(List.of(logofile), path);
+            List<String> fileNames = ftp.uploadFile(Arrays.asList(logofile), path);
             if(!fileNames.isEmpty()) {
                 site.setLogo("https://joeunfc2022.cdn1.cafe24.com/site/"+fileNames.get(0));
             }
