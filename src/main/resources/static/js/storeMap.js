@@ -6,8 +6,8 @@ const ZOOMS = {
     out: [0, 8] // 경계 이탈
 }
 const MAP_DATA = {
-    latlng: [37.532167, 126.81715],
-    zoom: 15, 
+    latlng: [37.6480921, 127.0336832],
+    zoom: 10, 
     address: { area1: '', area2: '', area3: '' },
 }
 
@@ -23,7 +23,7 @@ const NAVER_MAP = () => {
     const nvMap = new naver.maps.Map('map', {
         center: new naver.maps.LatLng(MAP_DATA.latlng[0], MAP_DATA.latlng[1]),
         zoom: MAP_DATA.zoom,
-        minZoom: 11,
+        minZoom: 10,
     });
     
     return nvMap;

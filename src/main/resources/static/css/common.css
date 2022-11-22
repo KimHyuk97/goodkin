@@ -304,6 +304,7 @@ button[class^=btn-] {
   grid-template-areas: "header header header" "aside main nav" "footer footer footer";
   grid-template-columns: auto 1fr auto;
   grid-template-rows: auto 1fr auto;
+  position: relative;
 }
 
 .title {
@@ -577,7 +578,7 @@ textarea {
   font-weight: 600;
   font-size: 17px;
   line-height: 26px;
-  text-align: start;
+  text-align: center;
 }
 @media (max-width: 767px) {
   .grid-table th {
@@ -694,14 +695,6 @@ textarea {
 .list-item {
   display: grid;
   gap: 24px;
-  width: 440px;
-  height: auto;
-}
-@media (max-width: 767px) {
-  .list-item {
-    width: auto;
-    height: auto;
-  }
 }
 .list-title {
   font-family: "GangwonEduPower";
@@ -834,6 +827,8 @@ textarea {
   flex-direction: column;
   gap: 24px;
   text-align: center;
+  justify-content: center;
+  align-items: center;
   font-weight: 500;
   font-size: 24px;
   line-height: 32px;
@@ -846,8 +841,8 @@ textarea {
 }
 .menu-swiper-item img {
   display: block;
-  width: 320px;
-  height: 320px;
+  width: 100%;
+  height: auto;
   -o-object-fit: cover;
      object-fit: cover;
 }
@@ -999,12 +994,15 @@ textarea {
 header {
   grid-area: header;
   height: 100px;
-  padding: 12px 16px;
+  padding: 12px 13.5vw;
   display: grid;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   position: relative;
   font-weight: 700;
+  position: fixed;
+  z-index: 10000;
+  width: 100%;
   background: #eeeeee;
 }
 @media (max-width: 1023px) {
@@ -1022,10 +1020,9 @@ header > div {
   height: 100%;
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 4vw;
+  gap: 6vw;
   align-items: center;
   justify-content: center;
-  transform: translate(-50px);
 }
 @media (max-width: 1023px) {
   header > div {
@@ -1056,8 +1053,13 @@ header .logo {
 }
 header ul {
   display: flex;
-  gap: min(2vw, 40px);
+  gap: 40px;
   justify-content: space-between;
+}
+@media (max-width: 1100) {
+  header ul {
+    display: none;
+  }
 }
 @media (max-width: 1023px) {
   header ul {
@@ -1074,6 +1076,9 @@ header ul li:hover {
 }
 header ul .selected {
   color: #f4a426;
+}
+header li a {
+  white-space: nowrap;
 }
 header .btn-menu {
   position: absolute;
@@ -1122,6 +1127,7 @@ nav {
   font-weight: 700;
   font-size: 18px;
   line-height: 26px;
+  box-shadow: rgba(0, 0, 0, 0.2) -6px 0 20px;
 }
 nav .nav-head {
   display: grid;
@@ -1171,6 +1177,7 @@ main {
   flex-direction: column;
   align-items: center;
   z-index: 100;
+  padding: 100px 0 0;
 }
 main .banner {
   position: relative;
@@ -1247,7 +1254,7 @@ main section {
   gap: 60px;
   width: 100%;
   height: 100%;
-  padding: 100px 10vw;
+  padding: 100px 13.5vw;
 }
 @media (max-width: 1023px) {
   main section {
