@@ -1008,11 +1008,13 @@ header {
 @media (max-width: 1023px) {
   header {
     height: 80px;
+    padding: 12px 40px;
   }
 }
 @media (max-width: 767px) {
   header {
     height: 56px;
+    padding: 12px 16px;
   }
 }
 header > div {

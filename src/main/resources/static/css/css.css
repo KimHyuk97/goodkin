@@ -35,6 +35,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    white-space: nowrap;
 }
 
 .marker_container:after {

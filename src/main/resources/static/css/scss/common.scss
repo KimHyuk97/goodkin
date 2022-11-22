@@ -729,9 +729,11 @@ header {
   width: 100%;
   @include tablet {
     height: 80px;
+    padding: 12px 40px;
   }
   @include mobile {
     height: 56px;
+    padding: 12px 16px;
   }
   background: $color-gray2;
   & > div {
