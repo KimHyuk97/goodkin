@@ -5,7 +5,7 @@
 <th:block layout:fragment="main">
   <main>
     <div class="banner-main">
-      <img th:src="${section1[0].img}" alt="menu-banner" />
+      <img alt="banner" th:style="'--imgUrl-PC:url('+${section1[0].img}+'); --imgUrl-MO:url('+${section1[1].img}+');'"/>
     </div>
     <section>
       <h1 class="title center">MENU</h1>
