@@ -38,7 +38,7 @@
         data.length > 0 
           ? data.map(item => 
             `<li class="list-item">
-              <img src="${item.fileUrl}" alt="menu" />
+              <img src="${item.fileUrl}" alt="menu" loading='eager'/>
               <div>
                 <p class="list-title ${id !== 'setmenu' ? 'center' : ''}">${item.name}</p>
                 ${id === 'setmenu' ? `<p class="list-explanation">${item.description}</p>` : ''}
