@@ -48,11 +48,19 @@ function tab(event, tabName) {
 
 // 메뉴 데이터 통신
 function getMenus(category) {
-  ajax(`/api/menu/${category.toUpperCase()}`, 'post')
-    .then((response) => {
+  if(category === 'new') {
+    ajax(`/api/menu/new`, 'post')
+      .then((response) => {
+        new_menu_data(response.data, category);
+      })
+      .catch((error) => console.log(error));
+  } else {
+    ajax(`/api/menu/${category.toUpperCase()}`, 'post')
+      .then((response) => {
         menu_data(response.data, category);
-    })
-    .catch((error) => console.log(error));
+      })
+      .catch((error) => console.log(error));
+  }
 }
 
 (function ($, window) {

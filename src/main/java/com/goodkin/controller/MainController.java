@@ -4,8 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.goodkin.model.site.PolicyType;
 import com.goodkin.repository.MenuRepository;
 import com.goodkin.repository.PageRepository;
+import com.goodkin.repository.PolicyRepository;
 import com.goodkin.repository.ReviewRepository;
 import com.goodkin.repository.SiteRepository;
 
@@ -19,6 +21,7 @@ public class MainController {
     private final MenuRepository menuRepository;
     private final SiteRepository siteRepository;
     private final PageRepository pageRepository;
+    private final PolicyRepository policyRepository;
         
     @GetMapping({"/", ""})
     public String home(Model model) {
@@ -64,6 +67,7 @@ public class MainController {
 
     @GetMapping("/franchise")
     public String franchise(Model model) {
+        model.addAttribute("privacy", policyRepository.getPolicy(PolicyType.PRIVACY));
         model.addAttribute("site", siteRepository.getSite());
         model.addAttribute("section1", pageRepository.getPages("franchise", 1));
         return "html/franchise";
@@ -90,6 +94,7 @@ public class MainController {
 
     @GetMapping("/privacy")
     public String privacy(Model model) {
+        model.addAttribute("privacy", policyRepository.getPolicy(PolicyType.PRIVACY));
         model.addAttribute("site", siteRepository.getSite());
         return "html/privacy";
     }

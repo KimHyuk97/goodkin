@@ -71,7 +71,7 @@
                     </fieldset>
                     <fieldset class="fieldset">
 
-                        <span class="input-wrap">
+                        <!-- <span class="input-wrap">
                             <label class="label">신메뉴 여부</label>
                             <div class="input-group">
                                 <div class="check-wrap">
@@ -87,7 +87,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </span>
+                        </span> -->
 
                         <span class="input-wrap">
                             <label class="label">노출 여부</label>
@@ -179,7 +179,7 @@
                 formData.append("files", form.file.files[0]);
                 if (mode === 'update') formData.append("mainfiles", form.mainfiles.files[0]);
                 formData.append("category", form.category.value);
-                formData.append("newStatus", form.newStatus.value);
+                formData.append("newStatus", 1);
                 formData.append("expStatus", form.expStatus.value);
 
                 fetch(`./${mode}`, {

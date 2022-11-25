@@ -9,6 +9,7 @@ import com.goodkin.model.Pagination;
 import com.goodkin.model.menu.MainMenu;
 import com.goodkin.model.menu.Menu;
 import com.goodkin.model.menu.MenuCategroy;
+import com.goodkin.model.menu.NewMenu;
 
 @Mapper
 public interface MenuRepository {
@@ -61,5 +62,13 @@ public interface MenuRepository {
 
     // 다운
     public void mainMenuSortDown(Long mainMenuNo);
+
+    // 신메뉴 설정
+    public List<NewMenu> newMenuList();
+    public NewMenu getNewMenu(Long newMenuNo);
+    public int newMenuInsert(NewMenu newMenu);
+    public int newMenuUpdate(NewMenu newMenu);
+    public int newMenuDelete(Long newMenuNo);
+    
 
 }

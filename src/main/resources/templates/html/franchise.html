@@ -170,18 +170,7 @@
             <input type="checkbox" value="true" name="policyStatus" id="agree" />
             개인정보 수집 및 활용 동의
           </label>
-          <div class="text">
-            개인정보 수집·활용 동의 <br /><br />
-            (주)조은에프씨는 이용하는 고객님의 개인정보 보호를 위하여,
-            개인정보 수집의 목적과 그 정보의 정책적, 시스템적 보안에 관하여
-            규정하고 그에 따른 동의를 받고자 합니다.<br /><br />
-            1. 개인정보 수집 및 이용목적 <br />- 기름 재사용 신고 확인 목적
-            외에 어떠한 용도로도 사용되지 않습니다. <br />- 신고 건 확인에
-            있어, 원활하게 신고 사항의 접수 및 답변이 이루어질 수 있도록
-            하기 위한 최소한의 정보를 수집합니다.<br /><br />
-            2. 수집하는 개인정보의 항목 <br />- 이름, 연락처(전화번호,
-            핸드폰번호), 이메일
-          </div>
+          <textarea class="contents" th:text="${privacy.content}" style="min-height: 120px;"></textarea>
         </div>
         <div class="grid-rows submit">
           <input type="submit" onclick="process()" value="작성 완료" />

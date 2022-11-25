@@ -39,6 +39,13 @@ public class MenuController {
             menuRepository.findByCategory(category) );
     }
 
+    @PostMapping("/api/menu/new")
+    @ResponseBody
+    public ResponseDto<?> getNewMenu() {
+        return responseService.responseBuilder("",
+            menuRepository.getNewMenu(1L));
+    }
+
     @GetMapping("/admin/menu/main/list")
     public ModelAndView menuMainList(ModelAndView mv) {
 
@@ -115,5 +122,34 @@ public class MenuController {
     @ResponseBody
     public ResponseDto<?> mainMenuSortChange(@RequestBody Map<String, Long[]> map) {
         return menuService.mainMenuSortChange(map.get("ids"));
+    }
+
+    /*
+     * 신메뉴 리스트
+     */
+    @GetMapping("/admin/menu/new/list")
+    public ModelAndView newMenuList(ModelAndView mv) {
+
+        return menuService.newMenuList(mv);
+    }
+
+    /*
+     * 신메뉴 등록
+     */
+    @PostMapping("/admin/menu/new/insert")
+    @ResponseBody
+    public ResponseDto<?> newMenuinsert(@RequestPart List<MultipartFile> files) {
+
+        return menuService.newMenuinsert(files);
+    }
+
+    /*
+     * 신메뉴 수정
+     */
+    @PostMapping("/admin/menu/new/update")
+    @ResponseBody
+    public ResponseDto<?> newMenuUpdate(@RequestPart List<MultipartFile> files) {
+
+        return menuService.newMenuUpdate(files);
     }
 }

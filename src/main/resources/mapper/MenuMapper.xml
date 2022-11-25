@@ -146,4 +146,35 @@
         </foreach>
     </update>
 
+    <!-- 신메뉴 설정 -->
+    <select id="newMenuList" resultType="NewMenu"> 
+        select *
+        from   new_menu
+    </select>
+
+    <!-- 신메뉴 설정 -->
+    <select id="getNewMenu" resultType="NewMenu"> 
+        select *
+        from   new_menu
+        where new_menu_no = #{newMenuNo}
+    </select>
+
+    <insert id="newMenuInsert">
+        insert into new_menu (file_url, file_name)
+        values (#{fileUrl}, #{fileName})
+    </insert>
+
+    <update id="newMenuUpdate">
+        update new_menu
+        set file_url = #{fileUrl}, file_name = #{fileName}
+        where new_menu_no = #{newMenuNo}
+    </update>
+
+    <delete id="newMenuDelete">
+        delete 
+        from new_menu 
+        where new_menu_no = #{newMenuNo}
+    </delete>
+
+
 </mapper>

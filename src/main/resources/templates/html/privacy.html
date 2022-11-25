@@ -7,7 +7,9 @@
   <main>
     <section>
       <h1>개인정보취급방침</h1>
-      <p class="contents">개인정보취급방침</p>
+      <textarea class="contents" 
+        th:text="${privacy.content}" 
+        style="min-height: auto; height: 100vh;"></textarea>
     </section>
   </main>
 

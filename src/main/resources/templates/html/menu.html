@@ -10,7 +10,10 @@
     <section>
       <h1 class="title center">MENU</h1>
       <div class="tab">
-        <button class="tab-links active" onclick="tab(event, 'setmenu')">
+        <button class="tab-links active" onclick="tab(event, 'new')">
+          신메뉴
+        </button>
+        <button class="tab-links" onclick="tab(event, 'setmenu')">
           세트메뉴
         </button>
         <button class="tab-links" onclick="tab(event, 'chicken')">
@@ -20,7 +23,10 @@
           떡볶이 메뉴
         </button>
       </div>
-      <div id="setmenu" class="tab-content active">
+      <div id="new" class="tab-content active">
+        <div class="list new_menu"></div>
+      </div>
+      <div id="setmenu" class="tab-content">
         <ul class="list"></ul>
       </div>
       <div id="chicken" class="tab-content">
@@ -53,8 +59,18 @@
       
     }
 
+    function new_menu_data(data, id) {
+      console.log(data);
+      const template = 
+        data != null
+          ? `<img src="${data.fileUrl}" alt="menu" loading='eager' width="100%" height="100%"/>`
+          : `<p>등록된 정보가 없습니다.</p>`;
+
+      document.querySelector(`#${id} div`).innerHTML = template;
+    }
+
     window.addEventListener('load', () => {
-      getMenus("setmenu");
+      getMenus("new");
     });
   </script>
 

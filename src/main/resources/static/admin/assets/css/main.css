@@ -2343,3 +2343,74 @@ textarea:active, textarea:focus {
 }
 
 
+.file_container {
+  width: 100%;
+  height: 75vh;
+  display: flex;
+  justify-content: center;
+  gap: 5vw;
+}
+
+.file_container .file_form {
+  width: 460px;
+  height: 664px;
+  position: relative;
+}
+
+.file_container .file_form label img {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.file_container .file_form h1 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.file_container .file_form input[type="file"] {
+  display: none;
+}
+
+.file_container .line {
+  height: 100%;
+  border: 0;
+  border-right: 5px solid #f5f5f5;
+}
+
+.un_file_icon {
+  background: url(../imgs/file_plus.png) center no-repeat #f1faff;
+  color: #009ef7;
+  border-radius: 15px;
+  border: 5px solid #009ef7;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.file_container .form_message{
+  width: 460px;
+  height: 664px;
+}
+
+.photo_file_icon {
+  background: url(../imgs/photo.png) center no-repeat #f1faff;
+  color: transparent;
+  border-radius: 15px;
+  border: 5px solid #009ef7;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all 0.5s;
+}
+
+.photo_file_icon:hover {
+  opacity: 0.7;
+}

@@ -16,6 +16,7 @@ import com.goodkin.model.ResponseDto;
 import com.goodkin.model.menu.MainMenu;
 import com.goodkin.model.menu.Menu;
 import com.goodkin.model.menu.MenuCategroy;
+import com.goodkin.model.menu.NewMenu;
 import com.goodkin.repository.MenuRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -269,6 +270,72 @@ public class MenuService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /*
+     * 신메뉴 리스트
+     */
+    public ModelAndView newMenuList(ModelAndView mv) {
+
+        NewMenu newMenu = menuRepository.getNewMenu(1L);
+
+        mv.addObject("item", newMenu != null ? newMenu : new NewMenu());
+        mv.setViewName("admin/menu/new/list");
+        return mv;
+    }
+
+    /*
+     * 신메뉴 등록
+     */
+    public ResponseDto<?> newMenuinsert(List<MultipartFile> files) {
+
+        NewMenu newMenu = new NewMenu();
+
+        try {
+            List<String> fileNames = ftp.uploadFile(files, "/www/menu/new/");
+            if (!fileNames.isEmpty()) {
+                newMenu.setFileName(fileNames.get(0));
+                newMenu.setFileUrl("https://joeunfc2022.cdn1.cafe24.com/menu/new/" + fileNames.get(0));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        menuRepository.newMenuInsert(newMenu);
+        return responseService.responseBuilder("등록되었습니다.", null);
+    }
+
+     /*
+     * 신메뉴 수정
+     */
+    public ResponseDto<?> newMenuUpdate(List<MultipartFile> files) {
+        
+        NewMenu newMenu = menuRepository.getNewMenu(1L);
+
+        // 사진 삭제
+        try {
+            if(newMenu != null) {
+                ftp.deleteFile(Arrays.asList(newMenu.getFileName()), 
+                    "/www/menu/new/");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // 사진등록
+        try {
+            List<String> fileNames = ftp.uploadFile(files, "/www/menu/new/");
+            if (!fileNames.isEmpty() && newMenu != null) {
+                newMenu.setFileName(fileNames.get(0));
+                newMenu.setFileUrl("https://joeunfc2022.cdn1.cafe24.com/menu/new/" + fileNames.get(0));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(newMenu != null) newMenu.setNewMenuNo(1L);
+        menuRepository.newMenuUpdate(newMenu);
+        return responseService.responseBuilder("등록되었습니다.", null);
     }
 
 }
