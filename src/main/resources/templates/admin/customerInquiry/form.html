@@ -226,7 +226,6 @@
         }
 
         const store_data = async () => {
-            console.log(storeNo);
             ajax('/api/stores', 'post')
             .then((response) => {
                 let template = '<option value="">선택</option>';

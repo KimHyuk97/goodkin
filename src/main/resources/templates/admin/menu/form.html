@@ -188,7 +188,6 @@
                     body: formData
                 })
                     .then((response) => response.json()).then((data) => {
-                        console.log(data);
                         alert(data.message);
                         if (data.message !== '이미 등록된 메뉴 입니다.') location.reload();
                     })
@@ -223,7 +222,6 @@
 
         // 메인 메뉴 설정
         function mainManuHandler(event) {
-            console.log(event)
             const menuNo = form.menuNo.value;
             const category = form.category.value;
             const url = event.target.value === 'true' ? `./main/${category}/insert/${menuNo}` : `./main/delete/${menuNo}`;
@@ -279,7 +277,6 @@
             }
 
             const upload_img = new Image();
-            console.log(file.files[0])
             upload_img.src = _URL.createObjectURL(file.files[0]);
             
             upload_img.onload = function() {

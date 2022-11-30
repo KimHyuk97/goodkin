@@ -101,3 +101,13 @@
     /* top: 0; */
     /* right: 0; */
 }
+
+
+.tab {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.tab::-webkit-scrollbar {
+    display: none;
+}

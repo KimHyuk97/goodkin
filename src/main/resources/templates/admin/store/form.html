@@ -135,7 +135,6 @@
             const service = checked.length > 0 ? checked.join(",") : '';
 
             if (storeValidation()) {
-                console.log('ddd');
                 ajax(`./${mode}`, 'POST', {
                     storeNo: form.storeNo ? form.storeNo.value : 0,
                     name: form.name.value,

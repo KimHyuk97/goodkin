@@ -41,13 +41,11 @@
 
     function store_data(data) {
 
-      console.log(data);
-
       // 데이터 처리
       const template = data.list.length > 0
         ? data.list.map(item => `
           <tr>
-            <td>${item.name}</td>
+            <td onclick="searchHandler('${item.address}')">${item.name}</td>
             <td>${item.address}, ${item.detailAddress}</td>
             <td>${item.phone}</td>
             <td>
@@ -115,8 +113,8 @@
     }
 
     // 검색 기능
-    const searchHandler = async () => {
-      const keyword = document.getElementById('keyword').value;
+    const searchHandler = async (value) => {
+      const keyword = value ? value : document.getElementById('keyword').value;
 
       // 데이터 조회 api
       await getStores();

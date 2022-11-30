@@ -530,6 +530,7 @@ textarea {
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;
+  cursor: pointer;
 }
 .line-table td {
   font-weight: 300;
@@ -632,6 +633,13 @@ textarea {
   justify-self: center;
   gap: 16px;
 }
+@media (max-width: 767px) {
+  .tab {
+    flex-wrap: nowrap;
+    overflow-y: scroll;
+    width: 100%;
+  }
+}
 .tab > div input {
   display: none;
 }
@@ -660,9 +668,10 @@ textarea {
 }
 @media (max-width: 767px) {
   .tab-links {
+    min-width: auto;
     font-size: 16px;
     line-height: 24px;
-    padding: 12px 20px;
+    padding: 10px 20px;
   }
 }
 .tab-links.active {
@@ -730,6 +739,8 @@ textarea {
   grid-template-columns: 1fr;
   max-width: 920px;
   max-height: 1288px;
+  width: 100%;
+  height: 100%;
   margin: 0 auto;
 }
 
