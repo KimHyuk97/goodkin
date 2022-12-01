@@ -196,9 +196,15 @@
         }
 
         function menuValidation() {
+            const category = form.category
             const name = form.name;
-            const newStatus = form.newStatus;
             const expStatus = form.expStatus;
+            const file = form.file;
+
+            if(category.value === '') { 
+                alert('카테고리를 선택해주세요.');
+                return false
+            }
 
             if (name.value === '') {
                 alert('메뉴 이름을 입력해주세요.');
@@ -206,12 +212,11 @@
                 return false
             }
 
-            if (newStatus.value === '') {
-                alert('신메뉴 여부를 선택해주세요.');
-                address.focus();
+            if (file.files.length === 0) {
+                alert('메뉴 사진을 등록해주세요.');
                 return false
             }
-
+            
             if (expStatus.value === '') {
                 alert('노출 여부를 선택해주세요.');
                 return false
