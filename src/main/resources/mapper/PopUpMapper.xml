@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goodkin.repository.PopUpRepository">
+
+    <!-- 팝업 조회 -->
+    <select id="getPopUp" resultType="PopUp"> 
+        SELECT  *
+        FROM    popup
+        WHERE   popup_no = #{popupNo}
+    </select>
+
+    <insert id="popupInsert">
+        INSERT INTO popup 
+        (
+            file_url, file_name
+        )
+        VALUES 
+        (
+            #{fileUrl}, #{fileName}
+        )
+    </insert>
+
+    <update id="popUpdate">
+        UPDATE  popup
+        SET     file_url = #{fileUrl}, file_name = #{fileName}
+        WHERE   popup_no = #{popupNo}
+    </update>
+
+    <select id="getPopUpUrl" resultType="PopUp">
+        SELECT  *
+        FROM    popup
+    </select>
+
+    <update id="updatePopUpUrl">
+        UPDATE  popup
+        SET     target_url = #{url}
+        WHERE   popup_no = 1
+    </update>
+</mapper>
