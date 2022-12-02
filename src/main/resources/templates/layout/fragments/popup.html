@@ -5,7 +5,7 @@
 <th:block  th:fragment="popup" th:if="${popup != null}">
     <div class="popup-out" >
         <div class="popup-inner">
-            <img class="popup-img" th:src="${popup.fileUrl}" />
+            <img class="popup-img" th:src="${popup.fileUrl}" th:onclick="popupTargetUrl([[${popup.targetUrl}]])"/>
             <div class="btn-modal">
                 <button onclick="popupCookie();">24시간 동안 다시 열람하지 않습니다.</button>
                 <button onclick="popupClose();">닫기</button>
@@ -28,6 +28,10 @@
 
             var cookie_value = escape(value) + ((days == null) ? '' : '; expires=' + exdate.toUTCString());
             document.cookie = cookie_name + '=' + cookie_value;
+        }
+
+        function popupTargetUrl(url) {
+            location.href=url;
         }
 
         // 쿠키 저장
