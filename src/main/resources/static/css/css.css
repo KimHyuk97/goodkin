@@ -135,24 +135,11 @@
     width: 100%;
     max-width: 700px;
 }
-/* .popup-img {
-    width: 36.5vw;
-    height: 100vh;
-} */
-/* @media screen and (max-width: 576px) {
-    .popup-out {
-        display: none;
-    }
-    .popup-img {
-        display: none;
-    }
-    .btn-modal {
-        display: none;
-    }
-    .btn-modal button {
-        display: none;
-    }
-} */
+
+.popup-inner img {
+    cursor: pointer;
+}
+
 .btn-modal {
     display: flex;
     justify-content: end;
