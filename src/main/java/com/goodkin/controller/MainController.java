@@ -8,6 +8,7 @@ import com.goodkin.model.site.PolicyType;
 import com.goodkin.repository.MenuRepository;
 import com.goodkin.repository.PageRepository;
 import com.goodkin.repository.PolicyRepository;
+import com.goodkin.repository.PopUpRepository;
 import com.goodkin.repository.ReviewRepository;
 import com.goodkin.repository.SiteRepository;
 
@@ -22,6 +23,7 @@ public class MainController {
     private final SiteRepository siteRepository;
     private final PageRepository pageRepository;
     private final PolicyRepository policyRepository;
+    private final PopUpRepository popUpRepository;
         
     @GetMapping({"/", ""})
     public String home(Model model) {
@@ -31,6 +33,7 @@ public class MainController {
         model.addAttribute("section1", pageRepository.getPages("main_page", 1));
         model.addAttribute("section2", pageRepository.getPages("main_page", 2));
         model.addAttribute("section3", pageRepository.getPages("main_page", 3));
+        model.addAttribute("popup", popUpRepository.getPopUpUrl());
         
         return "index";
     }
