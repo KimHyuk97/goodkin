@@ -1,7 +1,6 @@
 package com.goodkin.repository;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import com.goodkin.model.menu.PopUp;
 

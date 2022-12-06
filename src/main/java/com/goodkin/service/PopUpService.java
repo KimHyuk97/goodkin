@@ -9,7 +9,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.goodkin.ftp.Ftp;
 import com.goodkin.model.ResponseDto;
-import com.goodkin.model.menu.NewMenu;
 import com.goodkin.model.menu.PopUp;
 import com.goodkin.repository.PopUpRepository;
 
